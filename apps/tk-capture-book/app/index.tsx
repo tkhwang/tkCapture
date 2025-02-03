@@ -1,10 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import { Text, View } from "react-native";
 
-export default function Page() {
+export default function HomeScreen() {
   return (
-    <View className="flex-1 items-center justify-center bg-yellow-200">
-      <Text className="text-xl font-bold text-center">Home Page</Text>
+    <View className="flex-1 items-center justify-center">
+      <Text className="text-xl font-bold">홈 화면</Text>
       <StatusBar style="auto" />
     </View>
   );
