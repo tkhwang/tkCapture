@@ -2,9 +2,8 @@
 import "../global.css";
 import "../i18n"; // i18n 설정 임포트
 
-import { Stack } from "expo-router";
-import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
 import { useTranslation } from "react-i18next";
 
 export default function AppLayout() {
