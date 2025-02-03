@@ -6,15 +6,19 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "eslint ."
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.66.0",
+    "axios": "^1.7.9",
     "expo": "~52.0.28",
     "expo-constants": "~17.0.5",
     "expo-linking": "~7.0.5",
     "expo-router": "~4.0.17",
     "expo-status-bar": "~2.0.1",
     "i18next": "^24.2.2",
+    "jotai": "^2.11.3",
     "nativewind": "^4.1.23",
     "react": "18.3.1",
     "react-i18next": "^15.4.0",
@@ -26,7 +30,17 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@tanstack/eslint-plugin-query": "^5.66.0",
     "@types/react": "~18.3.12",
+    "@typescript-eslint/eslint-plugin": "^8.22.0",
+    "@typescript-eslint/parser": "^8.22.0",
+    "eslint-config-expo": "~8.0.1",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "prettier": "^3.4.2",
     "typescript": "^5.3.3"
   },
   "private": true

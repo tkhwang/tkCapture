@@ -1,9 +1,12 @@
 import { View, Text } from "react-native";
+import { useTranslation } from "react-i18next";
 
 export default function SearchScreen() {
+  const { t } = useTranslation();
+
   return (
-    <View className="flex-1 items-center justify-center">
-      <Text className="text-xl font-bold">검색 화면</Text>
+    <View className="items-center justify-center flex-1">
+      <Text className="text-xl font-bold">{t("search")} </Text>
     </View>
   );
 }
