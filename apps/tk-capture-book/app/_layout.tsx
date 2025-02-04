@@ -28,7 +28,14 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
-          name="search"
+          name="search-naver"
+          options={{
+            title: t("search"),
+            tabBarIcon: ({ color, size }) => <Ionicons name="search" size={size} color={color} />,
+          }}
+        />
+        <Tabs.Screen
+          name="search-kakao"
           options={{
             title: t("search"),
             tabBarIcon: ({ color, size }) => <Ionicons name="search" size={size} color={color} />,

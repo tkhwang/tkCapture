@@ -1,18 +1,18 @@
 import { useState } from "react";
-import { View, Text, TextInput, ActivityIndicator, ScrollView, Image } from "react-native";
+import { View, Text, TextInput, ActivityIndicator } from "react-native";
 import { useDebounce } from "use-debounce";
 
-import { NaverSearchResult } from "@/components/NaverSearchResult";
-import { useSearchNaverBooks } from "@/hooks/useSearchNaverBooks";
+import { KakaoSearchResult } from "@/components/KakaoSearchResult";
+import { useSearchKakaoBooks } from "@/hooks/useSearchKakaoBooks";
 
-export default function SearchScreen() {
+export default function SearchKakaoScreen() {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText] = useDebounce(searchText, 500);
 
-  const { data, isLoading, error } = useSearchNaverBooks({
+  const { data, isLoading, error } = useSearchKakaoBooks({
     query: debouncedSearchText,
-    display: 20,
-    sort: "sim",
+    size: 20,
+    sort: "accuracy", // accuracy (정확도순) or latest (발간일순)
   });
 
   return (
@@ -38,7 +38,7 @@ export default function SearchScreen() {
         </View>
       )}
 
-      <NaverSearchResult data={data} />
+      <KakaoSearchResult data={data} />
     </View>
   );
 }
