@@ -13,15 +13,16 @@ export function NaverSearchResult({ data }: NaverSearchResultProps) {
 
   return (
     <ScrollView className="flex-1">
-      {data.items.map((book) => (
+      {data?.items.map((book) => (
         <View key={book.isbn} className="p-4 border-b border-gray-200">
           <View className="flex-row">
             {book.image && (
-              <View className="w-20 mr-4 h-28">
+              <View className="w-16 h-24 mr-4">
                 <Image
                   source={{ uri: book.image }}
-                  className="w-full h-full rounded-md"
-                  resizeMode="cover"
+                  style={{ width: "100%", height: "100%" }}
+                  className="rounded-md"
+                  resizeMode="contain"
                 />
               </View>
             )}
