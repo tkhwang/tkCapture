@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { NaverBookResponse, NaverBookSearchParams } from "@/types/book";
+import { NaverBookResponse, NaverBookSearchParams } from "@/types/naver-book";
 
 const NAVER_API_URL = "https://openapi.naver.com/v1/search/book.json";
 

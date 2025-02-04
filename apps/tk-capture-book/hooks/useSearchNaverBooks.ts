@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { searchNaverBooks } from "@/api/search-naver-books";
-import { NaverBookSearchParams } from "@/types/book";
+import { NaverBookSearchParams } from "@/types/naver-book";
 
 export function useSearchNaverBooks(params: NaverBookSearchParams) {
   return useQuery({

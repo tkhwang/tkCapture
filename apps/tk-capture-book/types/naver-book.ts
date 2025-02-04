@@ -1,3 +1,10 @@
+export interface NaverBookSearchParams {
+  query: string;
+  display?: number;
+  start?: number;
+  sort?: "sim" | "date";
+}
+
 export interface NaverBookResponse {
   lastBuildDate: string;
   total: number;
@@ -16,11 +23,4 @@ export interface NaverBookItem {
   pubdate: string;
   isbn: string;
   description: string;
-}
-
-export interface NaverBookSearchParams {
-  query: string;
-  display?: number;
-  start?: number;
-  sort?: "sim" | "date";
 }
