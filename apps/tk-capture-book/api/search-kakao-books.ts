@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { KakaoBookResponse, KakaoBookSearchParams } from "@/types/kakao-book";
+import { KakaoBookResponse, KakaoBookSearchParams } from "@/types/book/kakao-book";
 
 const KAKAO_API_URL = "https://dapi.kakao.com/v3/search/book";
 
