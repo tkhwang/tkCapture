@@ -1,6 +1,7 @@
-import { useSearchNaverBooks } from "@/hooks/useSearchNaverBooks";
 import { useState } from "react";
 import { View, Text, TextInput, ActivityIndicator, ScrollView, Image } from "react-native";
+
+import { useSearchNaverBooks } from "@/hooks/useSearchNaverBooks";
 
 export default function SearchScreen() {
   const [searchText, setSearchText] = useState("");
