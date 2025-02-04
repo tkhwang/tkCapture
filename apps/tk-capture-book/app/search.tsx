@@ -1,10 +1,10 @@
-import { useBookSearch } from "@/hooks/useBookSearch";
+import { useSearchNaverBooks } from "@/hooks/useSearchNaverBooks";
 import { useState } from "react";
 import { View, Text, TextInput, ActivityIndicator, ScrollView, Image } from "react-native";
 
 export default function Search() {
   const [searchText, setSearchText] = useState("");
-  const { data, isLoading, error } = useBookSearch({
+  const { data, isLoading, error } = useSearchNaverBooks({
     query: searchText,
     display: 20,
     sort: "sim",

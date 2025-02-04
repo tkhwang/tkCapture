@@ -12,7 +12,7 @@ const naverApiClient = axios.create({
   },
 });
 
-export const searchBooks = async (params: NaverBookSearchParams): Promise<NaverBookResponse> => {
+export async function searchNaverBooks(params: NaverBookSearchParams): Promise<NaverBookResponse> {
   const { data } = await naverApiClient.get("", {
     params: {
       ...params,
@@ -21,4 +21,4 @@ export const searchBooks = async (params: NaverBookSearchParams): Promise<NaverB
     },
   });
   return data;
-};
+}
