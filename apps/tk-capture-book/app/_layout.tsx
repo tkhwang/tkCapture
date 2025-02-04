@@ -7,7 +7,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Tabs } from "expo-router";
 import { useTranslation } from "react-i18next";
 
-import { queryClient } from "../lib/react-query";
+import { queryClient } from "@/lib/react-query-client";
 
 export default function AppLayout() {
   const { t } = useTranslation();
@@ -28,7 +28,14 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
-          name="search"
+          name="search-naver"
+          options={{
+            title: t("search"),
+            tabBarIcon: ({ color, size }) => <Ionicons name="search" size={size} color={color} />,
+          }}
+        />
+        <Tabs.Screen
+          name="search-kakao"
           options={{
             title: t("search"),
             tabBarIcon: ({ color, size }) => <Ionicons name="search" size={size} color={color} />,
