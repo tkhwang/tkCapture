@@ -1,5 +1,5 @@
-import { View, Text } from "react-native";
 import { useTranslation } from "react-i18next";
+import { View, Text } from "react-native";
 
 export default function ProfileScreen() {
   const { t } = useTranslation();
