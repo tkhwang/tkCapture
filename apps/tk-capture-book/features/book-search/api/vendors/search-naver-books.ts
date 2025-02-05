@@ -21,6 +21,6 @@ export async function searchNaverBooks(params: NaverBookSearchParams): Promise<N
       start: params.start || 1,
     },
   });
-  // console.log(`[+][searchNaverBooks] response: ${JSON.stringify(data)}`);
+  console.log(`[+][searchNaverBooks] response: ${JSON.stringify(data)}`);
   return data;
 }

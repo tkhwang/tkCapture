@@ -22,5 +22,6 @@ export async function searchKakaoBooks(params: KakaoBookSearchParams): Promise<K
       target: params.target, // title (제목), isbn (ISBN), publisher (출판사), person(인명)
     },
   });
+  console.log(`[+][searchKakaoBooks] response: ${JSON.stringify(data)}`);
   return data;
 }
