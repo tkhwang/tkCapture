@@ -64,7 +64,7 @@ export default function SearchBookScreen() {
       {/* TODO: it should be extracted to a component */}
       <ScrollView className="flex-1">
         {data?.items.map((book) => (
-          <View key={book.isbn} className="p-4 border-b border-gray-200">
+          <View key={`${provider}-${book.isbn}`} className="p-4 border-b border-gray-200">
             <View className="flex-row">
               {book.thumbnail && (
                 <View className="w-20 mr-4 h-28">
