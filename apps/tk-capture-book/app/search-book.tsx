@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, Text, TextInput, ActivityIndicator } from "react-native";
 import { useDebounce } from "use-debounce";
 
-import { SEARCH_DEBOUNCE_MS } from "@/consts/appConsts";
+import { SEARCH_DEBOUNCE_MS, SEARCH_PAGE_SIZE } from "@/consts/appConsts";
 import { BookSearchList } from "@/features/book-search/components/BookSearchList";
 import { useSearchBooks } from "@/features/book-search/hooks/useSearchBooks";
 
@@ -13,7 +13,7 @@ export default function SearchBookScreen() {
   const { data, isLoading, error } = useSearchBooks("naver", {
     query: debouncedSearchText,
     page: 1,
-    size: 20,
+    size: SEARCH_PAGE_SIZE,
     sort: "accuracy",
   });
 
