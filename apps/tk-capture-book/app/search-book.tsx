@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { View, Text, TextInput, ActivityIndicator, Image, ScrollView } from "react-native";
+import { View, Text, TextInput, ActivityIndicator } from "react-native";
 import { useDebounce } from "use-debounce";
 
+import { SEARCH_DEBOUNCE_MS } from "@/consts/appConsts";
 import { BookSearchList } from "@/features/book-search/components/BookSearchList";
 import { useSearchBooks } from "@/features/book-search/hooks/useSearchBooks";
 
 export default function SearchBookScreen() {
   const [searchText, setSearchText] = useState("");
-  const [debouncedSearchText] = useDebounce(searchText, 500);
+  const [debouncedSearchText] = useDebounce(searchText, SEARCH_DEBOUNCE_MS);
 
   const { data, isLoading, error } = useSearchBooks("naver", {
     query: debouncedSearchText,
