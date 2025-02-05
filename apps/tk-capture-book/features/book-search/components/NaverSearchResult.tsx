@@ -1,6 +1,6 @@
 import { Image, ScrollView, Text, View } from "react-native";
 
-import { NaverBookResponse } from "@/types/book/naver-book";
+import { NaverBookResponse } from "@/features/book-search/types/naver-book";
 
 interface NaverSearchResultProps {
   data: NaverBookResponse | undefined;

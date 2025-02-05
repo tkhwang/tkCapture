@@ -1,6 +1,6 @@
 import { Image, ScrollView, Text, View } from "react-native";
 
-import { KakaoBookResponse } from "@/types/book/kakao-book";
+import { KakaoBookResponse } from "@/features/book-search/types/kakao-book";
 
 interface KakaoSearchResultProps {
   data: KakaoBookResponse | undefined;

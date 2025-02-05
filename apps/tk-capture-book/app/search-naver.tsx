@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, Text, TextInput, ActivityIndicator, Image, ScrollView } from "react-native";
 import { useDebounce } from "use-debounce";
 
-import { useSearchNaverBooks } from "@/hooks/useSearchNaverBooks";
+import { useSearchNaverBooks } from "@/features/book-search/hooks/useSearchNaverBooks";
 
 export default function SearchNaverScreen() {
   const [searchText, setSearchText] = useState("");

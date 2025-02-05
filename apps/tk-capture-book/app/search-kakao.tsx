@@ -2,8 +2,8 @@ import { useState } from "react";
 import { View, Text, TextInput, ActivityIndicator } from "react-native";
 import { useDebounce } from "use-debounce";
 
-import { KakaoSearchResult } from "@/components/KakaoSearchResult";
-import { useSearchKakaoBooks } from "@/hooks/useSearchKakaoBooks";
+import { KakaoSearchResult } from "@/features/book-search/components/KakaoSearchResult";
+import { useSearchKakaoBooks } from "@/features/book-search/hooks/useSearchKakaoBooks";
 
 export default function SearchKakaoScreen() {
   const [searchText, setSearchText] = useState("");
