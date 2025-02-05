@@ -12,13 +12,15 @@ import {
 import { useDebounce } from "use-debounce";
 
 import { SEARCH_DEBOUNCE_MS, SEARCH_PAGE_SIZE } from "@/consts/appConsts";
+import { BookSearchProvider } from "@/features/book-search/factories/book-search-factory";
 import { useSearchBooks } from "@/features/book-search/hooks/useSearchBooks";
 
 export default function SearchBookScreen() {
   const [searchText, setSearchText] = useState("");
+  const [provider, setProvider] = useState<BookSearchProvider>("naver");
   const [debouncedSearchText] = useDebounce(searchText, SEARCH_DEBOUNCE_MS);
 
-  const { data, isLoading, error } = useSearchBooks("naver", {
+  const { data, isLoading, error } = useSearchBooks(provider, {
     query: debouncedSearchText,
     page: 1,
     size: SEARCH_PAGE_SIZE,
@@ -27,7 +29,7 @@ export default function SearchBookScreen() {
 
   return (
     <View className="flex-1 bg-white">
-      <View className="p-4">
+      <View className="p-4 space-y-3">
         <View className="relative flex-row items-center">
           <TextInput
             className="flex-1 p-2 pr-8 border border-gray-300 rounded-lg"
@@ -40,6 +42,37 @@ export default function SearchBookScreen() {
               <Ionicons name="close-circle" size={20} color="#9CA3AF" />
             </Pressable>
           )}
+        </View>
+
+        <View className="flex-row space-x-2">
+          <Pressable
+            className={`flex-1 p-2 rounded-lg border ${
+              provider === "naver" ? "bg-blue-500 border-blue-500" : "border-gray-300"
+            }`}
+            onPress={() => setProvider("naver")}
+          >
+            <Text
+              className={`text-center font-medium ${
+                provider === "naver" ? "text-white" : "text-gray-700"
+              }`}
+            >
+              네이버
+            </Text>
+          </Pressable>
+          <Pressable
+            className={`flex-1 p-2 rounded-lg border ${
+              provider === "kakao" ? "bg-yellow-500 border-yellow-500" : "border-gray-300"
+            }`}
+            onPress={() => setProvider("kakao")}
+          >
+            <Text
+              className={`text-center font-medium ${
+                provider === "kakao" ? "text-white" : "text-gray-700"
+              }`}
+            >
+              카카오
+            </Text>
+          </Pressable>
         </View>
       </View>
 
