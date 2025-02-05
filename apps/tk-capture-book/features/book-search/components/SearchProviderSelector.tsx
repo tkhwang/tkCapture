@@ -15,7 +15,7 @@ export function SearchProviderSelector({
     <View className="flex-row space-x-2">
       <Pressable
         className={`flex-1 p-2 rounded-lg border ${
-          provider === "naver" ? "bg-blue-500 border-blue-500" : "border-gray-300"
+          provider === "naver" ? "bg-[#03C75A] border-[#03C75A]" : "border-gray-300"
         }`}
         onPress={() => onProviderChange("naver")}
       >
@@ -29,13 +29,13 @@ export function SearchProviderSelector({
       </Pressable>
       <Pressable
         className={`flex-1 p-2 rounded-lg border ${
-          provider === "kakao" ? "bg-yellow-500 border-yellow-500" : "border-gray-300"
+          provider === "kakao" ? "bg-[#FEE500] border-[#FEE500]" : "border-gray-300"
         }`}
         onPress={() => onProviderChange("kakao")}
       >
         <Text
           className={`text-center font-medium ${
-            provider === "kakao" ? "text-white" : "text-gray-700"
+            provider === "kakao" ? "text-black" : "text-gray-700"
           }`}
         >
           카카오
