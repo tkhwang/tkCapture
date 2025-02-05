@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { searchKakaoBooks } from "@/api/search-kakao-books";
+import { searchKakaoBooks } from "@/features/book-search/kakao/api/search-kakao-books";
 import { KakaoBookSearchParams } from "@/types/book/kakao-book";
 
 export function useSearchKakaoBooks(params: KakaoBookSearchParams) {
