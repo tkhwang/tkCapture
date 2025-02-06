@@ -1,22 +1,19 @@
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  ActivityIndicator,
-  Image,
-  Pressable,
-  ScrollView,
-} from "react-native";
+import { View, Text, TextInput, ActivityIndicator, Pressable, ScrollView } from "react-native";
 import { useDebounce } from "use-debounce";
 
 import { SEARCH_DEBOUNCE_MS, SEARCH_PAGE_SIZE } from "@/consts/appConsts";
+import { BookSearchItemView } from "@/features/book-search/components/BookSearchItem";
 import { SearchProviderSelector } from "@/features/book-search/components/SearchProviderSelector";
 import { BookSearchProvider } from "@/features/book-search/factories/book-search-factory";
 import { useSearchBooks } from "@/features/book-search/hooks/useSearchBooks";
+import { BookSearchItem } from "@/features/book-search/types/book-search-interface";
 
 export default function SearchBookScreen() {
+  const router = useRouter();
+
   const [searchText, setSearchText] = useState("");
   const [provider, setProvider] = useState<BookSearchProvider>("naver");
   const [debouncedSearchText] = useDebounce(searchText, SEARCH_DEBOUNCE_MS);
@@ -27,6 +24,13 @@ export default function SearchBookScreen() {
     size: SEARCH_PAGE_SIZE,
     sort: "accuracy",
   });
+
+  const handleBookPress = (book: BookSearchItem) => {
+    router.push({
+      pathname: "/(stack)/book-detail",
+      params: { id: book.isbn },
+    });
+  };
 
   return (
     <View className="flex-1 bg-white">
@@ -64,32 +68,11 @@ export default function SearchBookScreen() {
       {/* TODO: it should be extracted to a component */}
       <ScrollView className="flex-1">
         {data?.items.map((book) => (
-          <View key={`${provider}-${book.isbn}`} className="p-4 border-b border-gray-200">
-            <View className="flex-row">
-              {book.thumbnail && (
-                <View className="w-20 mr-4 h-28">
-                  <Image
-                    source={{ uri: book.thumbnail }}
-                    className="w-full h-full rounded-md"
-                    resizeMode="cover"
-                  />
-                </View>
-              )}
-              <View className="flex-1">
-                <Text className="text-lg font-bold" numberOfLines={2}>
-                  {book.title}
-                </Text>
-                <Text className="mt-1 text-gray-600">{book.author}</Text>
-                <Text className="mt-1 text-gray-500">{book.publisher}</Text>
-                {/* <Text className="mt-1 text-gray-500">
-                  {book.discount ? `${book.discount}원` : "가격정보 없음"}
-                </Text> */}
-              </View>
-            </View>
-            <Text className="mt-2 text-gray-600" numberOfLines={2}>
-              {book.description}
-            </Text>
-          </View>
+          <BookSearchItemView
+            key={`${provider}-${book.isbn}`}
+            book={book}
+            onPress={handleBookPress}
+          />
         ))}
       </ScrollView>
     </View>

@@ -12,6 +12,7 @@ export default function AppLayout() {
     <QueryClientProvider client={queryClient}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="book-detail" options={{ headerShown: false }} />
       </Stack>
     </QueryClientProvider>
   );
