@@ -7,7 +7,7 @@ export default function HomeScreen() {
 
   return (
     <View className="items-center justify-center flex-1">
-      <Text className="text-xl font-bold">{t("home")}</Text>
+      <Text className="text-xl font-bold">{t("home.tabTitle")}</Text>
       <StatusBar style="auto" />
     </View>
   );

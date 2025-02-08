@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { View, Text } from "react-native";
 
-export default function ProfileScreen() {
+export default function SettingsScreen() {
   const { t } = useTranslation();
 
   return (

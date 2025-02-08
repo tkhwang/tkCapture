@@ -10,27 +10,34 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: "#0284c7",
         tabBarInactiveTintColor: "#64748b",
+        tabBarIconStyle: {
+          marginBottom: -4,
+        },
+        tabBarLabelStyle: {
+          marginTop: 4,
+          fontSize: 12,
+        },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: t("home"),
+          title: t("home.tabTitle"),
           tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="search-book"
         options={{
-          title: t("search"),
+          title: t("search.tabTitle"),
           tabBarIcon: ({ color, size }) => <Ionicons name="search" size={size} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="settings"
         options={{
-          title: t("profile"),
-          tabBarIcon: ({ color, size }) => <Ionicons name="person" size={size} color={color} />,
+          title: t("settings.tabTitle"),
+          tabBarIcon: ({ color, size }) => <Ionicons name="settings" size={size} color={color} />,
         }}
       />
     </Tabs>
