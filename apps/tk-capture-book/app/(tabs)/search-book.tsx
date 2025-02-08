@@ -64,15 +64,16 @@ export default function SearchBookScreen() {
       )}
 
       {/* 검색 결과 리스트 */}
-      {/* TODO: it should be extracted to a component */}
       <ScrollView className="flex-1">
-        {data?.items.map((book) => (
-          <BookSearchItemView
-            key={`${bookSearchProvider}-${book.isbn}`}
-            book={book}
-            onPress={handleBookPress}
-          />
-        ))}
+        <View className="flex-row flex-wrap">
+          {data?.items.map((book) => (
+            <BookSearchItemView
+              key={`${bookSearchProvider}-${book.isbn}`}
+              book={book}
+              onPress={handleBookPress}
+            />
+          ))}
+        </View>
       </ScrollView>
     </View>
   );
