@@ -29,7 +29,7 @@ export default function SearchBookScreen() {
   const handleBookPress = (book: BookSearchItem) => {
     router.push({
       pathname: "/(stack)/book-detail",
-      params: { id: book.isbn },
+      params: { book: JSON.stringify(book) },
     });
   };
 
