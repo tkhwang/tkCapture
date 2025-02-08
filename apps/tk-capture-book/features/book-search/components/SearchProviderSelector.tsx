@@ -1,6 +1,6 @@
 import { View, Text, Pressable } from "react-native";
 
-import { BookSearchProvider } from "@/features/book-search/factories/book-search-factory";
+import { BookSearchProvider } from "@/features/book-search/types/book-search-interface";
 
 interface SearchProviderSelectorProps {
   provider: BookSearchProvider;

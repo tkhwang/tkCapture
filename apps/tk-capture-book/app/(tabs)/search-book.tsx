@@ -1,24 +1,25 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { useAtomValue } from "jotai";
 import { useState } from "react";
 import { View, Text, TextInput, ActivityIndicator, Pressable, ScrollView } from "react-native";
 import { useDebounce } from "use-debounce";
 
 import { SEARCH_DEBOUNCE_MS, SEARCH_PAGE_SIZE } from "@/consts/appConsts";
 import { BookSearchItemView } from "@/features/book-search/components/BookSearchItem";
-import { SearchProviderSelector } from "@/features/book-search/components/SearchProviderSelector";
-import { BookSearchProvider } from "@/features/book-search/factories/book-search-factory";
 import { useSearchBooks } from "@/features/book-search/hooks/useSearchBooks";
+import { BookSearchProviderAtom } from "@/features/book-search/states/book";
 import { BookSearchItem } from "@/features/book-search/types/book-search-interface";
 
 export default function SearchBookScreen() {
   const router = useRouter();
 
   const [searchText, setSearchText] = useState("");
-  const [provider, setProvider] = useState<BookSearchProvider>("naver");
+
+  const bookSearchProvider = useAtomValue(BookSearchProviderAtom);
   const [debouncedSearchText] = useDebounce(searchText, SEARCH_DEBOUNCE_MS);
 
-  const { data, isLoading, error } = useSearchBooks(provider, {
+  const { data, isLoading, error } = useSearchBooks({
     query: debouncedSearchText,
     page: 1,
     size: SEARCH_PAGE_SIZE,
@@ -67,7 +68,7 @@ export default function SearchBookScreen() {
       <ScrollView className="flex-1">
         {data?.items.map((book) => (
           <BookSearchItemView
-            key={`${provider}-${book.isbn}`}
+            key={`${bookSearchProvider}-${book.isbn}`}
             book={book}
             onPress={handleBookPress}
           />
