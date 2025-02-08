@@ -1,7 +1,16 @@
 export const en = {
   translation: {
-    home: "Home",
-    search: "Search",
-    profile: "Profile",
+    home: {
+      tabTitle: "Home",
+    },
+    search: {
+      tabTitle: "Search",
+    },
+    settings: {
+      tabTitle: "Settings",
+      bookSearch: {
+        provider: "Book Search Provider",
+      },
+    },
   },
 };

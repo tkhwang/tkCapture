@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
 
 import { searchBooks } from "@/features/book-search/api/search-books";
-import { BookSearchProvider } from "@/features/book-search/factories/book-search-factory";
+import { BookSearchProviderAtom } from "@/features/book-search/states/book";
 import { BookSearchParams } from "@/features/book-search/types/book-search-interface";
 
-export function useSearchBooks(provider: BookSearchProvider, params: BookSearchParams) {
+export function useSearchBooks(params: BookSearchParams) {
+  const provider = useAtomValue(BookSearchProviderAtom);
+
   return useQuery({
     queryKey: [`${provider}-api`, "books", params],
     queryFn: () => searchBooks(provider, params),

@@ -1,7 +1,13 @@
 export const ko = {
   translation: {
-    home: "홈",
-    search: "검색",
-    profile: "프로필",
+    home: {
+      tabTitle: "홈",
+    },
+    search: {
+      tabTitle: "검색",
+    },
+    settings: {
+      bookSearchProvider: "도서 검색 제공자",
+    },
   },
 };
