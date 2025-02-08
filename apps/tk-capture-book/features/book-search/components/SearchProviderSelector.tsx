@@ -12,7 +12,7 @@ export function SearchProviderSelector({
   onProviderChange,
 }: SearchProviderSelectorProps) {
   return (
-    <View className="flex-row space-x-2">
+    <View className="flex-row gap-4 space-x-2">
       <Pressable
         className={`flex-1 p-2 rounded-lg border ${
           provider === "naver" ? "bg-[#03C75A] border-[#03C75A]" : "border-gray-300"
