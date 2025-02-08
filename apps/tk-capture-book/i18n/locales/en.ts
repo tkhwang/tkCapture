@@ -8,6 +8,9 @@ export const en = {
     },
     settings: {
       tabTitle: "Settings",
+      bookSearch: {
+        provider: "Book Search Provider",
+      },
     },
   },
 };

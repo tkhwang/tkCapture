@@ -48,8 +48,6 @@ export default function SearchBookScreen() {
             </Pressable>
           )}
         </View>
-
-        <SearchProviderSelector provider={provider} onProviderChange={setProvider} />
       </View>
 
       {isLoading && (

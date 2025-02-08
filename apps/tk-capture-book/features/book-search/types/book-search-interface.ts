@@ -1,3 +1,5 @@
+export type BookSearchProvider = "naver" | "kakao";
+
 export interface BookSearchItem {
   title: string;
   link: string;

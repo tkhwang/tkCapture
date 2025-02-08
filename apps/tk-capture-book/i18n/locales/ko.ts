@@ -7,7 +7,7 @@ export const ko = {
       tabTitle: "검색",
     },
     settings: {
-      tabTitle: "설정",
+      bookSearchProvider: "도서 검색 제공자",
     },
   },
 };
