@@ -3,7 +3,15 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, Camera, MessageSquare, BookMarked } from "lucide-react";
+import {
+  BookOpen,
+  Camera,
+  MessageSquare,
+  BookMarked,
+  Share2,
+  Instagram,
+  Twitter,
+} from "lucide-react";
 import { FeatureCard } from "@/components/feature-card";
 
 export default function Home() {
@@ -79,99 +87,145 @@ export default function Home() {
             </h2>
 
             <div className="space-y-24">
-              {/* 시나리오 1: 책 문구 캡처 */}
               <div className="flex flex-col-reverse items-center gap-8 md:flex-row">
                 <div className="flex-1 space-y-4">
                   <h3 className="text-2xl font-semibold">
-                    마음에 드는 문구를 발견하는 순간
+                    나만의 독서 기록을 공유하기
                   </h3>
                   <p className="text-lg text-muted-foreground">
-                    책을 읽다가 마음에 드는 문구를 발견하셨나요? 스마트폰으로
-                    간단히 촬영하세요. AI가 자동으로 텍스트를 인식하고 책 정보를
-                    찾아드립니다.
+                    마음에 드는 문구를 다양한 디자인의 프레임으로 꾸며보세요. 책
+                    표지, 작가 정보, 출판사 등의 메타 정보를 자동으로 포함하여
+                    더욱 풍성한 독서 기록을 만들 수 있습니다.
                   </p>
-                  <ul className="space-y-2 text-muted-foreground">
-                    <li className="flex items-center gap-2">
-                      <span className="p-1 text-primary">•</span>
-                      정확한 OCR 인식으로 텍스트 추출
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="p-1 text-primary">•</span>책 제목, 저자
-                      자동 식별
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="p-1 text-primary">•</span>
-                      다양한 프레임으로 이미지 꾸미기
-                    </li>
-                  </ul>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    <div className="space-y-2">
+                      <h4 className="font-medium">맞춤형 프레임 템플릿</h4>
+                      <ul className="space-y-2 text-muted-foreground">
+                        <li className="flex items-center gap-2">
+                          <span className="p-1 text-primary">•</span>책 표지와
+                          어울리는 컬러 테마
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="p-1 text-primary">•</span>
+                          장르별 최적화된 디자인
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="p-1 text-primary">•</span>
+                          계절/시간대별 분위기 템플릿
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="space-y-2">
+                      <h4 className="font-medium">풍부한 메타 정보</h4>
+                      <ul className="space-y-2 text-muted-foreground">
+                        <li className="flex items-center gap-2">
+                          <span className="p-1 text-primary">•</span>책 표지
+                          이미지 자동 추가
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="p-1 text-primary">•</span>
+                          작가/역자 정보 포함
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="p-1 text-primary">•</span>
+                          출판사 및 ISBN 정보
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="pt-6">
+                    <h4 className="mb-4 font-medium">간편한 공유 옵션</h4>
+                    <div className="flex gap-4">
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <Instagram className="w-5 h-5" />
+                        <span>인스타그램 스토리</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <Instagram className="w-5 h-5" />
+                        <span>인스타그램 포스트</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <Twitter className="w-5 h-5" />
+                        <span>트위터</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  {/* 이미지는 실제 앱 스크린샷으로 교체 필요 */}
-                  <div className="aspect-[4/3] bg-muted rounded-lg"></div>
+                <div className="relative flex-1 p-8">
+                  <div className="relative w-full overflow-hidden aspect-square bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="relative w-24 h-24">
+                        <div className="absolute inset-0 transform rotate-45 bg-primary/20 rounded-xl" />
+                        <div className="absolute transform inset-2 bg-primary/30 rounded-xl rotate-12" />
+                        <div className="absolute flex items-center justify-center text-white inset-4 bg-primary rounded-xl">
+                          <Share2 className="w-8 h-8" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* 시나리오 2: AI 분석 */}
-              <div className="flex flex-col items-center gap-8 md:flex-row">
-                <div className="flex-1">
-                  {/* 이미지는 실제 앱 스크린샷으로 교체 필요 */}
-                  <div className="aspect-[4/3] bg-muted rounded-lg"></div>
-                </div>
-                <div className="flex-1 space-y-4">
-                  <h3 className="text-2xl font-semibold">
-                    AI와 함께 더 깊이 있는 독서
-                  </h3>
-                  <p className="text-lg text-muted-foreground">
-                    캡처한 문구에 대해 AI가 다양한 관점에서 분석을 제공합니다.
-                    작가의 의도, 문학적 기법, 역사적 맥락까지 새로운 시각으로
-                    책을 이해해보세요.
-                  </p>
-                  <ul className="space-y-2 text-muted-foreground">
-                    <li className="flex items-center gap-2">
-                      <span className="p-1 text-primary">•</span>
-                      문맥 기반 심층 분석
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="p-1 text-primary">•</span>
-                      관련 토론 주제 제안
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="p-1 text-primary">•</span>
-                      유사 도서 추천
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* 시나리오 3: 독서 커뮤니티 */}
               <div className="flex flex-col-reverse items-center gap-8 md:flex-row">
                 <div className="flex-1 space-y-4">
                   <h3 className="text-2xl font-semibold">
-                    나만의 독서 기록 공유하기
+                    책 속 문구를 찍으면 AI가 분석해드려요
                   </h3>
                   <p className="text-lg text-muted-foreground">
-                    마음에 드는 문구와 AI의 분석을 소셜 미디어에 공유하세요.
-                    다른 독자들과 생각을 나누고 새로운 관점을 발견할 수
+                    마음에 드는 문구를 발견하면 촬영하세요. AI가 자동으로
+                    텍스트를 인식하고 깊이 있는 분석을 제공합니다. 작가의
+                    의도부터 역사적 맥락까지, 새로운 관점으로 책을 이해할 수
                     있습니다.
                   </p>
-                  <ul className="space-y-2 text-muted-foreground">
-                    <li className="flex items-center gap-2">
-                      <span className="p-1 text-primary">•</span>
-                      아름다운 이미지 템플릿
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="p-1 text-primary">•</span>
-                      간편한 소셜 미디어 공유
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="p-1 text-primary">•</span>
-                      독서 기록 타임라인
-                    </li>
-                  </ul>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    <div className="space-y-2">
+                      <h4 className="font-medium">스마트한 텍스트 인식</h4>
+                      <ul className="space-y-2 text-muted-foreground">
+                        <li className="flex items-center gap-2">
+                          <span className="p-1 text-primary">•</span>
+                          정확한 OCR 텍스트 추출
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="p-1 text-primary">•</span>책 제목,
+                          저자 자동 식별
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="p-1 text-primary">•</span>
+                          페이지, 챕터 정보 저장
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="space-y-2">
+                      <h4 className="font-medium">AI 기반 심층 분석</h4>
+                      <ul className="space-y-2 text-muted-foreground">
+                        <li className="flex items-center gap-2">
+                          <span className="p-1 text-primary">•</span>
+                          문맥 기반 의미 분석
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="p-1 text-primary">•</span>
+                          문학적 기법 해설
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="p-1 text-primary">•</span>
+                          관련 도서 추천
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  {/* 이미지는 실제 앱 스크린샷으로 교체 필요 */}
-                  <div className="aspect-[4/3] bg-muted rounded-lg"></div>
+                <div className="relative flex-1 p-8">
+                  <div className="relative w-full overflow-hidden aspect-square bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="relative w-24 h-24">
+                        <div className="absolute inset-0 transform rotate-45 bg-primary/20 rounded-xl" />
+                        <div className="absolute transform inset-2 bg-primary/30 rounded-xl rotate-12" />
+                        <div className="absolute flex items-center justify-center text-white inset-4 bg-primary rounded-xl">
+                          <MessageSquare className="w-8 h-8" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
