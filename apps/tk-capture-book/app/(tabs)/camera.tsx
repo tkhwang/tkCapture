@@ -25,5 +25,24 @@ export default function CameraScreen() {
     setFacing((current) => (current === "back" ? "front" : "back"));
   };
 
-  return <CameraView facing={facing} onFlipCamera={handleFlipCamera} />;
+  const handlePictureTaken = (uri: string) => {
+    console.log("Picture taken:", uri);
+    // TODO: 여기서 촬영된 사진으로 원하는 작업 수행
+    // 예: 사진 저장, 서버 업로드, 이미지 분석 등
+  };
+
+  const handleBarcodeScanned = (data: string) => {
+    console.log("Barcode scanned:", data);
+    // TODO: 스캔된 ISBN으로 원하는 작업 수행
+    // 예: 책 정보 검색, 데이터베이스 저장 등
+  };
+
+  return (
+    <CameraView
+      facing={facing}
+      onFlipCamera={handleFlipCamera}
+      onPictureTaken={handlePictureTaken}
+      onBarcodeScanned={handleBarcodeScanned}
+    />
+  );
 }
