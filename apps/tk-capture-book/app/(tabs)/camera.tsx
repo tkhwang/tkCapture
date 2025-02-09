@@ -3,6 +3,7 @@ import * as MediaLibrary from "expo-media-library";
 import { useEffect, useState } from "react";
 import { Alert, Button, Text, View } from "react-native";
 
+import { APP_NAME } from "@/consts/appConsts";
 import { CameraView } from "@/features/camera/components/CameraView";
 
 export default function CameraScreen() {
@@ -50,14 +51,14 @@ export default function CameraScreen() {
 
       // tkCaptureBook 앨범이 있는지 확인하고 없으면 생성
       const albums = await MediaLibrary.getAlbumsAsync();
-      const tkCaptureBookAlbum = albums.find((album) => album.title === "tkCaptureBook");
+      const tkCaptureBookAlbum = albums.find((album) => album.title === APP_NAME);
 
       if (tkCaptureBookAlbum) {
         // 기존 앨범에 사진 추가
         await MediaLibrary.addAssetsToAlbumAsync([asset], tkCaptureBookAlbum.id, false);
       } else {
         // 새 앨범 생성 후 사진 추가
-        await MediaLibrary.createAlbumAsync("tkCaptureBook", asset, false);
+        await MediaLibrary.createAlbumAsync(APP_NAME, asset, false);
       }
 
       Alert.alert("Success", "Photo saved to tkCaptureBook album");
