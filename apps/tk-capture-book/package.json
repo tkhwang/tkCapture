@@ -31,7 +31,8 @@
     "react-native-screens": "~4.4.0",
     "tailwindcss": "^4.0.3",
     "use-debounce": "^10.0.4",
-    "expo-camera": "~16.0.15"
+    "expo-camera": "~16.0.15",
+    "expo-media-library": "~17.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
