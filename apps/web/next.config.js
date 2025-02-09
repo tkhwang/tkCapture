@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
-  transpilePackages: [], // 모노레포에서 공유하는 패키지가 있다면 여기에 추가
+  experimental: {
+    externalDir: true // 모노레포에서 외부 의존성을 허용
+  },
   reactStrictMode: true,
 };
 
