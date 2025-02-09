@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "tk-capture-book",
+    "name": "tkCaptureBook",
     "slug": "tk-capture-book",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -31,9 +31,6 @@
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": [
-      "expo-router"
-    ],
     "extra": {
       "router": {
         "origin": false
@@ -47,6 +44,17 @@
     },
     "updates": {
       "url": "https://u.expo.dev/14cbf632-9de1-42f7-835d-2738b2aa946a"
-    }
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ]
+    ]
   }
 }
