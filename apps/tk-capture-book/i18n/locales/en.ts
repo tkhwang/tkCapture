@@ -6,6 +6,9 @@ export const en = {
     search: {
       tabTitle: "Search",
     },
+    camera: {
+      tabTitle: "Camera",
+    },
     settings: {
       tabTitle: "Settings",
       bookSearch: {
