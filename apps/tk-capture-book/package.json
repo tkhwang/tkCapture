@@ -1,5 +1,5 @@
 {
-  "name": "tk-capture-book",
+  "name": "@tkCapture/tk-capture-book",
   "version": "1.0.0",
   "main": "expo-router/entry",
   "scripts": {
@@ -15,8 +15,10 @@
     "@tanstack/react-query": "^5.66.0",
     "axios": "^1.7.9",
     "expo": "~52.0.29",
+    "expo-camera": "~16.0.15",
     "expo-constants": "~17.0.5",
     "expo-linking": "~7.0.5",
+    "expo-media-library": "~17.0.5",
     "expo-router": "~4.0.17",
     "expo-status-bar": "~2.0.1",
     "expo-updates": "~0.26.15",
@@ -29,10 +31,8 @@
     "react-native-reanimated": "^3.16.7",
     "react-native-safe-area-context": "4.12.0",
     "react-native-screens": "~4.4.0",
-    "tailwindcss": "^4.0.3",
-    "use-debounce": "^10.0.4",
-    "expo-camera": "~16.0.15",
-    "expo-media-library": "~17.0.5"
+    "tailwindcss": "3.4.7",
+    "use-debounce": "^10.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
