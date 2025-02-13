@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import { CameraType, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import { useEffect, useState } from "react";
@@ -62,7 +63,7 @@ export default function CameraScreen() {
         setRecognizedText(ocrResult.text);
 
         if (ocrResult.text) {
-          Alert.alert("텍스트 추출 완료", ocrResult.text);
+          // Alert.alert("텍스트 추출 완료", ocrResult.text);
         } else {
           Alert.alert("알림", "텍스트가 발견되지 않았습니다.");
         }
@@ -104,10 +105,11 @@ export default function CameraScreen() {
                 <Text className="text-white">{recognizedText}</Text>
               </View>
               <TouchableOpacity
-                className="p-3 border-t border-white/20"
+                className="flex-row items-center justify-center p-4 space-x-2 border-t border-white/20 bg-black/80 active:bg-white/10"
                 onPress={handleTextRemoved}
               >
-                <Text className="text-center text-white">텍스트 지우기</Text>
+                <Ionicons name="trash-outline" size={20} color="white" />
+                <Text className="text-white font-bold">텍스트 지우기</Text>
               </TouchableOpacity>
             </View>
           ) : null}
