@@ -3,13 +3,16 @@ import * as MediaLibrary from "expo-media-library";
 import { useEffect, useState } from "react";
 import { Alert, Button, Text, View } from "react-native";
 
-import { APP_NAME } from "@/consts/appConsts";
+import { GOOGLE_CLOUD_API_KEY } from "@/consts/appConsts";
 import { CameraView } from "@/features/camera/components/CameraView";
+import { performOCR } from "@/features/camera/utils/googleVision";
 
 export default function CameraScreen() {
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
   const [mediaPermission, requestMediaPermission] = MediaLibrary.usePermissions();
+  const [recognizedText, setRecognizedText] = useState<string>("");
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     // 미디어 라이브러리 권한 요청
@@ -24,7 +27,7 @@ export default function CameraScreen() {
 
   if (!permission.granted) {
     return (
-      <View className="justify-center flex-1">
+      <View className="flex-1 justify-center">
         <Text className="pb-3 text-center">We need your permission to show the camera</Text>
         <Button onPress={requestPermission} title="grant permission" />
       </View>
@@ -33,7 +36,7 @@ export default function CameraScreen() {
 
   if (!mediaPermission.granted) {
     return (
-      <View className="justify-center flex-1">
+      <View className="flex-1 justify-center">
         <Text className="pb-3 text-center">We need your permission to save photos</Text>
         <Button onPress={requestMediaPermission} title="grant permission" />
       </View>
@@ -46,25 +49,32 @@ export default function CameraScreen() {
 
   const handlePictureTaken = async (uri: string) => {
     try {
-      // 먼저 사진을 미디어 라이브러리에 저장
+      setIsProcessing(true);
+
+      // 사진을 미디어 라이브러리에 저장
       const asset = await MediaLibrary.createAssetAsync(uri);
+      console.log("Picture saved to:", asset.uri);
 
-      // tkCaptureBook 앨범이 있는지 확인하고 없으면 생성
-      const albums = await MediaLibrary.getAlbumsAsync();
-      const tkCaptureBookAlbum = albums.find((album) => album.title === APP_NAME);
+      // Google Cloud Vision API로 텍스트 추출
+      try {
+        const ocrResult = await performOCR(uri, GOOGLE_CLOUD_API_KEY!);
+        console.log("[+] OCR Result:", ocrResult);
+        setRecognizedText(ocrResult.text);
 
-      if (tkCaptureBookAlbum) {
-        // 기존 앨범에 사진 추가
-        await MediaLibrary.addAssetsToAlbumAsync([asset], tkCaptureBookAlbum.id, false);
-      } else {
-        // 새 앨범 생성 후 사진 추가
-        await MediaLibrary.createAlbumAsync(APP_NAME, asset, false);
+        if (ocrResult.text) {
+          Alert.alert("텍스트 추출 완료", ocrResult.text);
+        } else {
+          Alert.alert("알림", "텍스트가 발견되지 않았습니다.");
+        }
+      } catch (error) {
+        console.error("OCR Error:", error);
+        Alert.alert("OCR 오류", "텍스트 추출 중 오류가 발생했습니다.");
       }
-
-      Alert.alert("Success", "Photo saved to tkCaptureBook album");
     } catch (error) {
-      console.error("Failed to save photo:", error);
-      Alert.alert("Error", "Failed to save photo");
+      console.error("Error saving picture:", error);
+      Alert.alert("오류", "사진 저장 중 오류가 발생했습니다.");
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -75,13 +85,32 @@ export default function CameraScreen() {
   };
 
   return (
-    <View className="justify-center flex-1">
-      <CameraView
-        facing={facing}
-        onFlipCamera={handleFlipCamera}
-        onPictureTaken={handlePictureTaken}
-        onBarcodeScanned={handleBarcodeScanned}
-      />
+    <View className="flex-1">
+      {permission?.granted ? (
+        <>
+          <CameraView
+            facing={facing}
+            onFlipCamera={handleFlipCamera}
+            onPictureTaken={handlePictureTaken}
+            onBarcodeScanned={handleBarcodeScanned}
+          />
+          {recognizedText ? (
+            <View className="absolute right-0 bottom-0 left-0 p-4 bg-black/50">
+              <Text className="text-white">{recognizedText}</Text>
+            </View>
+          ) : null}
+          {isProcessing && (
+            <View className="absolute inset-0 justify-center items-center bg-black/30">
+              <Text className="text-white">처리 중...</Text>
+            </View>
+          )}
+        </>
+      ) : (
+        <View className="flex-1 justify-center">
+          <Text className="pb-3 text-center">카메라 권한이 필요합니다</Text>
+          <Button onPress={requestPermission} title="권한 허용" />
+        </View>
+      )}
     </View>
   );
 }
