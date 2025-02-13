@@ -1,7 +1,7 @@
 import { CameraType, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import { useEffect, useState } from "react";
-import { Alert, Button, Text, View } from "react-native";
+import { Alert, Button, Text, TouchableOpacity, View } from "react-native";
 
 import { GOOGLE_CLOUD_API_KEY } from "@/consts/appConsts";
 import { CameraView } from "@/features/camera/components/CameraView";
@@ -84,6 +84,10 @@ export default function CameraScreen() {
     // 예: 책 정보 검색, 데이터베이스 저장 등
   };
 
+  const handleTextRemoved = () => {
+    setRecognizedText("");
+  };
+
   return (
     <View className="flex-1">
       {permission?.granted ? (
@@ -95,8 +99,16 @@ export default function CameraScreen() {
             onBarcodeScanned={handleBarcodeScanned}
           />
           {recognizedText ? (
-            <View className="absolute right-0 bottom-0 left-0 p-4 bg-black/50">
-              <Text className="text-white">{recognizedText}</Text>
+            <View className="absolute right-0 bottom-0 left-0 bg-black/50">
+              <View className="p-4">
+                <Text className="text-white">{recognizedText}</Text>
+              </View>
+              <TouchableOpacity
+                className="p-3 border-t border-white/20"
+                onPress={handleTextRemoved}
+              >
+                <Text className="text-center text-white">텍스트 지우기</Text>
+              </TouchableOpacity>
             </View>
           ) : null}
           {isProcessing && (
