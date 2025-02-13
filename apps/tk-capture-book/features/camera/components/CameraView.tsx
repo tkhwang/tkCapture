@@ -1,12 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import { CameraView as ExpoCameraView, CameraType } from "expo-camera";
 import { useEffect, useRef } from "react";
-import { StyleSheet, TouchableOpacity, View, Image } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Alert } from "react-native";
 
 interface CameraViewProps {
   facing: CameraType;
   onFlipCamera: () => void;
-  onPictureTaken?: (uri: string) => void;
+  onPictureTaken: (uri: string) => void;
   onBarcodeScanned?: (data: string) => void;
 }
 
@@ -41,11 +41,13 @@ export function CameraView({
         quality: 1,
         skipProcessing: true,
       });
+
       if (photo && photo.uri) {
-        onPictureTaken?.(photo.uri);
+        onPictureTaken(photo.uri);
       }
     } catch (error) {
       console.error("Failed to take picture:", error);
+      Alert.alert("오류", "사진 촬영 중 오류가 발생했습니다.");
     }
   };
 
@@ -55,29 +57,22 @@ export function CameraView({
       <ExpoCameraView ref={cameraRef} facing={facing} style={styles.camera}>
         <View className="flex-1">
           <TouchableOpacity
-            className="absolute items-center justify-center w-12 h-12 rounded-full bottom-8 right-8 bg-black/20"
+            className="absolute right-8 bottom-8 justify-center items-center w-12 h-12 rounded-full bg-black/20"
             onPress={onFlipCamera}
           >
             <Ionicons name="sync-outline" size={28} color="white" />
           </TouchableOpacity>
 
-          <View className="absolute left-0 right-0 items-center bottom-8">
+          <View className="absolute right-0 left-0 bottom-8 items-center">
             <TouchableOpacity
-              className="items-center justify-center w-16 h-16 bg-white rounded-full"
+              className="justify-center items-center w-16 h-16 bg-white rounded-full"
               onPress={takePicture}
             >
-              <View className="border-4 rounded-full w-14 h-14 border-sky-600" />
+              <View className="w-14 h-14 rounded-full border-4 border-sky-600" />
             </TouchableOpacity>
           </View>
         </View>
       </ExpoCameraView>
-      <View className="absolute inset-0 pointer-events-none">
-        <Image
-          source={require("../../../assets/frames/frame.png")}
-          className="w-full h-full"
-          resizeMode="contain"
-        />
-      </View>
     </View>
   );
 }

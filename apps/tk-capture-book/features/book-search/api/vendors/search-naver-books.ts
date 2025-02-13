@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import { NAVER_CLIENT_ID, NAVER_CLIENT_SECRET } from "@/consts/appConsts";
 import { NaverBookResponse, NaverBookSearchParams } from "@/features/book-search/types/naver-book";
 
 const NAVER_API_URL = "https://openapi.naver.com/v1/search/book.json";
@@ -8,8 +9,8 @@ const NAVER_API_URL = "https://openapi.naver.com/v1/search/book.json";
 const naverApiClient = axios.create({
   baseURL: NAVER_API_URL,
   headers: {
-    "X-Naver-Client-Id": process.env.EXPO_PUBLIC_NAVER_CLIENT_ID!,
-    "X-Naver-Client-Secret": process.env.EXPO_PUBLIC_NAVER_CLIENT_SECRET!,
+    "X-Naver-Client-Id": NAVER_CLIENT_ID!,
+    "X-Naver-Client-Secret": NAVER_CLIENT_SECRET!,
   },
 });
 

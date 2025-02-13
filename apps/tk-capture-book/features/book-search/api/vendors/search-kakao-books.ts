@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import { KAKAO_REST_API_KEY } from "@/consts/appConsts";
 import { KakaoBookResponse, KakaoBookSearchParams } from "@/features/book-search/types/kakao-book";
 
 const KAKAO_API_URL = "https://dapi.kakao.com/v3/search/book";
@@ -8,7 +9,7 @@ const KAKAO_API_URL = "https://dapi.kakao.com/v3/search/book";
 const kakaoApiClient = axios.create({
   baseURL: KAKAO_API_URL,
   headers: {
-    Authorization: `KakaoAK ${process.env.EXPO_PUBLIC_KAKAO_REST_API_KEY!}`,
+    Authorization: `KakaoAK ${KAKAO_REST_API_KEY!}`,
   },
 });
 
