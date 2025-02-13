@@ -39,3 +39,5 @@ if (!GOOGLE_CLOUD_API_KEY) {
  */
 export const SEARCH_DEBOUNCE_MS = 500;
 export const SEARCH_PAGE_SIZE = 20;
+
+export const GOOGLE_CLOUD_VISION_API_URL = "https://vision.googleapis.com/v1/images:annotate";
