@@ -34,14 +34,6 @@ function ProtectedLayout() {
     >
       <Stack.Screen name="(public)" />
       <Stack.Screen name="(auth)" />
-      <Stack.Screen
-        name="(stack)/book-detail"
-        options={{
-          headerBackTitle: "",
-          headerTitle: "Book Detail",
-          headerShown: true,
-        }}
-      />
     </Stack>
   );
 }
