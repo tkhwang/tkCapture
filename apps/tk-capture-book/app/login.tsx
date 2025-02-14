@@ -1,40 +1,72 @@
-import { useRouter } from "expo-router";
-import { useState } from "react";
-import { View, TextInput, TouchableOpacity, StyleSheet, Text } from "react-native";
-
-import { useAuth } from "@/providers/auth-provider";
+import { AntDesign } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
 
 export default function LoginScreen() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const { login } = useAuth();
-  const router = useRouter();
+  const handleGoogleLogin = () => {
+    // Google 로그인 로직
+    console.log("Google login pressed");
+  };
 
-  const handleLogin = () => {
-    login(username, password);
-    router.replace("/(tabs)");
+  const handleAppleLogin = () => {
+    // Apple 로그인 로직
+    console.log("Apple login pressed");
+  };
+
+  const handleEmailLogin = () => {
+    // 이메일 로그인 로직
+    console.log("Email login pressed");
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>tkCapture</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+      <ImageBackground
+        source={{
+          uri: "https://api.a0.dev/assets/image?text=abstract%20gradient%20background%20with%20modern%20design&aspect=9:16",
+        }}
+        style={styles.backgroundImage}
+      >
+        <LinearGradient colors={["rgba(0,0,0,0.1)", "rgba(0,0,0,0.8)"]} style={styles.gradient}>
+          <View style={styles.content}>
+            <Text style={styles.title}>환영합니다</Text>
+            <Text style={styles.subtitle}>계정에 로그인하세요</Text>
+
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[styles.socialButton, styles.googleButton]}
+                onPress={handleGoogleLogin}
+              >
+                <AntDesign name="google" size={24} color="#EA4335" />
+                <Text style={styles.buttonText}>Google로 계속하기</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.socialButton, styles.appleButton]}
+                onPress={handleAppleLogin}
+              >
+                <AntDesign name="apple1" size={24} color="#000" />
+                <Text style={styles.buttonText}>Apple로 계속하기</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.socialButton, styles.emailButton]}
+                onPress={handleEmailLogin}
+              >
+                <AntDesign name="mail" size={24} color="#fff" />
+                <Text style={[styles.buttonText, styles.emailButtonText]}>이메일로 계속하기</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.footer}>
+              <Text style={styles.footerText}>계정이 없으신가요?</Text>
+              <TouchableOpacity>
+                <Text style={styles.signupText}>회원가입</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </LinearGradient>
+      </ImageBackground>
     </View>
   );
 }
@@ -42,34 +74,74 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+  },
+  gradient: {
+    flex: 1,
+    justifyContent: "flex-end",
     padding: 20,
-    backgroundColor: "#fff",
+  },
+  content: {
+    marginBottom: 50,
   },
   title: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: "bold",
-    textAlign: "center",
+    color: "#fff",
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 18,
+    color: "#fff",
     marginBottom: 40,
+    opacity: 0.8,
   },
-  input: {
-    height: 50,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
-    marginBottom: 15,
-    paddingHorizontal: 15,
-    backgroundColor: "#f9f9f9",
+  buttonContainer: {
+    gap: 16,
   },
-  button: {
-    backgroundColor: "#007AFF",
-    padding: 15,
-    borderRadius: 8,
+  socialButton: {
+    flexDirection: "row",
     alignItems: "center",
+    padding: 16,
+    borderRadius: 12,
+    gap: 12,
+  },
+  googleButton: {
+    backgroundColor: "#fff",
+  },
+  appleButton: {
+    backgroundColor: "#fff",
+  },
+  emailButton: {
+    backgroundColor: "#007AFF",
   },
   buttonText: {
-    color: "#fff",
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "600",
+    color: "#000",
+    flex: 1,
+    textAlign: "center",
+  },
+  emailButtonText: {
+    color: "#fff",
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 24,
+    gap: 8,
+  },
+  footerText: {
+    color: "#fff",
+    fontSize: 14,
+  },
+  signupText: {
+    color: "#007AFF",
+    fontSize: 14,
+    fontWeight: "600",
   },
 });
