@@ -2,6 +2,12 @@
 
 ## [0] Common
 
+- development tool with AI
+
+  - cursor
+  - windsurf
+  - [a0.dev](https://a0.dev/)
+
 - backend
   - nest.js
   - supabase
@@ -13,20 +19,22 @@
 - app
   - react native expo
   - supabase
+  - jotai
   - tailwind css
   - shadcn/ui
-  - jotai
 
 ## EAS Build
 
 ### iOS
 
 ```bash
-eas build --platform ios --profile production
+> build:ios
+# eas build --platform ios --profile production
 ```
 
 ### Android
 
 ```bash
-eas build --platform android --profile preview
+> build:android
+# eas build --platform android --profile preview
 ```
