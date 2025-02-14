@@ -3,6 +3,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
 
+import { APP_NAME } from "@/consts/appConsts";
 import { useAuth } from "@/providers/auth-provider";
 
 export default function LoginScreen() {
@@ -35,6 +36,7 @@ export default function LoginScreen() {
         style={styles.backgroundImage}
       >
         <LinearGradient colors={["rgba(0,0,0,0.1)", "rgba(0,0,0,0.8)"]} style={styles.gradient}>
+          <Text style={styles.appName}>{APP_NAME}</Text>
           <View style={styles.content}>
             <Text style={styles.title}>환영합니다</Text>
             <Text style={styles.subtitle}>계정에 로그인하세요</Text>
@@ -79,6 +81,20 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
+  appName: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#fff",
+    textAlign: "center",
+    position: "absolute",
+    top: 100,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 5,
+  },
   container: {
     flex: 1,
   },
@@ -92,6 +108,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   content: {
+    marginTop: 60,
     marginBottom: 50,
   },
   title: {
