@@ -15,21 +15,25 @@ function ProtectedLayout() {
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    const inLoginScreen = segments[0] === "login";
+    const inPublicGroup = segments[0] === "(public)";
 
-    if (!isAuthenticated && !inLoginScreen) {
-      // 인증되지 않은 상태에서 login 화면이 아니면 login으로 이동
-      router.replace("/login");
-    } else if (isAuthenticated && inLoginScreen) {
-      // 인증된 상태에서 login 화면이면 tabs로 이동
-      router.replace("/(tabs)");
+    if (!isAuthenticated && !inPublicGroup) {
+      // 인증되지 않은 상태에서 public 그룹이 아니면 login으로 이동
+      router.replace("/(public)/login");
+    } else if (isAuthenticated && inPublicGroup) {
+      // 인증된 상태에서 public 그룹이면 auth 그룹으로 이동
+      router.replace("/(auth)/(tabs)");
     }
   }, [isAuthenticated, segments]);
 
   return (
-    <Stack>
-      <Stack.Screen name="login" options={{ headerShown: false }} />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    <Stack
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="(public)" />
+      <Stack.Screen name="(auth)" />
       <Stack.Screen
         name="(stack)/book-detail"
         options={{
