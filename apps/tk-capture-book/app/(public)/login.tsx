@@ -30,9 +30,7 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={{
-          uri: "https://api.a0.dev/assets/image?text=abstract%20gradient%20background%20with%20modern%20design&aspect=9:16",
-        }}
+        source={require("@/assets/images/gradient-background.webp")}
         style={styles.backgroundImage}
       >
         <LinearGradient colors={["rgba(0,0,0,0.1)", "rgba(0,0,0,0.8)"]} style={styles.gradient}>
