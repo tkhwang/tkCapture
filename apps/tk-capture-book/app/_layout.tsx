@@ -9,16 +9,19 @@ import { queryClient } from "@/lib/react-query-client";
 import { AuthProvider, useAuth } from "@/providers/auth-provider";
 
 function ProtectedLayout() {
-  const { isAuthenticated } = useAuth();
   const segments = useSegments();
   const router = useRouter();
 
-  useEffect(() => {
-    const inAuthGroup = segments[0] === "(auth)";
+  const { isAuthenticated } = useAuth();
 
-    if (!isAuthenticated && !inAuthGroup) {
+  useEffect(() => {
+    const inLoginScreen = segments[0] === "login";
+
+    if (!isAuthenticated && !inLoginScreen) {
+      // 인증되지 않은 상태에서 login 화면이 아니면 login으로 이동
       router.replace("/login");
-    } else if (isAuthenticated && inAuthGroup) {
+    } else if (isAuthenticated && inLoginScreen) {
+      // 인증된 상태에서 login 화면이면 tabs로 이동
       router.replace("/(tabs)");
     }
   }, [isAuthenticated, segments]);

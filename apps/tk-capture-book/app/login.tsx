@@ -3,20 +3,27 @@ import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
 
+import { useAuth } from "@/providers/auth-provider";
+
 export default function LoginScreen() {
+  const { setIsAuthenticated } = useAuth();
+
   const handleGoogleLogin = () => {
     // Google 로그인 로직
     console.log("Google login pressed");
+    setIsAuthenticated(true);
   };
 
   const handleAppleLogin = () => {
     // Apple 로그인 로직
     console.log("Apple login pressed");
+    setIsAuthenticated(true);
   };
 
   const handleEmailLogin = () => {
     // 이메일 로그인 로직
     console.log("Email login pressed");
+    setIsAuthenticated(true);
   };
 
   return (
