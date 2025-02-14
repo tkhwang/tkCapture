@@ -5,8 +5,8 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Stack, useRouter, useSegments } from "expo-router";
 import { useEffect } from "react";
 
-import { AuthProvider, useAuth } from "@/lib/auth-context";
 import { queryClient } from "@/lib/react-query-client";
+import { AuthProvider, useAuth } from "@/providers/auth-provider";
 
 function ProtectedLayout() {
   const { isAuthenticated } = useAuth();
