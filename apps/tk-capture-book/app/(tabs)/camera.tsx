@@ -105,11 +105,11 @@ export default function CameraScreen() {
                 <Text className="text-white">{recognizedText}</Text>
               </View>
               <TouchableOpacity
-                className="flex-row items-center justify-center p-4 space-x-2 border-t border-white/20 bg-black/80 active:bg-white/10"
+                className="flex-row justify-center items-center p-4 space-x-2 border-t border-white/20 bg-black/80 active:bg-white/10"
                 onPress={handleTextRemoved}
               >
                 <Ionicons name="trash-outline" size={20} color="white" />
-                <Text className="text-white font-bold">텍스트 지우기</Text>
+                <Text className="font-bold text-white">텍스트 지우기</Text>
               </TouchableOpacity>
             </View>
           ) : null}
