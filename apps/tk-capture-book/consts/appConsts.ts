@@ -6,6 +6,20 @@ export const APP_NAME = "tkCaptureBook";
 /*
  *  Environment variable
  */
+// export const GOOGLE_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID;
+// if (!GOOGLE_CLIENT_ID) {
+//   throw new Error("EXPO_PUBLIC_GOOGLE_CLIENT_ID is not set");
+// } else {
+//   console.log(`[+][const] GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}`);
+// }
+
+// export const GOOGLE_CLIENT_SECRET = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_SECRET;
+// if (!GOOGLE_CLIENT_SECRET) {
+//   throw new Error("EXPO_PUBLIC_GOOGLE_CLIENT_SECRET is not set");
+// } else {
+//   console.log(`[+][const] GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}`);
+// }
+
 export const NAVER_CLIENT_ID = process.env.EXPO_PUBLIC_NAVER_CLIENT_ID;
 if (!NAVER_CLIENT_ID) {
   throw new Error("EXPO_PUBLIC_NAVER_CLIENT_ID is not set");
@@ -32,6 +46,20 @@ if (!GOOGLE_CLOUD_API_KEY) {
   throw new Error("EXPO_PUBLIC_GOOGLE_CLOUD_API_KEY is not set");
 } else {
   console.log(`[+][const] GOOGLE_CLOUD_API_KEY: ${GOOGLE_CLOUD_API_KEY}`);
+}
+
+export const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL;
+if (!SUPABASE_URL) {
+  throw new Error("EXPO_PUBLIC_SUPABASE_URL is not set");
+} else {
+  console.log(`[+][const] SUPABASE_URL: ${SUPABASE_URL}`);
+}
+
+export const SUPABASE_ANON_KEY = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
+if (!SUPABASE_ANON_KEY) {
+  throw new Error("EXPO_PUBLIC_SUPABASE_ANON_KEY is not set");
+} else {
+  console.log(`[+][const] SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}`);
 }
 
 /*
