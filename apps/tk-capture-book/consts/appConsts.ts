@@ -34,6 +34,20 @@ if (!GOOGLE_CLOUD_API_KEY) {
   console.log(`[+][const] GOOGLE_CLOUD_API_KEY: ${GOOGLE_CLOUD_API_KEY}`);
 }
 
+export const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL;
+if (!SUPABASE_URL) {
+  throw new Error("EXPO_PUBLIC_SUPABASE_URL is not set");
+} else {
+  console.log(`[+][const] SUPABASE_URL: ${SUPABASE_URL}`);
+}
+
+export const SUPABASE_ANON_KEY = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
+if (!SUPABASE_ANON_KEY) {
+  throw new Error("EXPO_PUBLIC_SUPABASE_ANON_KEY is not set");
+} else {
+  console.log(`[+][const] SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}`);
+}
+
 /*
  *  Application consts
  */
