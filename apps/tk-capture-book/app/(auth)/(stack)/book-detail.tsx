@@ -18,9 +18,9 @@ export default function BookDetailScreen() {
       </View>
 
       {/* 책 표지 이미지 */}
-      <View className="items-center justify-center py-8">
+      <View className="justify-center items-center py-8">
         {bookData.thumbnail && (
-          <View className="w-56 shadow-lg h-72">
+          <View className="w-56 h-72 shadow-lg">
             <Image
               source={{ uri: bookData.thumbnail }}
               className="w-full h-full rounded-lg"

@@ -7,8 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "build:android": "eas build --profile preview --platform android",
     "build:ios": "eas build --profile production --platform ios",
+    "build:android": "eas build --profile preview --platform android",
     "lint": "eslint ."
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "expo": "~52.0.29",
     "expo-camera": "~16.0.15",
     "expo-constants": "~17.0.5",
+    "expo-linear-gradient": "~14.0.2",
     "expo-linking": "~7.0.5",
     "expo-media-library": "~17.0.5",
     "expo-router": "~4.0.17",

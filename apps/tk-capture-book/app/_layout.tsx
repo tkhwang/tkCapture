@@ -9,32 +9,31 @@ import { queryClient } from "@/lib/react-query-client";
 import { AuthProvider, useAuth } from "@/providers/auth-provider";
 
 function ProtectedLayout() {
-  const { isAuthenticated } = useAuth();
   const segments = useSegments();
   const router = useRouter();
 
-  useEffect(() => {
-    const inAuthGroup = segments[0] === "(auth)";
+  const { isAuthenticated } = useAuth();
 
-    if (!isAuthenticated && !inAuthGroup) {
-      router.replace("/login");
-    } else if (isAuthenticated && inAuthGroup) {
-      router.replace("/(tabs)");
+  useEffect(() => {
+    const inPublicGroup = segments[0] === "(public)";
+
+    if (!isAuthenticated && !inPublicGroup) {
+      // 인증되지 않은 상태에서 public 그룹이 아니면 login으로 이동
+      router.replace("/(public)/login");
+    } else if (isAuthenticated && inPublicGroup) {
+      // 인증된 상태에서 public 그룹이면 auth 그룹으로 이동
+      router.replace("/(auth)/(tabs)");
     }
   }, [isAuthenticated, segments]);
 
   return (
-    <Stack>
-      <Stack.Screen name="login" options={{ headerShown: false }} />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="(stack)/book-detail"
-        options={{
-          headerBackTitle: "",
-          headerTitle: "Book Detail",
-          headerShown: true,
-        }}
-      />
+    <Stack
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="(public)" />
+      <Stack.Screen name="(auth)" />
     </Stack>
   );
 }
