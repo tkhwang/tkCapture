@@ -1,30 +1,45 @@
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
+import { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
 
 import { APP_NAME } from "@/consts/appConsts";
+import { appleSignIn } from "@/features/auth/apple/apple-sign-in";
 import { useAuth } from "@/providers/auth-provider";
 
 export default function LoginScreen() {
+  const [loading, setLoading] = useState(false);
+
   const { setIsAuthenticated } = useAuth();
 
   const handleGoogleLogin = () => {
+    setLoading(true);
+
     // Google 로그인 로직
     console.log("Google login pressed");
+
     setIsAuthenticated(true);
+    setLoading(false);
   };
 
-  const handleAppleLogin = () => {
+  const handleAppleLogin = async () => {
+    setLoading(true);
+
     // Apple 로그인 로직
     console.log("Apple login pressed");
-    setIsAuthenticated(true);
+    await appleSignIn();
+
+    // setIsAuthenticated(true);
+    setLoading(false);
   };
 
   const handleEmailLogin = () => {
+    setLoading(true);
+
     // 이메일 로그인 로직
-    console.log("Email login pressed");
+
     setIsAuthenticated(true);
+    setLoading(false);
   };
 
   return (

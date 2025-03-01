@@ -18,7 +18,8 @@
       "bundleIdentifier": "com.tkhwang.tkcapturebook",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
-      }
+      },
+      "usesAppleSignIn": true
     },
     "android": {
       "adaptiveIcon": {
@@ -62,7 +63,8 @@
           "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
           "isAccessMediaLocationEnabled": true
         }
-      ]
+      ],
+      "expo-apple-authentication"
     ]
   }
 }
