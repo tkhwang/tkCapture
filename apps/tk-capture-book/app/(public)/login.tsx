@@ -23,14 +23,17 @@ export default function LoginScreen() {
   };
 
   const handleAppleLogin = async () => {
-    setLoading(true);
+    try {
+      setLoading(true);
+      console.log("Apple login pressed");
 
-    // Apple 로그인 로직
-    console.log("Apple login pressed");
-    await appleSignIn();
+      await appleSignIn();
 
-    // setIsAuthenticated(true);
-    setLoading(false);
+      // If sign-in is successful
+      // setIsAuthenticated(true);
+    } catch (error) {
+      console.error("Apple login failed:", error);
+    }
   };
 
   const handleEmailLogin = () => {

@@ -10,6 +10,8 @@ export async function appleSignIn() {
         AppleAuthentication.AppleAuthenticationScope.EMAIL,
       ],
     });
+    console.log(`[+][appleSignIn] credential`, JSON.stringify(credential));
+
     // Sign in via Supabase Auth.
     if (credential.identityToken) {
       const {
@@ -27,7 +29,7 @@ export async function appleSignIn() {
       throw new Error("No identityToken.");
     }
   } catch (e) {
-    if (e.code === "ERR_REQUEST_CANCELED") {
+    if (e && typeof e === "object" && "code" in e && e.code === "ERR_REQUEST_CANCELED") {
       // handle that the user canceled the sign-in flow
     } else {
       // handle other errors
