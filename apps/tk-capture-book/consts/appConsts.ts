@@ -6,19 +6,19 @@ export const APP_NAME = "tkCaptureBook";
 /*
  *  Environment variable
  */
-export const GOOGLE_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID;
-if (!GOOGLE_CLIENT_ID) {
-  throw new Error("EXPO_PUBLIC_GOOGLE_CLIENT_ID is not set");
-} else {
-  console.log(`[+][const] GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}`);
-}
+// export const GOOGLE_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID;
+// if (!GOOGLE_CLIENT_ID) {
+//   throw new Error("EXPO_PUBLIC_GOOGLE_CLIENT_ID is not set");
+// } else {
+//   console.log(`[+][const] GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}`);
+// }
 
-export const GOOGLE_CLIENT_SECRET = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_SECRET;
-if (!GOOGLE_CLIENT_SECRET) {
-  throw new Error("EXPO_PUBLIC_GOOGLE_CLIENT_SECRET is not set");
-} else {
-  console.log(`[+][const] GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}`);
-}
+// export const GOOGLE_CLIENT_SECRET = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_SECRET;
+// if (!GOOGLE_CLIENT_SECRET) {
+//   throw new Error("EXPO_PUBLIC_GOOGLE_CLIENT_SECRET is not set");
+// } else {
+//   console.log(`[+][const] GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}`);
+// }
 
 export const NAVER_CLIENT_ID = process.env.EXPO_PUBLIC_NAVER_CLIENT_ID;
 if (!NAVER_CLIENT_ID) {
