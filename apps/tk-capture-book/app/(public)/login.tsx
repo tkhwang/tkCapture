@@ -4,13 +4,13 @@ import { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
 
 import { APP_NAME } from "@/consts/appConsts";
-import { appleSignIn } from "@/features/auth/apple/apple-sign-in";
+import { useAppleSignIn } from "@/features/auth/hooks/useAppleSignIn";
 import { useAuth } from "@/providers/auth-provider";
 
 export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
-
   const { setIsAuthenticated } = useAuth();
+  const { signIn: signInApple, loading: loadingApple, error: errorApple } = useAppleSignIn();
 
   const handleGoogleLogin = () => {
     setLoading(true);
@@ -23,16 +23,15 @@ export default function LoginScreen() {
   };
 
   const handleAppleLogin = async () => {
-    try {
-      setLoading(true);
-      console.log("Apple login pressed");
+    console.log("Apple login pressed");
 
-      await appleSignIn();
+    const result = await signInApple();
 
-      // If sign-in is successful
-      // setIsAuthenticated(true);
-    } catch (error) {
-      console.error("Apple login failed:", error);
+    if (result.success) {
+      setIsAuthenticated(true);
+    } else if (!result.canceled) {
+      // Show error to user if needed
+      console.error(`[-][LoginScreen] Apple login failed: ${JSON.stringify(result.error)}`);
     }
   };
 
@@ -44,6 +43,9 @@ export default function LoginScreen() {
     setIsAuthenticated(true);
     setLoading(false);
   };
+
+  // Combine local loading state with Apple loading state
+  const isLoading = loading || loadingApple;
 
   return (
     <View style={styles.container}>
@@ -61,6 +63,7 @@ export default function LoginScreen() {
               <TouchableOpacity
                 style={[styles.socialButton, styles.googleButton]}
                 onPress={handleGoogleLogin}
+                disabled={isLoading}
               >
                 <AntDesign name="google" size={24} color="#EA4335" />
                 <Text style={styles.buttonText}>Google로 계속하기</Text>
@@ -69,6 +72,7 @@ export default function LoginScreen() {
               <TouchableOpacity
                 style={[styles.socialButton, styles.appleButton]}
                 onPress={handleAppleLogin}
+                disabled={isLoading}
               >
                 <AntDesign name="apple1" size={24} color="#000" />
                 <Text style={styles.buttonText}>Apple로 계속하기</Text>
@@ -77,6 +81,7 @@ export default function LoginScreen() {
               <TouchableOpacity
                 style={[styles.socialButton, styles.emailButton]}
                 onPress={handleEmailLogin}
+                disabled={isLoading}
               >
                 <AntDesign name="mail" size={24} color="#fff" />
                 <Text style={[styles.buttonText, styles.emailButtonText]}>이메일로 계속하기</Text>
