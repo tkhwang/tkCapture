@@ -8,7 +8,7 @@ interface ProfileProps {
 
 export function Profile({ onLogout }: ProfileProps) {
   return (
-    <View className="p-4 shadow-md bg-primary rounded-xl">
+    <View className="p-4 shadow-md bg-gray-50 rounded-xl">
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center gap-3">
           <View className="items-center justify-center w-12 h-12 bg-white rounded-full">
@@ -19,7 +19,7 @@ export function Profile({ onLogout }: ProfileProps) {
           </View>
         </View>
 
-        <TouchableOpacity className="px-4 py-2 bg-white rounded-full" onPress={onLogout}>
+        <TouchableOpacity className="px-4 py-4 bg-gray-200 rounded-full" onPress={onLogout}>
           <Text className="font-semibold text-primary">로그아웃</Text>
         </TouchableOpacity>
       </View>
