@@ -1,5 +1,8 @@
 export const ko = {
   translation: {
+    camera: {
+      tabTitle: "카메라",
+    },
     login: {
       title: "환영합니다",
       subtitle: "계정에 로그인하세요",
@@ -13,12 +16,15 @@ export const ko = {
     search: {
       tabTitle: "검색",
     },
-    camera: {
-      tabTitle: "카메라",
-    },
+
     settings: {
       tabTitle: "설정",
       bookSearchProvider: "도서 검색 제공자",
+      menu: {
+        profile: "프로필",
+        language: "언어",
+        bookSearchProvider: "도서 검색 제공자",
+      },
     },
   },
 };

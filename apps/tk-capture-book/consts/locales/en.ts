@@ -1,5 +1,8 @@
 export const en = {
   translation: {
+    camera: {
+      tabTitle: "Camera",
+    },
     login: {
       title: "Welcome",
       subtitle: "Login to your account",
@@ -13,13 +16,15 @@ export const en = {
     search: {
       tabTitle: "Search",
     },
-    camera: {
-      tabTitle: "Camera",
-    },
     settings: {
       tabTitle: "Settings",
       bookSearch: {
         provider: "Book Search Provider",
+      },
+      menu: {
+        profile: "Profile",
+        language: "Language",
+        bookSearchProvider: "Book Search Provider",
       },
     },
   },
