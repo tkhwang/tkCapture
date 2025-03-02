@@ -1,26 +1,42 @@
-import { Ionicons } from "@expo/vector-icons";
 import { useAtom } from "jotai";
-import React from "react";
-import { useTranslation } from "react-i18next";
 import { View, Text } from "react-native";
 
-import { SearchProviderSelector } from "@/features/book-search/components/SearchProviderSelector";
 import { BookSearchProviderAtom } from "@/features/book-search/states/book";
+import { Profile } from "@/features/profile/profile";
+import { BookSearchProviderSetting } from "@/features/setting/book-search-provider-setting";
+import { LanguageSetting } from "@/features/setting/language-setting";
+import { languageAtom } from "@/features/setting/states/language";
+import { useAuth } from "@/providers/auth-provider";
 
 export default function SettingsScreen() {
-  const { t } = useTranslation();
   const [provider, setProvider] = useAtom(BookSearchProviderAtom);
+  const [language, setLanguage] = useAtom(languageAtom);
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    // After logout, the auth provider's useEffect in _layout.tsx will redirect to login
+  };
 
   return (
     <View className="flex-1 bg-white">
-      <View className="p-4">
-        <View className="flex-row items-center mb-4 space-x-2">
-          <Ionicons name="search" size={24} color="#4B5563" />
-          <Text className="text-lg font-bold text-gray-800">
-            {t("settings.bookSearch.provider")}
-          </Text>
+      <View className="flex-1 gap-8 p-4">
+        {/* User Profile Section */}
+        <View className="gap-3">
+          <Text className="text-xl font-bold text-gray-800">Profile</Text>
+          <Profile onLogout={handleLogout} />
         </View>
-        <SearchProviderSelector provider={provider} onProviderChange={setProvider} />
+
+        {/* Language Settings Section */}
+        <Text className="text-xl font-bold text-gray-800">Setting</Text>
+        <View className="gap-3">
+          <LanguageSetting currentLanguage={language} onLanguageChange={setLanguage} />
+        </View>
+
+        {/* Search Settings Section */}
+        <View className="gap-3">
+          <BookSearchProviderSetting provider={provider} onProviderChange={setProvider} />
+        </View>
       </View>
     </View>
   );
