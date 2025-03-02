@@ -5,12 +5,10 @@ import { BookSearchProviderAtom } from "@/features/book-search/states/book";
 import { Profile } from "@/features/profile/profile";
 import { BookSearchProviderSetting } from "@/features/setting/book-search-provider-setting";
 import { LanguageSetting } from "@/features/setting/language-setting";
-import { languageAtom } from "@/features/setting/states/language";
 import { useAuth } from "@/providers/auth-provider";
 
 export default function SettingsScreen() {
   const [provider, setProvider] = useAtom(BookSearchProviderAtom);
-  const [language, setLanguage] = useAtom(languageAtom);
   const { logout } = useAuth();
 
   const handleLogout = () => {
@@ -30,7 +28,7 @@ export default function SettingsScreen() {
         {/* Language Settings Section */}
         <Text className="text-xl font-bold text-gray-800">Setting</Text>
         <View className="gap-3">
-          <LanguageSetting currentLanguage={language} onLanguageChange={setLanguage} />
+          <LanguageSetting />
         </View>
 
         {/* Search Settings Section */}
