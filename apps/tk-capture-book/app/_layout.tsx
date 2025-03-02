@@ -6,6 +6,7 @@ import { Stack, useRouter, useSegments } from "expo-router";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { View, ActivityIndicator } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import i18n from "@/features/i18n";
 import { languageAtom } from "@/features/setting/states/language";
@@ -63,10 +64,12 @@ export default function AppLayout() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <ProtectedLayout />
-      </AuthProvider>
-    </QueryClientProvider>
+    <SafeAreaProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <ProtectedLayout />
+        </AuthProvider>
+      </QueryClientProvider>
+    </SafeAreaProvider>
   );
 }
