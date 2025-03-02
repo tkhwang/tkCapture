@@ -1,16 +1,17 @@
 import { useAtom } from "jotai";
+import { useTranslation } from "react-i18next";
 import { View, Text } from "react-native";
 
 import { BookSearchProviderAtom } from "@/features/book-search/states/book";
 import { Profile } from "@/features/profile/profile";
 import { BookSearchProviderSetting } from "@/features/setting/book-search-provider-setting";
 import { LanguageSetting } from "@/features/setting/language-setting";
-import { languageAtom } from "@/features/setting/states/language";
 import { useAuth } from "@/providers/auth-provider";
 
 export default function SettingsScreen() {
+  const { t } = useTranslation();
+
   const [provider, setProvider] = useAtom(BookSearchProviderAtom);
-  const [language, setLanguage] = useAtom(languageAtom);
   const { logout } = useAuth();
 
   const handleLogout = () => {
@@ -23,14 +24,14 @@ export default function SettingsScreen() {
       <View className="flex-1 gap-8 p-4">
         {/* User Profile Section */}
         <View className="gap-3">
-          <Text className="text-xl font-bold text-gray-800">Profile</Text>
+          <Text className="text-xl font-bold text-gray-800">{t("settings.menu.profile")}</Text>
           <Profile onLogout={handleLogout} />
         </View>
 
         {/* Language Settings Section */}
-        <Text className="text-xl font-bold text-gray-800">Setting</Text>
+        <Text className="text-xl font-bold text-gray-800">{t("settings.menu.settings")}</Text>
         <View className="gap-3">
-          <LanguageSetting currentLanguage={language} onLanguageChange={setLanguage} />
+          <LanguageSetting />
         </View>
 
         {/* Search Settings Section */}

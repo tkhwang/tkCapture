@@ -1,10 +1,14 @@
 import "../global.css";
-import "../i18n";
+import "../features/i18n";
 
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Stack, useRouter, useSegments } from "expo-router";
-import { useEffect } from "react";
+import { useAtom } from "jotai";
+import { useEffect, useState } from "react";
+import { View, ActivityIndicator } from "react-native";
 
+import i18n from "@/features/i18n";
+import { languageAtom } from "@/features/setting/states/language";
 import { queryClient } from "@/lib/react-query-client";
 import { AuthProvider, useAuth } from "@/providers/auth-provider";
 
@@ -39,6 +43,25 @@ function ProtectedLayout() {
 }
 
 export default function AppLayout() {
+  const [language] = useAtom(languageAtom);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // 언어 설정이 로드되면 로딩 상태 해제
+    if (language) {
+      i18n.changeLanguage(language);
+      setIsLoading(false);
+    }
+  }, [language]);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
