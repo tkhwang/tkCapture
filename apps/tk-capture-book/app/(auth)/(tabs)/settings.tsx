@@ -29,7 +29,7 @@ export default function SettingsScreen() {
         </View>
 
         {/* Language Settings Section */}
-        <Text className="text-xl font-bold text-gray-800">{t("settings.menu.language")}</Text>
+        <Text className="text-xl font-bold text-gray-800">{t("settings.menu.settings")}</Text>
         <View className="gap-3">
           <LanguageSetting />
         </View>

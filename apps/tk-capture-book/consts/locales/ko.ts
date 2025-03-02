@@ -22,6 +22,7 @@ export const ko = {
       bookSearchProvider: "도서 검색 제공자",
       menu: {
         profile: "프로필",
+        settings: "설정",
         language: "언어",
         bookSearchProvider: "도서 검색 제공자",
       },

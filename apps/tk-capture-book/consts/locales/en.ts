@@ -23,6 +23,7 @@ export const en = {
       },
       menu: {
         profile: "Profile",
+        settings: "설정",
         language: "Language",
         bookSearchProvider: "Book Search Provider",
       },
