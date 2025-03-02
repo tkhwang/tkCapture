@@ -1,5 +1,5 @@
 import "../global.css";
-import "../i18n";
+import "../features/i18n";
 
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Stack, useRouter, useSegments } from "expo-router";
@@ -7,8 +7,8 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { View, ActivityIndicator } from "react-native";
 
+import i18n from "@/features/i18n";
 import { languageAtom } from "@/features/setting/states/language";
-import i18n from "@/i18n";
 import { queryClient } from "@/lib/react-query-client";
 import { AuthProvider, useAuth } from "@/providers/auth-provider";
 
