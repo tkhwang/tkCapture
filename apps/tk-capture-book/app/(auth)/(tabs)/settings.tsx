@@ -17,19 +17,19 @@ export default function SettingsScreen() {
   };
 
   return (
-    <View className="flex-1 gap-8 p-4 bg-white">
-      {/* User Profile Section */}
-      <View className="gap-4">
-        <Text className="text-xl font-bold text-gray-800">Profile</Text>
-        <Profile onLogout={handleLogout} />
-      </View>
+    <View className="flex-1 bg-white">
+      <View className="flex-1 p-5 gap-8">
+        {/* User Profile Section */}
+        <View className="gap-3">
+          <Text className="text-xl font-bold text-gray-800">Profile</Text>
+          <Profile onLogout={handleLogout} />
+        </View>
 
-      {/* Settings Section */}
-      <View className="gap-4">
-        <Text className="text-xl font-bold text-gray-800">Search</Text>
-
-        {/* Book Search Provider Setting */}
-        <BookSearchProviderSetting provider={provider} onProviderChange={setProvider} />
+        {/* Settings Section */}
+        <View className="gap-3">
+          <Text className="text-xl font-bold text-gray-800">Search</Text>
+          <BookSearchProviderSetting provider={provider} onProviderChange={setProvider} />
+        </View>
       </View>
     </View>
   );

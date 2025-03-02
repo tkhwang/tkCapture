@@ -8,10 +8,10 @@ interface ProfileProps {
 
 export function Profile({ onLogout }: ProfileProps) {
   return (
-    <View className="shadow-md bg-primary rounded-b-3xl">
-      <View className="flex-row items-center justify-between mb-2">
-        <View className="flex-row items-center">
-          <View className="items-center justify-center w-12 h-12 mr-4 bg-white rounded-full">
+    <View className="p-4 shadow-md bg-primary rounded-xl">
+      <View className="flex-row items-center justify-between">
+        <View className="flex-row items-center gap-3">
+          <View className="items-center justify-center w-12 h-12 bg-white rounded-full">
             <MaterialIcons name="person" size={28} color="#4B5563" />
           </View>
           <View>
