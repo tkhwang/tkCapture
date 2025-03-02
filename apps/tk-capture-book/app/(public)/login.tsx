@@ -1,6 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
 
 import { APP_NAME } from "@/consts/appConsts";
@@ -8,8 +9,12 @@ import { useAppleSignIn } from "@/features/auth/hooks/useAppleSignIn";
 import { useAuth } from "@/providers/auth-provider";
 
 export default function LoginScreen() {
+  const { t } = useTranslation();
+
   const [loading, setLoading] = useState(false);
+
   const { setIsAuthenticated } = useAuth();
+
   const { signIn: signInApple, loading: loadingApple, error: errorApple } = useAppleSignIn();
 
   const handleGoogleLogin = () => {
@@ -56,8 +61,8 @@ export default function LoginScreen() {
         <LinearGradient colors={["rgba(0,0,0,0.1)", "rgba(0,0,0,0.8)"]} style={styles.gradient}>
           <Text style={styles.appName}>{APP_NAME}</Text>
           <View style={styles.content}>
-            <Text style={styles.title}>환영합니다</Text>
-            <Text style={styles.subtitle}>계정에 로그인하세요</Text>
+            <Text style={styles.title}>{t("login.title")}</Text>
+            <Text style={styles.subtitle}>{t("login.subtitle")}</Text>
 
             <View style={styles.buttonContainer}>
               <TouchableOpacity
@@ -66,7 +71,7 @@ export default function LoginScreen() {
                 disabled={isLoading}
               >
                 <AntDesign name="google" size={24} color="#EA4335" />
-                <Text style={styles.buttonText}>Google로 계속하기</Text>
+                <Text style={styles.buttonText}>{t("login.googleButton")}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -75,7 +80,7 @@ export default function LoginScreen() {
                 disabled={isLoading}
               >
                 <AntDesign name="apple1" size={24} color="#000" />
-                <Text style={styles.buttonText}>Apple로 계속하기</Text>
+                <Text style={styles.buttonText}>{t("login.appleButton")}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -84,14 +89,9 @@ export default function LoginScreen() {
                 disabled={isLoading}
               >
                 <AntDesign name="mail" size={24} color="#fff" />
-                <Text style={[styles.buttonText, styles.emailButtonText]}>이메일로 계속하기</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.footer}>
-              <Text style={styles.footerText}>계정이 없으신가요?</Text>
-              <TouchableOpacity>
-                <Text style={styles.signupText}>회원가입</Text>
+                <Text style={[styles.buttonText, styles.emailButtonText]}>
+                  {t("login.emailButton")}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
