@@ -2,7 +2,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Platform } from "react-native";
 
 import { APP_NAME } from "@/consts/appConsts";
 import { useAppleSignIn } from "@/features/auth/hooks/useAppleSignIn";
@@ -74,14 +74,16 @@ export default function LoginScreen() {
                 <Text style={styles.buttonText}>{t("login.googleButton")}</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                style={[styles.socialButton, styles.appleButton]}
-                onPress={handleAppleLogin}
-                disabled={isLoading}
-              >
-                <AntDesign name="apple1" size={24} color="#000" />
-                <Text style={styles.buttonText}>{t("login.appleButton")}</Text>
-              </TouchableOpacity>
+              {Platform.OS === "ios" && (
+                <TouchableOpacity
+                  style={[styles.socialButton, styles.appleButton]}
+                  onPress={handleAppleLogin}
+                  disabled={isLoading}
+                >
+                  <AntDesign name="apple1" size={24} color="#000" />
+                  <Text style={styles.buttonText}>{t("login.appleButton")}</Text>
+                </TouchableOpacity>
+              )}
 
               <TouchableOpacity
                 style={[styles.socialButton, styles.emailButton]}
