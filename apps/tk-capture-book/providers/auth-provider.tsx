@@ -7,6 +7,7 @@ type AuthContextType = {
   session: Session | null;
   loading: boolean;
   isAuthenticated: boolean;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
   logout: () => Promise<void>;
 };
 
@@ -14,6 +15,7 @@ const AuthContext = createContext<AuthContextType>({
   session: null,
   loading: true,
   isAuthenticated: false,
+  setIsAuthenticated: () => {},
   logout: async () => {},
 });
 
@@ -56,6 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     session,
     loading,
     isAuthenticated,
+    setIsAuthenticated,
     logout,
   };
 
