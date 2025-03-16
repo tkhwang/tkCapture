@@ -1,11 +1,18 @@
-import { IAppleAuthRemoteData, AppleAuthUser } from "../types/remote-user";
+import { IAppleAuthRemoteData, AppleAuthUser } from "../types/remote-user-apple";
 
 import { IUser } from "@/features/user/types/user";
-// import { IGoogleAuthRemoteData, GoogleAuthUser } from "../types/remote-user"; // 추후 구현 필요
 
 export type AuthProvider = "apple" | "google";
 
-export class User implements IUser {
+/**
+ * Anti-Corruption Layer and class domain model
+ *
+ * @export
+ * @class User
+ * @implements {IUser}
+ */
+// export class User implements IUser {
+export class User {
   private readonly _id: string;
   private readonly _name: string;
   private readonly _provider: AuthProvider;
