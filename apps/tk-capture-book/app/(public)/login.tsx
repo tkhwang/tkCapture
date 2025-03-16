@@ -6,6 +6,7 @@ import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Platform } f
 
 import { APP_NAME } from "@/consts/appConsts";
 import { useAppleSignIn } from "@/features/auth/hooks/useAppleSignIn";
+import { User } from "@/features/user/models/user";
 import { useAuth } from "@/providers/auth-provider";
 
 export default function LoginScreen() {
@@ -33,7 +34,14 @@ export default function LoginScreen() {
     const result = await signInApple();
 
     if (result.success) {
-      setIsAuthenticated(true);
+      try {
+        const user = User.fromAppleAuth(result.user);
+        console.log(`[+][LoginScreen] user: ${JSON.stringify(user)}`);
+
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error(JSON.stringify(error));
+      }
     } else if (!result.canceled) {
       // Show error to user if needed
       console.error(`[-][LoginScreen] Apple login failed: ${JSON.stringify(result.error)}`);

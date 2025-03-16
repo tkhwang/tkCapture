@@ -1,4 +1,4 @@
-import { IAppleAuthRemoteData, AppleAuthUser } from "../types/remote-user-apple";
+import { AppleAuthUser } from "../types/remote-user-apple";
 
 import { IUser } from "@/features/user/types/user";
 
@@ -44,19 +44,13 @@ export class User {
   }
 
   // Apple OAuth factory method
-  static fromAppleAuth(appleData: IAppleAuthRemoteData): User {
-    if (!appleData.user) {
-      throw new Error("Invalid Apple user data");
-    }
-
-    const user: AppleAuthUser = appleData.user;
-
+  static fromAppleAuth(remoteAppleUser: AppleAuthUser): User {
     return new User({
-      id: user.id,
-      name: user.email,
+      id: remoteAppleUser.id,
+      name: remoteAppleUser.email,
       provider: "apple",
-      createdAt: new Date(user.created_at),
-      updatedAt: new Date(user.updated_at),
+      createdAt: new Date(remoteAppleUser.created_at),
+      updatedAt: new Date(remoteAppleUser.updated_at),
     });
   }
 }
