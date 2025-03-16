@@ -35,10 +35,10 @@ export default function LoginScreen() {
 
     if (result.success) {
       try {
-        const user = User.fromAppleAuth(result.user);
-        console.log(`[+][LoginScreen] user: ${JSON.stringify(user)}`);
+        const userModel = User.fromAppleAuth(result.user);
+        console.log(`[+][LoginScreen] user: ${JSON.stringify(userModel)}`);
 
-        await user.findOrCreateInSupabase();
+        const user = await userModel.findOrCreate();
 
         setIsAuthenticated(true);
       } catch (error) {

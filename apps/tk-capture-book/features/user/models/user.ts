@@ -1,7 +1,7 @@
 import { AppleAuthUser } from "../types/remote-user-apple";
 
+import { SupabaseUserRepository } from "@/features/user/repository/supabase/supabase-user-repository";
 import { IUser } from "@/features/user/types/user";
-import { supabase } from "@/lib/supabase";
 
 export type AuthProvider = "apple" | "google";
 
@@ -12,8 +12,7 @@ export type AuthProvider = "apple" | "google";
  * @class User
  * @implements {IUser}
  */
-// export class User implements IUser {
-export class User {
+export class User implements IUser {
   private readonly _id: string;
   private readonly _name: string;
   private readonly _provider: AuthProvider;
@@ -59,48 +58,20 @@ export class User {
   }
 
   /**
-   * Supabase users 테이블에서 사용자를 찾고, 없으면 새로 생성합니다.
-   * @returns 데이터베이스에서 찾거나 생성된 사용자 정보
+   * Find user in supabase and create if not there.
+   *
+   * @return {*}  {Promise<User>}
+   * @memberof User
    */
-  async findOrCreateInSupabase() {
+  async findOrCreate(): Promise<User> {
     try {
-      const { data: existingUser, error: queryError } = await supabase
-        .from("users")
-        .select("*")
-        .eq("id", this._id)
-        .single();
+      const userRepository = new SupabaseUserRepository();
+      const savedUser = await userRepository.findOrCreate(this);
 
-      if (queryError && queryError.code !== "PGRST116") {
-        throw queryError;
-      }
-
-      if (existingUser) {
-        console.log(`[+][User] already existing User`);
-        return existingUser;
-      }
-
-      const newUser = {
-        id: this._id,
-        name: this._name,
-        provider: this._provider,
-        created_at: this._createdAt.toISOString(),
-        updated_at: this._updatedAt.toISOString(),
-      };
-
-      const { data: createdUser, error: insertError } = await supabase
-        .from("users")
-        .insert([newUser])
-        .select()
-        .single();
-
-      if (insertError) {
-        throw insertError;
-      }
-
-      console.log(`[+][User] new user created: ${JSON.stringify(createdUser)}`);
-      return createdUser;
+      console.log(`[+][User] User found or created successfully: ${savedUser.id}`);
+      return savedUser;
     } catch (error) {
-      console.error(`[-][User] create new user failed: ${JSON.stringify(error)}`);
+      console.error(`[-][User] Failed to find or create user: ${JSON.stringify(error)}`);
       throw error;
     }
   }
