@@ -38,6 +38,8 @@ export default function LoginScreen() {
         const user = User.fromAppleAuth(result.user);
         console.log(`[+][LoginScreen] user: ${JSON.stringify(user)}`);
 
+        await user.findOrCreateInSupabase();
+
         setIsAuthenticated(true);
       } catch (error) {
         console.error(JSON.stringify(error));
