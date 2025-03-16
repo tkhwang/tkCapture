@@ -1,5 +1,5 @@
-import { User } from "@/features/user/models/user";
+import { IUser } from "@/features/user/types/user";
 
 export interface IUserRepository {
-  findOrCreate(user: User): Promise<User>;
+  findOrCreate(user: IUser): Promise<IUser>;
 }

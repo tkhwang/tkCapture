@@ -50,16 +50,16 @@ export class User implements IUser {
    * Factory method to create a User instance from database record
    *
    * @static
-   * @param {Record<string, any>} dbRecord - Database record from Supabase
+   * @param {Record<string, any>} userDB - Database record from Supabase
    * @return {User} User domain model instance
    */
-  static fromDatabase(dbRecord: Record<string, any>): User {
+  static fromDatabase(userDB: IUser): User {
     return new User({
-      id: dbRecord.id,
-      name: dbRecord.name,
-      provider: dbRecord.provider as AuthProvider,
-      createdAt: new Date(dbRecord.created_at),
-      updatedAt: new Date(dbRecord.updated_at),
+      id: userDB.id,
+      name: userDB.name,
+      provider: userDB.provider as AuthProvider,
+      createdAt: new Date(userDB.createdAt),
+      updatedAt: new Date(userDB.updatedAt),
     });
   }
 
@@ -82,20 +82,6 @@ export class User implements IUser {
   }
 
   /**
-   * Get a plain object representation of this User for database operations
-   *
-   * @return {Record<string, any>} Plain object suitable for database operations
-   */
-  toDatabase(): Record<string, any> {
-    return {
-      id: this._id,
-      name: this._name,
-      provider: this._provider,
-      created_at: this._createdAt.toISOString(),
-      updated_at: this._updatedAt.toISOString(),
-    };
-  }
-  /**
    * Find user in supabase and create if not there.
    *
    * @return {*}  {Promise<User>}
@@ -107,7 +93,7 @@ export class User implements IUser {
       const savedUser = await userRepository.findOrCreate(this);
 
       console.log(`[+][User] User found or created successfully: ${savedUser.id}`);
-      return savedUser;
+      return User.fromDatabase(savedUser);
     } catch (error) {
       console.error(`[-][User] Failed to find or create user: ${JSON.stringify(error)}`);
       throw error;

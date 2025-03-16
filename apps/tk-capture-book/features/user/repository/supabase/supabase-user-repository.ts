@@ -1,8 +1,28 @@
-import { User } from "@/features/user/models/user";
 import { IUserRepository } from "@/features/user/repository/user-repository";
+import { IUser, IUserDB } from "@/features/user/types/user";
 import { supabase } from "@/lib/supabase";
 
 export class SupabaseUserRepository implements IUserRepository {
+  private mapToUser(userDB: IUserDB): IUser {
+    return {
+      id: userDB.id,
+      name: userDB.name,
+      provider: userDB.provider,
+      createdAt: new Date(userDB.created_at),
+      updatedAt: new Date(userDB.updated_at),
+    };
+  }
+
+  private mapToUserDB(user: IUser): IUserDB {
+    return {
+      id: user.id,
+      name: user.name,
+      provider: user.provider,
+      created_at: user.createdAt.toISOString(),
+      updated_at: user.updatedAt.toISOString(),
+    };
+  }
+
   /**
    *
    *
@@ -10,7 +30,7 @@ export class SupabaseUserRepository implements IUserRepository {
    * @return {*}
    * @memberof SupabaseUserRepository
    */
-  async findOrCreate(user: User): Promise<User> {
+  async findOrCreate(user: IUser): Promise<IUser> {
     try {
       const { data: existingUser, error: queryError } = await supabase
         .from("users")
@@ -22,18 +42,16 @@ export class SupabaseUserRepository implements IUserRepository {
         throw queryError;
       }
 
-      if (existingUser) {
-        console.log(`[+][User] already existing User`);
-        // Convert database record to User domain model
-        return User.fromDatabase(existingUser);
-      }
+      const userDB: IUserDB | null = existingUser;
 
-      // Convert User domain model to plain object for database insertion
-      const userForDb = user.toDatabase();
+      if (userDB) {
+        console.log(`[+][User] already existing User`);
+        return this.mapToUser(userDB);
+      }
 
       const { data: createdUser, error: insertError } = await supabase
         .from("users")
-        .insert([userForDb])
+        .insert([this.mapToUserDB(user)])
         .select()
         .single();
 
@@ -42,8 +60,7 @@ export class SupabaseUserRepository implements IUserRepository {
       }
 
       console.log(`[+][User] new user created: ${JSON.stringify(createdUser)}`);
-      // Convert database record to User domain model
-      return User.fromDatabase(createdUser);
+      return createdUser;
     } catch (error) {
       console.error(`[-][User] create new user failed: ${JSON.stringify(error)}`);
       throw error;
