@@ -1,5 +1,6 @@
-import { IAppleAuthRemoteData, AppleAuthUser } from "../types/remote-user-apple";
+import { AppleAuthUser } from "../types/remote-user-apple";
 
+import { SupabaseUserRepository } from "@/features/user/repository/supabase/supabase-user-repository";
 import { IUser } from "@/features/user/types/user";
 
 export type AuthProvider = "apple" | "google";
@@ -11,8 +12,7 @@ export type AuthProvider = "apple" | "google";
  * @class User
  * @implements {IUser}
  */
-// export class User implements IUser {
-export class User {
+export class User implements IUser {
   private readonly _id: string;
   private readonly _name: string;
   private readonly _provider: AuthProvider;
@@ -27,6 +27,9 @@ export class User {
     this._updatedAt = params.updatedAt;
   }
 
+  /*
+   *  Getter
+   */
   get id(): string {
     return this._id;
   }
@@ -43,20 +46,57 @@ export class User {
     return this._updatedAt;
   }
 
-  // Apple OAuth factory method
-  static fromAppleAuth(appleData: IAppleAuthRemoteData): User {
-    if (!appleData.user) {
-      throw new Error("Invalid Apple user data");
-    }
-
-    const user: AppleAuthUser = appleData.user;
-
+  /**
+   * Factory method to create a User instance from database record
+   *
+   * @static
+   * @param {Record<string, any>} userDB - Database record from Supabase
+   * @return {User} User domain model instance
+   */
+  static fromDatabase(userDB: IUser): User {
     return new User({
-      id: user.id,
-      name: user.email,
-      provider: "apple",
-      createdAt: new Date(user.created_at),
-      updatedAt: new Date(user.updated_at),
+      id: userDB.id,
+      name: userDB.name,
+      provider: userDB.provider as AuthProvider,
+      createdAt: new Date(userDB.createdAt),
+      updatedAt: new Date(userDB.updatedAt),
     });
+  }
+
+  /**
+   *
+   *
+   * @static
+   * @param {AppleAuthUser} remoteAppleUser
+   * @return {*}  {User}
+   * @memberof User
+   */
+  static fromAppleAuth(remoteAppleUser: AppleAuthUser): User {
+    return new User({
+      id: remoteAppleUser.id,
+      name: remoteAppleUser.email,
+      provider: "apple",
+      createdAt: new Date(remoteAppleUser.created_at),
+      updatedAt: new Date(remoteAppleUser.updated_at),
+    });
+  }
+
+  /**
+   * Find user in supabase and create if not there.
+   *
+   * @return {*}  {Promise<User>}
+   * @memberof User
+   */
+  async findOrCreate(): Promise<User> {
+    try {
+      const userRepository = new SupabaseUserRepository();
+      const savedUser = await userRepository.findOrCreate(this);
+
+      console.log(`[+][User] User found or created successfully: ${savedUser.id}`);
+      return User.fromDatabase(savedUser);
+    } catch (error) {
+      console.error(`[-][User] Failed to find or create user: ${JSON.stringify(error)}`);
+      throw error;
+    }
   }
 }

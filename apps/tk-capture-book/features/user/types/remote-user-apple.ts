@@ -56,6 +56,8 @@ export interface AppleAuthUser {
 }
 
 export interface IAppleAuthRemoteData {
-  error: any;
+  success: boolean;
+  canceled?: boolean;
+  error?: Error;
   user: AppleAuthUser;
 }

@@ -2,11 +2,15 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
+import { useAuth } from "@/providers/auth-provider";
+
 interface ProfileProps {
   onLogout: () => void;
 }
 
 export function Profile({ onLogout }: ProfileProps) {
+  const { user } = useAuth();
+
   return (
     <View className="p-4 shadow-md bg-gray-50 rounded-xl">
       <View className="flex-row items-center justify-between">
@@ -15,7 +19,7 @@ export function Profile({ onLogout }: ProfileProps) {
             <MaterialIcons name="person" size={28} color="#4B5563" />
           </View>
           <View>
-            <Text className="text-xl font-bold text-black">userName</Text>
+            <Text className="text-xl font-bold text-black">{user?.name ?? ""}</Text>
           </View>
         </View>
 
