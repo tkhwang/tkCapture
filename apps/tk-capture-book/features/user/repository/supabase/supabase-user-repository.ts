@@ -10,7 +10,7 @@ export class SupabaseUserRepository implements IUserRepository {
    * @return {*}
    * @memberof SupabaseUserRepository
    */
-  async findOrCreate(user: User) {
+  async findOrCreate(user: User): Promise<User> {
     try {
       const { data: existingUser, error: queryError } = await supabase
         .from("users")
@@ -24,12 +24,16 @@ export class SupabaseUserRepository implements IUserRepository {
 
       if (existingUser) {
         console.log(`[+][User] already existing User`);
-        return existingUser as User;
+        // Convert database record to User domain model
+        return User.fromDatabase(existingUser);
       }
+
+      // Convert User domain model to plain object for database insertion
+      const userForDb = user.toDatabase();
 
       const { data: createdUser, error: insertError } = await supabase
         .from("users")
-        .insert([user])
+        .insert([userForDb])
         .select()
         .single();
 
@@ -38,7 +42,8 @@ export class SupabaseUserRepository implements IUserRepository {
       }
 
       console.log(`[+][User] new user created: ${JSON.stringify(createdUser)}`);
-      return createdUser;
+      // Convert database record to User domain model
+      return User.fromDatabase(createdUser);
     } catch (error) {
       console.error(`[-][User] create new user failed: ${JSON.stringify(error)}`);
       throw error;

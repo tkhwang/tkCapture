@@ -46,7 +46,31 @@ export class User implements IUser {
     return this._updatedAt;
   }
 
-  // Apple OAuth factory method
+  /**
+   * Factory method to create a User instance from database record
+   *
+   * @static
+   * @param {Record<string, any>} dbRecord - Database record from Supabase
+   * @return {User} User domain model instance
+   */
+  static fromDatabase(dbRecord: Record<string, any>): User {
+    return new User({
+      id: dbRecord.id,
+      name: dbRecord.name,
+      provider: dbRecord.provider as AuthProvider,
+      createdAt: new Date(dbRecord.created_at),
+      updatedAt: new Date(dbRecord.updated_at),
+    });
+  }
+
+  /**
+   *
+   *
+   * @static
+   * @param {AppleAuthUser} remoteAppleUser
+   * @return {*}  {User}
+   * @memberof User
+   */
   static fromAppleAuth(remoteAppleUser: AppleAuthUser): User {
     return new User({
       id: remoteAppleUser.id,
@@ -57,6 +81,20 @@ export class User implements IUser {
     });
   }
 
+  /**
+   * Get a plain object representation of this User for database operations
+   *
+   * @return {Record<string, any>} Plain object suitable for database operations
+   */
+  toDatabase(): Record<string, any> {
+    return {
+      id: this._id,
+      name: this._name,
+      provider: this._provider,
+      created_at: this._createdAt.toISOString(),
+      updated_at: this._updatedAt.toISOString(),
+    };
+  }
   /**
    * Find user in supabase and create if not there.
    *
