@@ -14,7 +14,7 @@ export default function LoginScreen() {
 
   const [loading, setLoading] = useState(false);
 
-  const { setIsAuthenticated } = useAuth();
+  const { setIsAuthenticated, setUser } = useAuth();
 
   const { signIn: signInApple, loading: loadingApple, error: errorApple } = useAppleSignIn();
 
@@ -39,7 +39,7 @@ export default function LoginScreen() {
         console.log(`[+][LoginScreen] user: ${JSON.stringify(userModel)}`);
 
         const user = await userModel.findOrCreate();
-
+        setUser(user);
         setIsAuthenticated(true);
       } catch (error) {
         console.error(JSON.stringify(error));
