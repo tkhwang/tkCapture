@@ -9,10 +9,9 @@ export function useAppleSignIn() {
   const [error, setError] = useState<Error | null>(null);
 
   const signIn = async (): Promise<AuthSignInResult> => {
-    try {
-      setLoading(true);
-      setError(null);
+    setLoading(true);
 
+    try {
       const credential = await AppleAuthentication.signInAsync({
         requestedScopes: [
           AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
