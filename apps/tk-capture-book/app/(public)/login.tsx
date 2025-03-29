@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Platform } from "react-native";
 
-import { APP_NAME } from "@/consts/appConsts";
+import { AppName } from "@/components/app-name";
 import { useAppleSignIn } from "@/features/auth/hooks/useAppleSignIn";
 import { useGoogleSignIn } from "@/features/auth/hooks/useGoogleSignIn";
 import { User } from "@/features/user/models/user";
@@ -83,7 +83,7 @@ export default function LoginScreen() {
         style={styles.backgroundImage}
       >
         <LinearGradient colors={["rgba(0,0,0,0.1)", "rgba(0,0,0,0.8)"]} style={styles.gradient}>
-          <Text style={styles.appName}>{APP_NAME}</Text>
+          <AppName />
           <View style={styles.content}>
             <Text style={styles.title}>{t("login.title")}</Text>
             <Text style={styles.subtitle}>{t("login.subtitle")}</Text>
@@ -129,20 +129,6 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  appName: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: "#fff",
-    textAlign: "center",
-    position: "absolute",
-    top: 100,
-    left: 0,
-    right: 0,
-    zIndex: 1,
-    textShadowColor: "rgba(0, 0, 0, 0.75)",
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 5,
-  },
   container: {
     flex: 1,
   },
