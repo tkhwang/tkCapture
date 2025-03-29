@@ -6,6 +6,7 @@ import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Platform } f
 
 import { APP_NAME } from "@/consts/appConsts";
 import { useAppleSignIn } from "@/features/auth/hooks/useAppleSignIn";
+import { useGoogleSignIn } from "@/features/auth/hooks/useGoogleSignIn";
 import { User } from "@/features/user/models/user";
 import { useAuth } from "@/providers/auth-provider";
 
@@ -17,16 +18,7 @@ export default function LoginScreen() {
   const { setIsAuthenticated, setUser } = useAuth();
 
   const { signIn: signInApple, loading: loadingApple, error: errorApple } = useAppleSignIn();
-
-  const handleGoogleLogin = () => {
-    setLoading(true);
-
-    // Google 로그인 로직
-    console.log("Google login pressed");
-
-    setIsAuthenticated(true);
-    setLoading(false);
-  };
+  const { signIn: signInGoogle, loading: loadingGoogle, error: errorGoogle } = useGoogleSignIn();
 
   const handleAppleLogin = async () => {
     console.log("Apple login pressed");
@@ -48,6 +40,16 @@ export default function LoginScreen() {
       // Show error to user if needed
       console.error(`[-][LoginScreen] Apple login failed: ${JSON.stringify(result.error)}`);
     }
+  };
+
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+
+    const result = await signInGoogle();
+    console.log("TCL: handleGoogleLogin -> result", result);
+
+    setIsAuthenticated(true);
+    setLoading(false);
   };
 
   const handleEmailLogin = () => {
