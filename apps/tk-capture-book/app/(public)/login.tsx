@@ -48,7 +48,7 @@ export default function LoginScreen() {
     const result = await signInGoogle();
     console.log("TCL: handleGoogleLogin -> result", result);
 
-    setIsAuthenticated(true);
+    // setIsAuthenticated(true);
     setLoading(false);
   };
 

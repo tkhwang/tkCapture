@@ -16,12 +16,16 @@ export function useGoogleSignIn() {
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
+      console.log(`[+][useGoogleSignIn] response`, JSON.stringify(response));
+
       if (isSuccessResponse(response)) {
-        console.log(`[+][useGoogleSignIn] signIn`, JSON.stringify(response, null, 2));
+        //
       } else {
         // sign in was cancelled by user
       }
     } catch (error) {
+      console.log(`[-][][useGoogleSignIn] error`, JSON.stringify(error));
+
       if (isErrorWithCode(error)) {
         switch (error.code) {
           case statusCodes.IN_PROGRESS:
