@@ -89,16 +89,14 @@ export default function LoginScreen() {
             <Text style={styles.subtitle}>{t("login.subtitle")}</Text>
 
             <View style={styles.buttonContainer}>
-              {Platform.OS === "android" && (
-                <TouchableOpacity
-                  style={[styles.socialButton, styles.googleButton]}
-                  onPress={handleGoogleLogin}
-                  disabled={isLoading}
-                >
-                  <AntDesign name="google" size={24} color="#EA4335" />
-                  <Text style={styles.buttonText}>{t("login.googleButton")}</Text>
-                </TouchableOpacity>
-              )}
+              <TouchableOpacity
+                style={[styles.socialButton, styles.googleButton]}
+                onPress={handleGoogleLogin}
+                disabled={isLoading}
+              >
+                <AntDesign name="google" size={24} color="#EA4335" />
+                <Text style={styles.buttonText}>{t("login.googleButton")}</Text>
+              </TouchableOpacity>
 
               {Platform.OS === "ios" && (
                 <TouchableOpacity
@@ -110,7 +108,6 @@ export default function LoginScreen() {
                   <Text style={styles.buttonText}>{t("login.appleButton")}</Text>
                 </TouchableOpacity>
               )}
-
               <TouchableOpacity
                 style={[styles.socialButton, styles.emailButton]}
                 onPress={handleEmailLogin}
