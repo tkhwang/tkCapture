@@ -63,7 +63,7 @@ export class User implements IUser {
     });
   }
 
-  static fromSupabaseAuth(supabaseUser: SupabaseUser, authProvider: AuthProvider): User {
+  static fromSupabaseAuthUser(supabaseUser: SupabaseUser, authProvider: AuthProvider): User {
     return new User({
       id: supabaseUser.id,
       name: supabaseUser.email ?? supabaseUser.user_metadata.email,

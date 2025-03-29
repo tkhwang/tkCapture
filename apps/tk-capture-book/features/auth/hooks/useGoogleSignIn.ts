@@ -4,26 +4,36 @@ import {
   isSuccessResponse,
   statusCodes,
 } from "@react-native-google-signin/google-signin";
-import { useState } from "react";
+
+import { supabase } from "@/lib/supabase";
 
 export function useGoogleSignIn() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
-
   const signIn = async () => {
-    setLoading(true);
-
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
       console.log(`[+][useGoogleSignIn] response`, JSON.stringify(response));
 
-      if (isSuccessResponse(response)) {
-        //
+      if (isSuccessResponse(response) && response.data.idToken) {
+        const {
+          error,
+          data: { user },
+        } = await supabase.auth.signInWithIdToken({
+          provider: "google",
+          token: response.data.idToken,
+        });
+
+        if (error) {
+          console.log(`[-][useGoogleSignIn] error`, JSON.stringify(error));
+          return { success: false, error };
+        }
+
+        console.log(`[+][useGoogleSignIn] user`, JSON.stringify(user));
+        return { success: true, user };
       } else {
-        // sign in was cancelled by user
+        throw new Error("No identityToken.");
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.log(`[-][][useGoogleSignIn] error`, JSON.stringify(error));
 
       if (isErrorWithCode(error)) {
@@ -38,14 +48,14 @@ export function useGoogleSignIn() {
           // some other error happened
         }
       } else {
-        // an error that's not related to google sign in occurred
+        const errorMessage =
+          error instanceof Error ? error.message : "Unknown error during Apple sign-in";
+        return { success: false, error: error instanceof Error ? error : new Error(errorMessage) };
       }
     }
   };
 
   return {
     signIn,
-    loading,
-    error,
   };
 }

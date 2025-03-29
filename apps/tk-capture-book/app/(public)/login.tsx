@@ -17,8 +17,8 @@ export default function LoginScreen() {
 
   const { setIsAuthenticated, setUser } = useAuth();
 
-  const { signIn: signInApple, loading: loadingApple, error: errorApple } = useAppleSignIn();
-  const { signIn: signInGoogle, loading: loadingGoogle, error: errorGoogle } = useGoogleSignIn();
+  const { signIn: signInApple } = useAppleSignIn();
+  const { signIn: signInGoogle } = useGoogleSignIn();
 
   const handleAppleLogin = async () => {
     console.log("Apple login pressed");
@@ -27,7 +27,7 @@ export default function LoginScreen() {
 
     if (result.success) {
       try {
-        const userModel = User.fromAppleAuth(result.user);
+        const userModel = User.fromSupabaseAuthUser(result.user, "apple");
         console.log(`[+][LoginScreen] user: ${JSON.stringify(userModel)}`);
 
         const user = await userModel.findOrCreate();
@@ -46,7 +46,19 @@ export default function LoginScreen() {
     setLoading(true);
 
     const result = await signInGoogle();
-    console.log("TCL: handleGoogleLogin -> result", result);
+
+    if (result?.success && result.user) {
+      try {
+        const userModel = User.fromSupabaseAuthUser(result.user, "google");
+        console.log(`[+][LoginScreen] user: ${JSON.stringify(userModel)}`);
+
+        const user = await userModel.findOrCreate();
+        setUser(user);
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error(JSON.stringify(error));
+      }
+    }
 
     // setIsAuthenticated(true);
     setLoading(false);
@@ -62,7 +74,7 @@ export default function LoginScreen() {
   };
 
   // Combine local loading state with Apple loading state
-  const isLoading = loading || loadingApple;
+  const isLoading = loading;
 
   return (
     <View style={styles.container}>
