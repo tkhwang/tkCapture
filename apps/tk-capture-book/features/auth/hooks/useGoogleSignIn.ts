@@ -6,11 +6,6 @@ import {
 } from "@react-native-google-signin/google-signin";
 import { useState } from "react";
 
-GoogleSignin.configure({
-  scopes: ["https://www.googleapis.com/auth/drive.readonly"],
-  webClientId: "185571880939-0umavpdlg075vfcve3hjnth2o8rt10r3.apps.googleusercontent.com",
-});
-
 export function useGoogleSignIn() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);

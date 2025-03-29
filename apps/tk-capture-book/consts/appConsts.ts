@@ -62,6 +62,13 @@ if (!SUPABASE_ANON_KEY) {
   console.log(`[+][const] SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}`);
 }
 
+export const GOOGLE_WEB_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID;
+if (!GOOGLE_WEB_CLIENT_ID) {
+  throw new Error("EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID is not set");
+} else {
+  console.log(`[+][const] GOOGLE_WEB_CLIENT_ID: ${GOOGLE_WEB_CLIENT_ID}`);
+}
+
 /*
  *  Application consts
  */
