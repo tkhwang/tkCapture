@@ -1,4 +1,4 @@
-import { AppleAuthUser } from "../types/remote-user-apple";
+import { User as SupabaseUser } from "@supabase/supabase-js";
 
 import { SupabaseUserRepository } from "@/features/user/repository/supabase/supabase-user-repository";
 import { IUser } from "@/features/user/types/user";
@@ -63,21 +63,13 @@ export class User implements IUser {
     });
   }
 
-  /**
-   *
-   *
-   * @static
-   * @param {AppleAuthUser} remoteAppleUser
-   * @return {*}  {User}
-   * @memberof User
-   */
-  static fromAppleAuth(remoteAppleUser: AppleAuthUser): User {
+  static fromSupabaseAuth(supabaseUser: SupabaseUser, authProvider: AuthProvider): User {
     return new User({
-      id: remoteAppleUser.id,
-      name: remoteAppleUser.email,
-      provider: "apple",
-      createdAt: new Date(remoteAppleUser.created_at),
-      updatedAt: new Date(remoteAppleUser.updated_at),
+      id: supabaseUser.id,
+      name: supabaseUser.email ?? supabaseUser.user_metadata.email,
+      provider: authProvider,
+      createdAt: new Date(supabaseUser.created_at),
+      updatedAt: new Date(supabaseUser.updated_at as string),
     });
   }
 
