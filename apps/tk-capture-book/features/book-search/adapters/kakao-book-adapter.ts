@@ -6,6 +6,8 @@ import {
   BookSearchResponse,
 } from "../types/book-search-interface";
 
+import { Book } from "@/features/book-search/models/book";
+
 export class KakaoBookAdapter implements BookSearchAdapter {
   async search(params: BookSearchParams): Promise<BookSearchResponse> {
     const kakaoResponse = await searchKakaoBooks({
@@ -15,21 +17,23 @@ export class KakaoBookAdapter implements BookSearchAdapter {
       sort: params.sort === "latest" ? "latest" : "accuracy",
     });
 
-    const items: BookSearchItem[] = kakaoResponse.documents.map((doc) => ({
-      title: doc.title,
-      link: doc.url,
-      thumbnail: doc.thumbnail,
-      author: doc.authors.join(", "),
-      isbn: doc.isbn,
-      publisher: doc.publisher,
-      description: doc.contents,
-    }));
+    const books: BookSearchItem[] = kakaoResponse.documents.map((book) =>
+      Book.fromBookSearchItem({
+        title: book.title,
+        link: book.url,
+        thumbnail: book.thumbnail,
+        author: book.authors.join(", "),
+        isbn: book.isbn,
+        publisher: book.publisher,
+        description: book.contents,
+      }),
+    );
 
     return {
       total: kakaoResponse.meta.total_count,
       page: params.page || 1,
       size: params.size || 20,
-      items,
+      items: books,
     };
   }
 }
