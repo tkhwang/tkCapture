@@ -95,9 +95,9 @@ export default function SearchBookScreen() {
       {/* 검색 결과 리스트 */}
       <ScrollView className="flex-1">
         <View className="flex-row flex-wrap">
-          {data?.items.map((book) => (
+          {data?.items.map((book, index) => (
             <BookSearchItemView
-              key={`${bookSearchProvider}-${book.isbn}`}
+              key={`${bookSearchProvider}-${book.isbn}-${index}`}
               book={book}
               onPress={handleBookPress}
             />
