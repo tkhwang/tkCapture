@@ -1,7 +1,8 @@
 import { Session } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { IUser } from "@/features/user/types/user";
+import { User } from "@/features/user/models/user";
+import { IUser, AuthProvider as AuthProviderType } from "@/features/user/types/user";
 import { supabase } from "@/lib/supabase";
 
 type AuthContextType = {
@@ -33,7 +34,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log(`[+][getSession] session.user`, JSON.stringify(session?.user));
+
       setSession(session);
+      if (session?.user && session.user.app_metadata.provider) {
+        const userModel = User.fromSupabaseAuthUser(
+          session.user,
+          session.user.app_metadata.providers.at(-1) as AuthProviderType,
+        );
+        setUser(userModel);
+      }
       setIsAuthenticated(!!session);
       setLoading(false);
     });
@@ -42,7 +52,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      console.log(`[+][onAuthStateChange] session.user`, JSON.stringify(session?.user));
+
       setSession(session);
+      if (session?.user && session.user.app_metadata.provider) {
+        const userModel = User.fromSupabaseAuthUser(
+          session.user,
+          session.user.app_metadata.providers.at(-1) as AuthProviderType,
+        );
+        setUser(userModel);
+      }
       setIsAuthenticated(!!session);
       setLoading(false);
     });

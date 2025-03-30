@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Platform } from "react-native";
 
-import { APP_NAME } from "@/consts/appConsts";
+import { AppName } from "@/components/app-name";
 import { useAppleSignIn } from "@/features/auth/hooks/useAppleSignIn";
+import { useGoogleSignIn } from "@/features/auth/hooks/useGoogleSignIn";
 import { User } from "@/features/user/models/user";
 import { useAuth } from "@/providers/auth-provider";
 
@@ -16,17 +17,8 @@ export default function LoginScreen() {
 
   const { setIsAuthenticated, setUser } = useAuth();
 
-  const { signIn: signInApple, loading: loadingApple, error: errorApple } = useAppleSignIn();
-
-  const handleGoogleLogin = () => {
-    setLoading(true);
-
-    // Google 로그인 로직
-    console.log("Google login pressed");
-
-    setIsAuthenticated(true);
-    setLoading(false);
-  };
+  const { signIn: signInApple } = useAppleSignIn();
+  const { signIn: signInGoogle } = useGoogleSignIn();
 
   const handleAppleLogin = async () => {
     console.log("Apple login pressed");
@@ -35,7 +27,7 @@ export default function LoginScreen() {
 
     if (result.success) {
       try {
-        const userModel = User.fromAppleAuth(result.user);
+        const userModel = User.fromSupabaseAuthUser(result.user, "apple");
         console.log(`[+][LoginScreen] user: ${JSON.stringify(userModel)}`);
 
         const user = await userModel.findOrCreate();
@@ -50,6 +42,28 @@ export default function LoginScreen() {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+
+    const result = await signInGoogle();
+
+    if (result?.success && result.user) {
+      try {
+        const userModel = User.fromSupabaseAuthUser(result.user, "google");
+        console.log(`[+][LoginScreen] user: ${JSON.stringify(userModel)}`);
+
+        const user = await userModel.findOrCreate();
+        setUser(user);
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error(JSON.stringify(error));
+      }
+    }
+
+    // setIsAuthenticated(true);
+    setLoading(false);
+  };
+
   const handleEmailLogin = () => {
     setLoading(true);
 
@@ -60,7 +74,7 @@ export default function LoginScreen() {
   };
 
   // Combine local loading state with Apple loading state
-  const isLoading = loading || loadingApple;
+  const isLoading = loading;
 
   return (
     <View style={styles.container}>
@@ -69,21 +83,22 @@ export default function LoginScreen() {
         style={styles.backgroundImage}
       >
         <LinearGradient colors={["rgba(0,0,0,0.1)", "rgba(0,0,0,0.8)"]} style={styles.gradient}>
-          <Text style={styles.appName}>{APP_NAME}</Text>
+          <AppName />
           <View style={styles.content}>
             <Text style={styles.title}>{t("login.title")}</Text>
             <Text style={styles.subtitle}>{t("login.subtitle")}</Text>
 
             <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={[styles.socialButton, styles.googleButton]}
-                onPress={handleGoogleLogin}
-                disabled={isLoading}
-              >
-                <AntDesign name="google" size={24} color="#EA4335" />
-                <Text style={styles.buttonText}>{t("login.googleButton")}</Text>
-              </TouchableOpacity>
-
+              {Platform.OS === "android" && (
+                <TouchableOpacity
+                  style={[styles.socialButton, styles.googleButton]}
+                  onPress={handleGoogleLogin}
+                  disabled={isLoading}
+                >
+                  <AntDesign name="google" size={24} color="#EA4335" />
+                  <Text style={styles.buttonText}>{t("login.googleButton")}</Text>
+                </TouchableOpacity>
+              )}
               {Platform.OS === "ios" && (
                 <TouchableOpacity
                   style={[styles.socialButton, styles.appleButton]}
@@ -94,7 +109,6 @@ export default function LoginScreen() {
                   <Text style={styles.buttonText}>{t("login.appleButton")}</Text>
                 </TouchableOpacity>
               )}
-
               <TouchableOpacity
                 style={[styles.socialButton, styles.emailButton]}
                 onPress={handleEmailLogin}
@@ -114,20 +128,6 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  appName: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: "#fff",
-    textAlign: "center",
-    position: "absolute",
-    top: 100,
-    left: 0,
-    right: 0,
-    zIndex: 1,
-    textShadowColor: "rgba(0, 0, 0, 0.75)",
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 5,
-  },
   container: {
     flex: 1,
   },

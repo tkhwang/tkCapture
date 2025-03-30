@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { View, Text } from "react-native";
 
 import { BookSearchProviderAtom } from "@/features/book-search/states/book";
-import { Profile } from "@/features/profile/profile";
 import { BookSearchProviderSetting } from "@/features/setting/book-search-provider-setting";
+import { Profile } from "@/features/setting/components/profile";
 import { LanguageSetting } from "@/features/setting/language-setting";
 import { useAuth } from "@/providers/auth-provider";
 

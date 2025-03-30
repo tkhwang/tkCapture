@@ -8,10 +8,13 @@ import { useEffect, useState } from "react";
 import { View, ActivityIndicator } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { configureGoogleAuth } from "@/features/auth/google-auth";
 import i18n from "@/features/i18n";
 import { languageAtom } from "@/features/setting/states/language";
 import { queryClient } from "@/lib/react-query-client";
 import { AuthProvider, useAuth } from "@/providers/auth-provider";
+
+configureGoogleAuth();
 
 function ProtectedLayout() {
   const segments = useSegments();

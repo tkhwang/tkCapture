@@ -1,18 +1,11 @@
 import * as AppleAuthentication from "expo-apple-authentication";
-import { useState } from "react";
 
 import { AuthSignInResult } from "@/features/auth/types/auth";
 import { supabase } from "@/lib/supabase";
 
 export function useAppleSignIn() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
-
   const signIn = async (): Promise<AuthSignInResult> => {
     try {
-      setLoading(true);
-      setError(null);
-
       const credential = await AppleAuthentication.signInAsync({
         requestedScopes: [
           AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
@@ -21,49 +14,39 @@ export function useAppleSignIn() {
       });
       console.log(`[+][useAppleSignIn] credential`, JSON.stringify(credential));
 
-      // Sign in via Supabase Auth.
-      if (credential.identityToken) {
-        const {
-          error,
-          data: { user },
-        } = await supabase.auth.signInWithIdToken({
-          provider: "apple",
-          token: credential.identityToken,
-        });
-        console.log(
-          `[+][useAppleSignIn] signInWithIdToken`,
-          JSON.stringify({ error, user }, null, 2),
-        );
+      if (!credential.identityToken) {
+        const error = new Error("No identityToken.");
+        return { success: false, error };
+      }
 
-        if (!error) {
-          // User is signed in.
-          return { success: true, user };
-        } else {
-          throw new Error(error.message);
-        }
-      } else {
-        throw new Error("No identityToken.");
+      const {
+        error,
+        data: { user },
+      } = await supabase.auth.signInWithIdToken({
+        provider: "apple",
+        token: credential.identityToken,
+      });
+
+      if (error) {
+        console.log(`[-][useAppleSignIn] error`, JSON.stringify(error));
+
+        return { success: false, error };
       }
-    } catch (e) {
-      if (e && typeof e === "object" && "code" in e && e.code === "ERR_REQUEST_CANCELED") {
-        // User canceled the sign-in flow
-        console.log("User canceled Apple sign-in");
-        return { success: false, canceled: true };
+
+      console.log(`[+][useAppleSignIn] user`, JSON.stringify(user));
+      return { success: true, user };
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(`[-][useAppleSignIn] error`, JSON.stringify(error));
+        return { success: false, error };
       } else {
-        // Other errors
-        const errorMessage = e instanceof Error ? e.message : "Unknown error during Apple sign-in";
-        console.error("Apple sign-in error:", errorMessage);
-        setError(e instanceof Error ? e : new Error(errorMessage));
-        return { success: false, error: e instanceof Error ? e : new Error(errorMessage) };
+        const newError = new Error(`Unknown error during Apple sign-in: ${error}`);
+        return { success: false, error: newError };
       }
-    } finally {
-      setLoading(false);
     }
   };
 
   return {
     signIn,
-    loading,
-    error,
   };
 }
