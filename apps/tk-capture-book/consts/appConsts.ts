@@ -69,6 +69,13 @@ if (!GOOGLE_WEB_CLIENT_ID) {
   console.log(`[+][const] GOOGLE_WEB_CLIENT_ID: ${GOOGLE_WEB_CLIENT_ID}`);
 }
 
+export const GOOGLE_IOS_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID;
+if (!GOOGLE_IOS_CLIENT_ID) {
+  throw new Error("EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID is not set");
+} else {
+  console.log(`[+][const] GOOGLE_IOS_CLIENT_ID: ${GOOGLE_IOS_CLIENT_ID}`);
+}
+
 /*
  *  Application consts
  */
