@@ -15,6 +15,11 @@ export const en = {
     },
     search: {
       tabTitle: "Search",
+      "search-no-result": {
+        title: "No search results found",
+        description:
+          "Try searching for a book by name or author.\nYou can change the book search provider in the settings.",
+      },
     },
     settings: {
       tabTitle: "Settings",
