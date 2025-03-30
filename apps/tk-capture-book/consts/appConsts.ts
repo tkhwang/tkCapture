@@ -4,6 +4,13 @@
 export const APP_NAME = "tkCaptureBook";
 
 /*
+ *  APP VERSION
+ */
+export const APP_VERSION = "1.11.1";
+export const PLAYSTORE_VERSION = "11";
+export const VERSION = `${APP_VERSION} (${PLAYSTORE_VERSION})`;
+
+/*
  *  Environment variable
  */
 // export const GOOGLE_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID;
