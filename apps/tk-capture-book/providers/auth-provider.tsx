@@ -2,8 +2,9 @@ import { Session } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { User } from "@/features/user/models/user";
-import { IUser, AuthProvider as AuthProviderType } from "@/features/user/types/user";
+import { IUser } from "@/features/user/types/user";
 import { supabase } from "@/lib/supabase";
+import { isOAuthProviderFrom } from "@/utils/auth";
 
 type AuthContextType = {
   session: Session | null;
@@ -40,7 +41,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (session?.user && session.user.app_metadata.provider) {
         const userModel = User.fromSupabaseAuthUser(
           session.user,
-          session.user.app_metadata.providers.at(-1) as AuthProviderType,
+          isOAuthProviderFrom(session, "apple") ? "apple" : "google",
         );
         setUser(userModel);
       }
@@ -58,7 +59,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (session?.user && session.user.app_metadata.provider) {
         const userModel = User.fromSupabaseAuthUser(
           session.user,
-          session.user.app_metadata.providers.at(-1) as AuthProviderType,
+          isOAuthProviderFrom(session, "apple") ? "apple" : "google",
         );
         setUser(userModel);
       }

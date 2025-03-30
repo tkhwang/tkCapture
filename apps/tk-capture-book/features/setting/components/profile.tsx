@@ -9,7 +9,6 @@ interface ProfileProps {
 
 export function Profile({ onLogout }: ProfileProps) {
   const { user } = useAuth();
-  console.log("TCL: Profile -> user", user);
 
   return (
     <View className="p-4 shadow-md bg-gray-50 rounded-xl">

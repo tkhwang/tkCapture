@@ -6,6 +6,8 @@ import {
   BookSearchResponse,
 } from "../types/book-search-interface";
 
+import { Book } from "@/features/book-search/models/book";
+
 export class NaverBookAdapter implements BookSearchAdapter {
   async search(params: BookSearchParams): Promise<BookSearchResponse> {
     const naverResponse = await searchNaverBooks({
@@ -15,21 +17,23 @@ export class NaverBookAdapter implements BookSearchAdapter {
       sort: params.sort === "latest" ? "date" : "sim",
     });
 
-    const items: BookSearchItem[] = naverResponse.items.map((item) => ({
-      title: item.title.replace(/<[^>]*>/g, ""),
-      link: item.link,
-      thumbnail: item.image,
-      author: item.author,
-      isbn: item.isbn,
-      publisher: item.publisher,
-      description: item.description,
-    }));
+    const books: BookSearchItem[] = naverResponse.items.map((book) =>
+      Book.fromBookSearchItem({
+        title: book.title.replace(/<[^>]*>/g, ""),
+        link: book.link,
+        thumbnail: book.image,
+        author: book.author,
+        isbn: book.isbn,
+        publisher: book.publisher,
+        description: book.description,
+      }),
+    );
 
     return {
       total: naverResponse.total,
       page: params.page || 1,
       size: params.size || 10,
-      items,
+      items: books,
     };
   }
 }

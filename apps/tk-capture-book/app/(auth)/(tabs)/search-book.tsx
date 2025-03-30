@@ -2,7 +2,16 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useAtomValue } from "jotai";
 import { useState } from "react";
-import { View, Text, TextInput, ActivityIndicator, Pressable, ScrollView } from "react-native";
+import { useTranslation } from "react-i18next";
+import {
+  View,
+  Text,
+  TextInput,
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  Image,
+} from "react-native";
 import { useDebounce } from "use-debounce";
 
 import { SEARCH_DEBOUNCE_MS, SEARCH_PAGE_SIZE } from "@/consts/appConsts";
@@ -15,6 +24,8 @@ export default function SearchBookScreen() {
   const router = useRouter();
 
   const [searchText, setSearchText] = useState("");
+
+  const { t } = useTranslation();
 
   const bookSearchProvider = useAtomValue(BookSearchProviderAtom);
   const [debouncedSearchText] = useDebounce(searchText, SEARCH_DEBOUNCE_MS);
@@ -63,12 +74,30 @@ export default function SearchBookScreen() {
         </View>
       )}
 
+      {!isLoading && !error && (!data?.items || data.items.length === 0) && (
+        <View className="absolute inset-0 flex items-center justify-center px-4">
+          <View className="items-center">
+            <Image
+              source={require("../../../assets/images/woman-book-flying-green.png")}
+              className="mb-8 w-72 h-72"
+              resizeMode="contain"
+            />
+            <Text className="mb-3 text-xl font-medium text-gray-800">
+              {t("search.search-no-result.title")}
+            </Text>
+            <Text className="text-base text-center text-gray-500">
+              {t("search.search-no-result.description")}
+            </Text>
+          </View>
+        </View>
+      )}
+
       {/* 검색 결과 리스트 */}
       <ScrollView className="flex-1">
         <View className="flex-row flex-wrap">
-          {data?.items.map((book) => (
+          {data?.items.map((book, index) => (
             <BookSearchItemView
-              key={`${bookSearchProvider}-${book.isbn}`}
+              key={`${bookSearchProvider}-${book.isbn}-${index}`}
               book={book}
               onPress={handleBookPress}
             />
