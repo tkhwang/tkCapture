@@ -14,7 +14,7 @@ export const ko = {
       tabTitle: "홈",
     },
     search: {
-      tabTitle: "검색",
+      tabTitle: "도서 검색",
       "search-no-result": {
         title: "도서 검색 결과가 없습니다",
         description:

@@ -14,7 +14,7 @@ export const en = {
       tabTitle: "Home",
     },
     search: {
-      tabTitle: "Search",
+      tabTitle: "Book Search",
       "search-no-result": {
         title: "No search results found",
         description:
