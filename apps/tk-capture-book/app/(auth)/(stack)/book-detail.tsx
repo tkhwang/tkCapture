@@ -1,15 +1,22 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Text, View, Image, ScrollView, TouchableOpacity, SafeAreaView } from "react-native";
 
-import { Book } from "@/features/book-search/models/book";
+import { useSearchBookByISDN } from "@/features/book-search/hooks/useSearchBookByISDN";
 
 export default function BookDetailScreen() {
+  const router = useRouter();
   const { t } = useTranslation();
 
-  const { book } = useLocalSearchParams();
-  const bookData = JSON.parse(book as string) as Book;
+  const { isbn } = useLocalSearchParams();
+
+  const { data: bookData } = useSearchBookByISDN(isbn as string);
+
+  if (!bookData) {
+    router.back();
+    return;
+  }
 
   const handleRegisterBook = () => {
     console.log(`[+][BookDetailScreen] book:  ${JSON.stringify(bookData)}`);
