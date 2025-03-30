@@ -34,7 +34,7 @@ export function useGoogleSignIn() {
         throw new Error("No identityToken.");
       }
     } catch (error: unknown) {
-      console.log(`[-][][useGoogleSignIn] error`, JSON.stringify(error));
+      console.log(`[-][useGoogleSignIn] error`, JSON.stringify(error));
 
       if (isErrorWithCode(error)) {
         switch (error.code) {

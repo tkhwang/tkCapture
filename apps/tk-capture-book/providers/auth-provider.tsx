@@ -40,7 +40,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (session?.user && session.user.app_metadata.provider) {
         const userModel = User.fromSupabaseAuthUser(
           session.user,
-          session.user.identities?.at(-1)?.provider as AuthProviderType,
+          session.user.app_metadata.providers.at(-1) as AuthProviderType,
         );
         setUser(userModel);
       }
@@ -58,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (session?.user && session.user.app_metadata.provider) {
         const userModel = User.fromSupabaseAuthUser(
           session.user,
-          session.user.identities?.at(-1)?.provider as AuthProviderType,
+          session.user.app_metadata.providers.at(-1) as AuthProviderType,
         );
         setUser(userModel);
       }
