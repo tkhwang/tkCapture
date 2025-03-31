@@ -18,8 +18,8 @@ import { useDebounce } from "use-debounce";
 import { SEARCH_DEBOUNCE_MS, SEARCH_PAGE_SIZE } from "@/consts/appConsts";
 import { BookSearchItemView } from "@/features/book-search/components/BookSearchItem";
 import { useSearchBooks } from "@/features/book-search/hooks/useSearchBooks";
-import { Book } from "@/features/book-search/models/book";
 import { BookSearchProviderAtom } from "@/features/book-search/states/book";
+import { BookSearchItem } from "@/features/book-search/types/book-search-interface";
 
 export default function SearchBookScreen() {
   const router = useRouter();
@@ -38,7 +38,7 @@ export default function SearchBookScreen() {
       sort: "accuracy",
     });
 
-  const handleBookPress = (book: Book) => {
+  const handleBookPress = (book: BookSearchItem) => {
     router.push({
       pathname: "/(stack)/book-detail",
       params: { isbn: book.isbn },

@@ -4,6 +4,9 @@ import { useTranslation } from "react-i18next";
 import { Text, View, Image, ScrollView, TouchableOpacity, SafeAreaView } from "react-native";
 
 import { useSearchBookByISBN } from "@/features/book-search/hooks/useSearchBookByISBN";
+import { Book } from "@/features/book-search/models/book";
+import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/providers/auth-provider";
 
 export default function BookDetailScreen() {
   const router = useRouter();
@@ -11,34 +14,52 @@ export default function BookDetailScreen() {
 
   const { isbn } = useLocalSearchParams();
 
-  const { data: searchedBook } = useSearchBookByISBN(isbn as string);
+  const { user } = useAuth();
 
-  if (!searchedBook) {
-    router.back();
-    return;
-  }
+  const { data: selectedBook } = useSearchBookByISBN(isbn as string);
 
-  const handleRegisterBook = () => {
-    console.log(`[+][BookDetailScreen] book:  ${JSON.stringify(searchedBook)}`);
+  const handleRegisterBook = async (searchedBook: Book) => {
+    if (!user) return;
+    if (!searchedBook) return;
+
+    try {
+      const newBookDB = searchedBook.toDatabase(user.id);
+      const { data, error } = await supabase.from("books").insert([newBookDB]).select().single();
+
+      if (error) {
+        console.error(`[-][BookDetailScreen] error registering book: ${JSON.stringify(error)}`);
+        return;
+      }
+
+      console.log(`[+][BookDetailScreen] book registered: ${JSON.stringify(data)}`);
+      router.replace("/(auth)/(tabs)");
+    } catch (error) {
+      console.error(`[-][BookDetailScreen] error: ${JSON.stringify(error)}`);
+    }
   };
+
+  if (!selectedBook) {
+    router.back();
+    return null;
+  }
 
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView className="flex-1 pb-20 bg-white">
         {/* 상단 제목 및 기본 정보 */}
         <View className="p-4 border-b border-gray-200">
-          <Text className="text-2xl font-bold">{searchedBook.title}</Text>
+          <Text className="text-2xl font-bold">{selectedBook.title}</Text>
           <Text className="mt-2 text-gray-600">
-            {searchedBook.author} | {searchedBook.publisher}
+            {selectedBook.author} | {selectedBook.publisher}
           </Text>
         </View>
 
         {/* 책 표지 이미지 */}
         <View className="items-center justify-center py-8">
-          {searchedBook.thumbnail && (
+          {selectedBook.thumbnail && (
             <View className="w-56 shadow-lg h-72">
               <Image
-                source={{ uri: searchedBook.thumbnail }}
+                source={{ uri: selectedBook.thumbnail }}
                 className="w-full h-full rounded-lg"
                 resizeMode="contain"
               />
@@ -49,14 +70,14 @@ export default function BookDetailScreen() {
         {/* 세부 정보 */}
         <View className="p-4">
           <Text className="mb-2 text-lg font-semibold">도서 정보</Text>
-          <Text className="leading-6 text-gray-600">{searchedBook.description}</Text>
+          <Text className="leading-6 text-gray-600">{selectedBook.description}</Text>
         </View>
       </ScrollView>
 
       {/* Bottom Registration Button */}
       <View className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
         <TouchableOpacity
-          onPress={handleRegisterBook}
+          onPress={() => handleRegisterBook(selectedBook)}
           className="flex-row items-center justify-center py-3 px-4 bg-[#0284c7] rounded-lg"
           activeOpacity={0.8}
         >
