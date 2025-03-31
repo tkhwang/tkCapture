@@ -6,8 +6,8 @@ export const APP_NAME = "tkCaptureBook";
 /*
  *  APP VERSION
  */
-export const APP_VERSION = "1.27.1";
-export const PLAYSTORE_VERSION = "27";
+export const APP_VERSION = "1.28.1";
+export const PLAYSTORE_VERSION = "28";
 export const VERSION = `${APP_VERSION} (${PLAYSTORE_VERSION})`;
 
 /*
@@ -77,4 +77,5 @@ export const SEARCH_PAGE_SIZE = 20;
 
 export const GOOGLE_CLOUD_VISION_API_URL = "https://vision.googleapis.com/v1/images:annotate";
 
-export const BOOK_CACHE_TIME = 7 * 24 * 60 * 60 * 1000; // 1주일
+export const BOOK_LIST_QUERY_CACHE_TIME = 60 * 60 * 1000; // 1시간
+export const BOOK_DETAIL_QUERY_CACHE_TIME = 7 * 24 * 60 * 60 * 1000; // 1주일

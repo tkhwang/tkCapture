@@ -3,7 +3,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Text, View, Image, ScrollView, TouchableOpacity, SafeAreaView } from "react-native";
 
-import { useSearchBookByISDN } from "@/features/book-search/hooks/useSearchBookByISDN";
+import { useSearchBookByISBN } from "@/features/book-search/hooks/useSearchBookByISBN";
 
 export default function BookDetailScreen() {
   const router = useRouter();
@@ -11,15 +11,15 @@ export default function BookDetailScreen() {
 
   const { isbn } = useLocalSearchParams();
 
-  const { data: bookData } = useSearchBookByISDN(isbn as string);
+  const { data: searchedBook } = useSearchBookByISBN(isbn as string);
 
-  if (!bookData) {
+  if (!searchedBook) {
     router.back();
     return;
   }
 
   const handleRegisterBook = () => {
-    console.log(`[+][BookDetailScreen] book:  ${JSON.stringify(bookData)}`);
+    console.log(`[+][BookDetailScreen] book:  ${JSON.stringify(searchedBook)}`);
   };
 
   return (
@@ -27,18 +27,18 @@ export default function BookDetailScreen() {
       <ScrollView className="flex-1 pb-20 bg-white">
         {/* 상단 제목 및 기본 정보 */}
         <View className="p-4 border-b border-gray-200">
-          <Text className="text-2xl font-bold">{bookData.title}</Text>
+          <Text className="text-2xl font-bold">{searchedBook.title}</Text>
           <Text className="mt-2 text-gray-600">
-            {bookData.author} | {bookData.publisher}
+            {searchedBook.author} | {searchedBook.publisher}
           </Text>
         </View>
 
         {/* 책 표지 이미지 */}
         <View className="items-center justify-center py-8">
-          {bookData.thumbnail && (
+          {searchedBook.thumbnail && (
             <View className="w-56 shadow-lg h-72">
               <Image
-                source={{ uri: bookData.thumbnail }}
+                source={{ uri: searchedBook.thumbnail }}
                 className="w-full h-full rounded-lg"
                 resizeMode="contain"
               />
@@ -49,7 +49,7 @@ export default function BookDetailScreen() {
         {/* 세부 정보 */}
         <View className="p-4">
           <Text className="mb-2 text-lg font-semibold">도서 정보</Text>
-          <Text className="leading-6 text-gray-600">{bookData.description}</Text>
+          <Text className="leading-6 text-gray-600">{searchedBook.description}</Text>
         </View>
       </ScrollView>
 
