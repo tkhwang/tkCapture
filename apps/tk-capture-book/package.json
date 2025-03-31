@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "build:ios": "eas build --profile production --platform ios",
     "build:android": "eas build --profile preview --platform android",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "generate-types": "npx supabase gen types typescript --project-id zklqfvgqkpoxfsjkdeyz --schema public > ./types/types_db.ts"
   },
   "dependencies": {
     "@flyerhq/react-native-chat-ui": "^1.4.3",
