@@ -61,7 +61,7 @@ export default function SearchBookScreen() {
   const allBooks = data?.pages.flatMap((page) => page.items) || [];
 
   // 검색 결과가 없는지 확인
-  const noResults = !isLoading && !error && allBooks.length === 0 && !!debouncedSearchText;
+  const hasNoResults = !isLoading && !error && allBooks.length === 0 && !debouncedSearchText;
 
   return (
     <View className="flex-1 bg-white">
@@ -93,7 +93,7 @@ export default function SearchBookScreen() {
         </View>
       )}
 
-      {noResults && (
+      {hasNoResults && (
         <View className="absolute inset-0 flex items-center justify-center px-4">
           <View className="items-center">
             <Image
