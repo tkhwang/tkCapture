@@ -1,17 +1,30 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 
+import { BOOK_CACHE_TIME } from "@/consts/appConsts";
 import { searchBooks } from "@/features/book-search/api/search-books";
+import { Book } from "@/features/book-search/models/book";
 import { BookSearchProviderAtom } from "@/features/book-search/states/book";
 import { BookSearchParams } from "@/features/book-search/types/book-search-interface";
 
 export function useSearchBooks(params: BookSearchParams) {
   const provider = useAtomValue(BookSearchProviderAtom);
+  const queryClient = useQueryClient();
 
   return useQuery({
-    queryKey: [`${provider}-api`, "books", params],
-    queryFn: () => searchBooks(provider, params),
-    enabled: !!params.query, // 검색어가 있을 때만 쿼리 실행
-    staleTime: 5 * 60 * 1000, // 5분간 캐시 유지
+    queryKey: ["books", provider, params],
+    queryFn: async () => {
+      const results = await searchBooks(provider, params);
+
+      results.items.forEach((book: Book) => {
+        if (book.isbn) {
+          queryClient.setQueryData(["book", provider, book.isbn], book);
+        }
+      });
+
+      return results;
+    },
+    enabled: !!params.query,
+    staleTime: BOOK_CACHE_TIME,
   });
 }
