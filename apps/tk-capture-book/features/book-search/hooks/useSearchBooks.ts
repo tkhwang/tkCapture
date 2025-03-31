@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 
-import { BOOK_CACHE_TIME } from "@/consts/appConsts";
+import { BOOK_LIST_QUERY_CACHE_TIME } from "@/consts/appConsts";
 import { searchBooks } from "@/features/book-search/api/search-books";
 import { Book } from "@/features/book-search/models/book";
 import { BookSearchProviderAtom } from "@/features/book-search/states/book";
@@ -25,6 +25,6 @@ export function useSearchBooks(params: BookSearchParams) {
       return results;
     },
     enabled: !!params.query,
-    staleTime: BOOK_CACHE_TIME,
+    staleTime: BOOK_LIST_QUERY_CACHE_TIME,
   });
 }

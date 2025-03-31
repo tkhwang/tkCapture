@@ -77,4 +77,5 @@ export const SEARCH_PAGE_SIZE = 20;
 
 export const GOOGLE_CLOUD_VISION_API_URL = "https://vision.googleapis.com/v1/images:annotate";
 
-export const BOOK_CACHE_TIME = 7 * 24 * 60 * 60 * 1000; // 1주일
+export const BOOK_LIST_QUERY_CACHE_TIME = 60 * 60 * 1000; // 1시간
+export const BOOK_DETAIL_QUERY_CACHE_TIME = 7 * 24 * 60 * 60 * 1000; // 1주일
