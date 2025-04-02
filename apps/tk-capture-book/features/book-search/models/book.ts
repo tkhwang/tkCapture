@@ -1,4 +1,5 @@
 import { BookSearchItem } from "@/features/book-search/types/book-search-interface";
+import { TablesInsert } from "@/types/types_db";
 
 /**
  * Book model
@@ -30,5 +31,18 @@ export class Book implements BookSearchItem {
       item.publisher,
       item.description,
     );
+  }
+
+  toDatabase(ownerId: string): TablesInsert<"books"> {
+    return {
+      ownerId,
+      title: this.title,
+      link: this.link,
+      thumbnail: this.thumbnail,
+      author: this.author,
+      isbn: this.isbn,
+      publisher: this.publisher,
+      description: this.description,
+    };
   }
 }
