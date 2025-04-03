@@ -1,5 +1,7 @@
 # tkCapture
 
+![img](./docs/figs/GitDiagram Diagram.png)
+
 ## [0] Common
 
 - development tool with AI
@@ -9,8 +11,8 @@
   - [a0.dev](https://a0.dev/)
 
 - backend
-  - nest.js
   - supabase
+  - nest.js
 
 ## [1] tkCaptureBook
 
