@@ -1,6 +1,6 @@
 # tkCapture
 
-![img](./docs/figs/GitDiagram Diagram.png)
+![img](./docs/figs/GitDiagram-Diagram.png)
 
 ## [0] Common
 
