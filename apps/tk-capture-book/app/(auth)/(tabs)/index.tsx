@@ -39,7 +39,7 @@ export default function HomeScreen() {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <View className="flex-1 py-4 bg-gray-50">
       {loading ? (
         <View className="items-center justify-center flex-1">
           <ActivityIndicator size="large" color="#0284c7" />
@@ -49,7 +49,7 @@ export default function HomeScreen() {
           data={books}
           renderItem={renderBookItem}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ padding: 16 }}
+          contentContainerStyle={{ paddingHorizontal: 16 }}
         />
       ) : (
         <View className="absolute inset-0 flex items-center justify-center px-4">
@@ -70,6 +70,6 @@ export default function HomeScreen() {
       )}
 
       <StatusBar style="auto" />
-    </SafeAreaView>
+    </View>
   );
 }
