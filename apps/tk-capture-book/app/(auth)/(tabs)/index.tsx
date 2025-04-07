@@ -1,10 +1,9 @@
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Text, View, FlatList, Image, TouchableOpacity, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { supabase } from "@/lib/supabase";
+import { useBooks } from "@/features/book-search/hooks/useBooks";
 import { useAuth } from "@/providers/auth-provider";
 import { Database } from "@/types/types_db";
 
@@ -12,43 +11,9 @@ type Book = Database["public"]["Tables"]["books"]["Row"];
 
 export default function HomeScreen() {
   const { t } = useTranslation();
+
   const { user } = useAuth();
-  const [books, setBooks] = useState<Book[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!user) {
-      setLoading(false);
-      return;
-    }
-
-    const userId = user.id;
-
-    async function fetchBooks() {
-      try {
-        setLoading(true);
-        const { data, error } = await supabase
-          .from("books")
-          .select("*")
-          .eq("ownerId", userId)
-          .order("created_at", { ascending: false });
-
-        if (error) {
-          console.error(`[-][HomeScreen] Error fetching books: ${JSON.stringify(error)}`);
-          return;
-        }
-
-        setBooks(data || []);
-        console.log(`[+][HomeScreen] Fetched ${data?.length} books`);
-      } catch (error) {
-        console.error(`[-][HomeScreen] Unexpected error: ${JSON.stringify(error)}`);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchBooks();
-  }, [user]);
+  const { books, loading } = useBooks(user?.id);
 
   const renderBookItem = ({ item }: { item: Book }) => (
     <TouchableOpacity className="flex-row p-4 mb-4 bg-white rounded-lg shadow-sm">
@@ -74,7 +39,7 @@ export default function HomeScreen() {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <View className="flex-1 py-4 bg-gray-50">
       {loading ? (
         <View className="items-center justify-center flex-1">
           <ActivityIndicator size="large" color="#0284c7" />
@@ -84,7 +49,7 @@ export default function HomeScreen() {
           data={books}
           renderItem={renderBookItem}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ padding: 16 }}
+          contentContainerStyle={{ paddingHorizontal: 16 }}
         />
       ) : (
         <View className="absolute inset-0 flex items-center justify-center px-4">
@@ -105,6 +70,6 @@ export default function HomeScreen() {
       )}
 
       <StatusBar style="auto" />
-    </SafeAreaView>
+    </View>
   );
 }
