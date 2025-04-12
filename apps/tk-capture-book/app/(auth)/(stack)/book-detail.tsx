@@ -1,90 +1,54 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { Text, View, Image, ScrollView, TouchableOpacity, SafeAreaView } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
 
-import { useSearchBookByISBN } from "@/features/book-search/hooks/useSearchBookByISBN";
-import { Book } from "@/features/book-search/models/book";
-import { supabase } from "@/lib/supabase";
-import { useAuth } from "@/providers/auth-provider";
+type BookParams = {
+  id: string;
+  title: string;
+  author: string;
+  publisher: string;
+  thumbnail?: string;
+  description?: string;
+};
 
 export default function BookDetailScreen() {
-  const router = useRouter();
+  const params = useLocalSearchParams<BookParams>();
   const { t } = useTranslation();
 
-  const { isbn } = useLocalSearchParams();
-
-  const { user } = useAuth();
-
-  const { data: selectedBook } = useSearchBookByISBN(isbn as string);
-
-  const handleRegisterBook = async (searchedBook: Book) => {
-    if (!user) return;
-    if (!searchedBook) return;
-
-    try {
-      const newBookDB = searchedBook.toDatabase(user.id);
-      const { data, error } = await supabase.from("books").insert([newBookDB]).select().single();
-
-      if (error) {
-        console.error(`[-][BookDetailScreen] error registering book: ${JSON.stringify(error)}`);
-        return;
-      }
-
-      console.log(`[+][BookDetailScreen] book registered: ${JSON.stringify(data)}`);
-      router.replace("/(auth)/(tabs)");
-    } catch (error) {
-      console.error(`[-][BookDetailScreen] error: ${JSON.stringify(error)}`);
-    }
-  };
-
-  if (!selectedBook) {
-    router.back();
-    return null;
+  if (!params.id) {
+    return (
+      <View className="items-center justify-center flex-1">
+        <Text className="text-lg text-gray-600">Book not found</Text>
+      </View>
+    );
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <ScrollView className="flex-1 pb-20 bg-white">
-        {/* 상단 제목 및 기본 정보 */}
-        <View className="p-4 border-b border-gray-200">
-          <Text className="text-2xl font-bold">{selectedBook.title}</Text>
-          <Text className="mt-2 text-gray-600">
-            {selectedBook.author} | {selectedBook.publisher}
-          </Text>
-        </View>
-
-        {/* 책 표지 이미지 */}
-        <View className="items-center justify-center py-8">
-          {selectedBook.thumbnail && (
-            <View className="w-56 shadow-lg h-72">
-              <Image
-                source={{ uri: selectedBook.thumbnail }}
-                className="w-full h-full rounded-lg"
-                resizeMode="contain"
-              />
-            </View>
-          )}
-        </View>
-
-        {/* 세부 정보 */}
-        <View className="p-4">
-          <Text className="mb-2 text-lg font-semibold">도서 정보</Text>
-          <Text className="leading-6 text-gray-600">{selectedBook.description}</Text>
-        </View>
-      </ScrollView>
-
-      {/* Bottom Registration Button */}
-      <View className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
-        <TouchableOpacity
-          onPress={() => handleRegisterBook(selectedBook)}
-          className="flex-row items-center justify-center py-3 px-4 bg-[#0284c7] rounded-lg"
-          activeOpacity={0.8}
-        >
-          <Ionicons name="add-circle" size={20} color="white" />
-          <Text className="ml-2 text-base font-medium text-white">{t("search.register-book")}</Text>
-        </TouchableOpacity>
+    <ScrollView className="flex-1 p-4 bg-white">
+      <View className="flex-row items-center mb-4">
+        <Ionicons name="book" size={24} color="#0284c7" />
+        <Text className="ml-2 text-2xl font-bold text-gray-800">{t("home.detail.title")}</Text>
       </View>
-    </SafeAreaView>
+
+      <View className="p-4 mb-6 bg-white border shadow-md border-sky-100 rounded-xl">
+        <View className="flex-row">
+          {params.thumbnail && (
+            <Image
+              source={{ uri: params.thumbnail }}
+              className="w-32 mr-4 rounded-md shadow-md h-44"
+              resizeMode="cover"
+            />
+          )}
+          <View className="flex-1">
+            <Text className="mb-2 text-xl font-bold text-gray-800" numberOfLines={2}>
+              {params.title}
+            </Text>
+            <Text className="mb-1 text-gray-700">{params.author}</Text>
+            <Text className="mb-1 text-gray-600">{params.publisher}</Text>
+          </View>
+        </View>
+      </View>
+    </ScrollView>
   );
 }

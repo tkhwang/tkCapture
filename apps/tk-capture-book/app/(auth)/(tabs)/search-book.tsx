@@ -40,7 +40,7 @@ export default function SearchBookScreen() {
 
   const handleBookPress = (book: BookSearchItem) => {
     router.push({
-      pathname: "/(stack)/book-detail",
+      pathname: "/(stack)/book-search-detail",
       params: { isbn: book.isbn },
     });
   };
