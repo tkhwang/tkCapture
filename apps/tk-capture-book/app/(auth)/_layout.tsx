@@ -1,6 +1,9 @@
 import { Stack } from "expo-router";
+import { useTranslation } from "react-i18next";
 
 export default function AuthLayout() {
+  const { t } = useTranslation();
+
   return (
     <Stack
       screenOptions={{
@@ -12,7 +15,7 @@ export default function AuthLayout() {
         name="(stack)/book-detail"
         options={{
           headerBackTitle: "",
-          headerTitle: "Book Detail",
+          headerTitle: t("home.detail.title"),
           headerShown: true,
         }}
       />
@@ -20,7 +23,7 @@ export default function AuthLayout() {
         name="(stack)/book-search-detail"
         options={{
           headerBackTitle: "",
-          headerTitle: "Book Detail",
+          headerTitle: t("home.detail.title"),
           headerShown: true,
         }}
       />

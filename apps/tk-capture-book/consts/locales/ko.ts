@@ -12,6 +12,9 @@ export const ko = {
     },
     home: {
       tabTitle: "홈",
+      detail: {
+        title: "도서 정보",
+      },
     },
     search: {
       tabTitle: "도서 검색",

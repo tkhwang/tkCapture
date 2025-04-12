@@ -1,9 +1,8 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Image, ScrollView, Text, View } from "react-native";
 
-import { Database } from "@/types/types_db";
-
-type Book = Database["public"]["Tables"]["books"]["Row"];
 type BookParams = {
   id: string;
   title: string;
@@ -15,6 +14,7 @@ type BookParams = {
 
 export default function BookDetailScreen() {
   const params = useLocalSearchParams<BookParams>();
+  const { t } = useTranslation();
 
   if (!params.id) {
     return (
@@ -25,17 +25,22 @@ export default function BookDetailScreen() {
   }
 
   return (
-    <ScrollView className="flex-1 p-4">
-      <View className="flex-row mb-6">
+    <ScrollView className="flex-1 p-4 bg-white">
+      <View className="flex-row items-center mb-4">
+        <Ionicons name="book" size={24} color="#0284c7" />
+        <Text className="ml-2 text-2xl font-bold text-gray-800">{t("home.detail.title")}</Text>
+      </View>
+
+      <View className="flex-row">
         {params.thumbnail && (
           <Image
             source={{ uri: params.thumbnail }}
-            className="w-32 mr-4 rounded-md h-44"
+            className="w-32 mr-4 rounded-md shadow-md h-44"
             resizeMode="cover"
           />
         )}
         <View className="flex-1">
-          <Text className="mb-2 text-xl font-bold" numberOfLines={2}>
+          <Text className="mb-2 text-xl font-bold text-gray-800" numberOfLines={2}>
             {params.title}
           </Text>
           <Text className="mb-1 text-gray-700">{params.author}</Text>

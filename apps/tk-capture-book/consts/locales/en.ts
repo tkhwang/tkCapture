@@ -12,6 +12,9 @@ export const en = {
     },
     home: {
       tabTitle: "Home",
+      detail: {
+        title: "Book information",
+      },
     },
     search: {
       tabTitle: "Book Search",
