@@ -16,6 +16,14 @@ export default function AuthLayout() {
           headerShown: true,
         }}
       />
+      <Stack.Screen
+        name="(stack)/book-search-detail"
+        options={{
+          headerBackTitle: "",
+          headerTitle: "Book Detail",
+          headerShown: true,
+        }}
+      />
     </Stack>
   );
 }
