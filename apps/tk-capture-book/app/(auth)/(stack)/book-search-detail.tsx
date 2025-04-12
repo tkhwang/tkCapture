@@ -10,7 +10,7 @@ import { Book } from "@/features/book-search/models/book";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/providers/auth-provider";
 
-export default function BookDetailScreen() {
+export default function BookSearchDetailScreen() {
   const router = useRouter();
   const { t } = useTranslation();
   const { isbn } = useLocalSearchParams();
