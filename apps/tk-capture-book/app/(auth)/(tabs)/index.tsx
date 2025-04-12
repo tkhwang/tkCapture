@@ -1,7 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useTranslation } from "react-i18next";
 import { Text, View, FlatList, Image, TouchableOpacity, ActivityIndicator } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useBooks } from "@/features/book-search/hooks/useBooks";
 import { useAuth } from "@/providers/auth-provider";
