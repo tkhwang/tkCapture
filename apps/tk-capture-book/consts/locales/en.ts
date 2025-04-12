@@ -20,7 +20,10 @@ export const en = {
         description:
           "Try searching for a book by name or author.\nYou can change the book search provider in the settings.",
       },
-      "register-book": "Register book",
+      "register-book": {
+        new: "Register book",
+        registered: "Already Unregistered Book",
+      },
     },
     settings: {
       tabTitle: "Settings",
