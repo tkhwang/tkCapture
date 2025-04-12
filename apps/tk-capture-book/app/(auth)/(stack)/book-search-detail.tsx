@@ -54,31 +54,40 @@ export default function BookSearchDetailScreen() {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView className="flex-1 pb-20 bg-white">
-        {/* 상단 제목 및 기본 정보 */}
-        <View className="p-4 border-b border-gray-200">
-          <Text className="text-2xl font-bold">{selectedBook.title}</Text>
-          <Text className="mt-2 text-gray-600">
-            {selectedBook.author} | {selectedBook.publisher}
-          </Text>
+        {/* Title with icon */}
+        <View className="p-4 flex-row items-center">
+          <Ionicons name="book" size={24} color="#0284c7" />
+          <Text className="ml-2 text-2xl font-bold text-gray-800">{t("home.detail.title")}</Text>
         </View>
 
-        {/* 책 표지 이미지 */}
-        <View className="items-center justify-center py-8">
-          {selectedBook.thumbnail && (
-            <View className="w-56 shadow-lg h-72">
-              <Image
-                source={{ uri: selectedBook.thumbnail }}
-                className="w-full h-full rounded-lg"
-                resizeMode="contain"
-              />
-            </View>
-          )}
-        </View>
+        {/* Book information with styled box */}
+        <View className="mx-4 p-4 bg-white border border-sky-100 rounded-xl shadow-md">
+          {/* Book title and basic info */}
+          <View className="border-b border-sky-100 pb-4">
+            <Text className="text-2xl font-bold text-gray-800">{selectedBook.title}</Text>
+            <Text className="mt-2 text-gray-700">
+              {selectedBook.author} | {selectedBook.publisher}
+            </Text>
+          </View>
 
-        {/* 세부 정보 */}
-        <View className="p-4">
-          <Text className="mb-2 text-lg font-semibold">도서 정보</Text>
-          <Text className="leading-6 text-gray-600">{selectedBook.description}</Text>
+          {/* Book cover image */}
+          <View className="items-center justify-center py-6">
+            {selectedBook.thumbnail && (
+              <View className="w-56 shadow-lg h-72">
+                <Image
+                  source={{ uri: selectedBook.thumbnail }}
+                  className="w-full h-full rounded-lg"
+                  resizeMode="contain"
+                />
+              </View>
+            )}
+          </View>
+
+          {/* Book description */}
+          <View className="pt-2">
+            <Text className="mb-2 text-lg font-semibold text-gray-800">Book Description</Text>
+            <Text className="leading-6 text-gray-700">{selectedBook.description}</Text>
+          </View>
         </View>
       </ScrollView>
 

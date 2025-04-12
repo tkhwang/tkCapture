@@ -31,20 +31,22 @@ export default function BookDetailScreen() {
         <Text className="ml-2 text-2xl font-bold text-gray-800">{t("home.detail.title")}</Text>
       </View>
 
-      <View className="flex-row">
-        {params.thumbnail && (
-          <Image
-            source={{ uri: params.thumbnail }}
-            className="w-32 mr-4 rounded-md shadow-md h-44"
-            resizeMode="cover"
-          />
-        )}
-        <View className="flex-1">
-          <Text className="mb-2 text-xl font-bold text-gray-800" numberOfLines={2}>
-            {params.title}
-          </Text>
-          <Text className="mb-1 text-gray-700">{params.author}</Text>
-          <Text className="mb-1 text-gray-600">{params.publisher}</Text>
+      <View className="p-4 mb-6 bg-white border shadow-md border-sky-100 rounded-xl">
+        <View className="flex-row">
+          {params.thumbnail && (
+            <Image
+              source={{ uri: params.thumbnail }}
+              className="w-32 mr-4 rounded-md shadow-md h-44"
+              resizeMode="cover"
+            />
+          )}
+          <View className="flex-1">
+            <Text className="mb-2 text-xl font-bold text-gray-800" numberOfLines={2}>
+              {params.title}
+            </Text>
+            <Text className="mb-1 text-gray-700">{params.author}</Text>
+            <Text className="mb-1 text-gray-600">{params.publisher}</Text>
+          </View>
         </View>
       </View>
     </ScrollView>
