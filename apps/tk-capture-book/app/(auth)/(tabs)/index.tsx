@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useTranslation } from "react-i18next";
 import { Text, View, FlatList, Image, TouchableOpacity, ActivityIndicator } from "react-native";
@@ -10,12 +11,30 @@ type Book = Database["public"]["Tables"]["books"]["Row"];
 
 export default function HomeScreen() {
   const { t } = useTranslation();
+  const router = useRouter();
 
   const { user } = useAuth();
   const { books, loading } = useBooks(user?.id);
 
+  const handleBookPress = (book: Book) => {
+    router.push({
+      pathname: "/(auth)/(stack)/book-detail",
+      params: {
+        id: book.id,
+        title: book.title,
+        author: book.author,
+        publisher: book.publisher,
+        thumbnail: book.thumbnail,
+        description: book.description,
+      },
+    });
+  };
+
   const renderBookItem = ({ item }: { item: Book }) => (
-    <TouchableOpacity className="flex-row p-4 mb-4 bg-white rounded-lg shadow-sm">
+    <TouchableOpacity
+      className="flex-row p-4 mb-4 bg-white rounded-lg shadow-sm"
+      onPress={() => handleBookPress(item)}
+    >
       {item.thumbnail && (
         <Image
           source={{ uri: item.thumbnail }}
