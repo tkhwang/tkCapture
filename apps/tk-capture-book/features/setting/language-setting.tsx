@@ -1,6 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useAtom } from "jotai";
-import { useTranslation } from "react-i18next";
 import { View, TouchableOpacity } from "react-native";
 
 import { Text } from "@/components/ui/text";
@@ -13,8 +12,6 @@ interface LanguageOption {
 }
 
 export function LanguageSetting() {
-  const { t } = useTranslation();
-
   const [language, setLanguage] = useAtom(languageAtom);
 
   const languageOptions: LanguageOption[] = [
@@ -24,13 +21,6 @@ export function LanguageSetting() {
 
   return (
     <View className="gap-4">
-      <View className="flex-row items-center gap-2">
-        <Ionicons name="language" size={24} color="hsl(var(--primary))" />
-        <Text variant="title" size="lg">
-          {t("settings.menu.language")}
-        </Text>
-      </View>
-
       <View className="gap-2">
         {languageOptions.map((option) => (
           <TouchableOpacity

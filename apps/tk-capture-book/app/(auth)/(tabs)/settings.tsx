@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 import ToggleTheme from "@/components/ToggleTheme";
-import { Card, CardContent } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
 import { BookSearchProviderAtom } from "@/features/book-search/states/book";
 import { BookSearchProviderSetting } from "@/features/setting/book-search-provider-setting";
@@ -32,7 +31,7 @@ export default function SettingsScreen() {
           </Text>
         </View>
 
-        {/* User Profile Section */}
+        {/* User Profile Section - 테두리 유지 */}
         <View className="gap-3">
           <Text variant="title" size="xl" className="text-foreground">
             {t("settings.menu.profile")}
@@ -40,7 +39,7 @@ export default function SettingsScreen() {
           <Profile onLogout={handleLogout} />
         </View>
 
-        {/* Theme Toggle Section */}
+        {/* Theme Toggle Section - 테두리 제거 */}
         <View className="gap-3">
           <Text variant="title" size="xl" className="text-foreground">
             {t("settings.menu.appearance")}
@@ -48,22 +47,21 @@ export default function SettingsScreen() {
           <ToggleTheme />
         </View>
 
-        {/* Language Settings Section */}
-        <Text variant="title" size="xl" className="text-foreground">
-          {t("settings.menu.settings")}
-        </Text>
-        <Card>
-          <CardContent className="p-4">
-            <LanguageSetting />
-          </CardContent>
-        </Card>
+        {/* Language Settings Section - 테두리 제거 */}
+        <View className="gap-3">
+          <Text variant="title" size="xl" className="text-foreground">
+            {t("settings.menu.settings")}
+          </Text>
+          <LanguageSetting />
+        </View>
 
-        {/* Search Settings Section */}
-        <Card>
-          <CardContent className="p-4">
-            <BookSearchProviderSetting provider={provider} onProviderChange={setProvider} />
-          </CardContent>
-        </Card>
+        {/* Search Settings Section - 테두리 제거 */}
+        <View className="gap-3">
+          <Text variant="title" size="xl" className="text-foreground">
+            {t("settings.menu.bookSearchProvider")}
+          </Text>
+          <BookSearchProviderSetting provider={provider} onProviderChange={setProvider} />
+        </View>
       </View>
     </View>
   );

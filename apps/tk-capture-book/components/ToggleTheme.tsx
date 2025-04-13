@@ -17,7 +17,7 @@ export default function ToggleTheme({ className }: ToggleThemeProps) {
     <View className="w-full">
       <Pressable
         className={cn(
-          "w-full flex h-10 flex-row items-center justify-center gap-2 rounded-md border border-input",
+          "w-full flex h-10 flex-row items-center justify-center gap-2 rounded-md bg-card",
           className,
         )}
         onPress={toggleColorScheme}
