@@ -32,7 +32,7 @@ export default function SettingsScreen() {
           <Profile onLogout={handleLogout} />
         </View>
 
-        {/* Theme Toggle Section - 테두리 제거 */}
+        {/* Color Scheme Section */}
         <View className="gap-3">
           <Text variant="title" size="xl" className="text-foreground">
             {t("settings.menu.appearance")}
@@ -40,7 +40,7 @@ export default function SettingsScreen() {
           <ToggleTheme />
         </View>
 
-        {/* Language Settings Section - 테두리 제거 */}
+        {/* Language Settings Section */}
         <View className="gap-3">
           <Text variant="title" size="xl" className="text-foreground">
             {t("settings.menu.language")}
@@ -48,7 +48,7 @@ export default function SettingsScreen() {
           <LanguageSetting />
         </View>
 
-        {/* Search Settings Section - 테두리 제거 */}
+        {/* Search Settings Section */}
         <View className="gap-3">
           <Text variant="title" size="xl" className="text-foreground">
             {t("settings.menu.bookSearchProvider")}
