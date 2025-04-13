@@ -1,7 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useState } from "react";
-import { Image, Pressable, ScrollView, View } from "react-native";
+import { useState, useCallback, useEffect } from "react";
+import { Image, Pressable, View } from "react-native";
+import { GiftedChat, IMessage, InputToolbar } from "react-native-gifted-chat";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -15,6 +16,43 @@ export default function BookDetailScreen() {
   const { user } = useAuth();
   const { book, loading, error } = useBook(user?.id, params.isbn);
   const [expanded, setExpanded] = useState(true);
+  const [messages, setMessages] = useState<IMessage[]>([]);
+
+  useEffect(() => {
+    // Initialize with a welcome message
+    if (book) {
+      setMessages([
+        {
+          _id: 1,
+          text: `Welcome to ${book.title} capture space. You can add your thoughts and captured sentences here.`,
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: "Book Assistant",
+            avatar: "https://placeimg.com/140/140/any",
+          },
+        },
+      ]);
+    }
+  }, [book]);
+
+  const onSend = useCallback((newMessages: IMessage[] = []) => {
+    setMessages((previousMessages) => GiftedChat.append(previousMessages, newMessages));
+  }, []);
+
+  const renderInputToolbar = useCallback((props: any) => {
+    return (
+      <InputToolbar
+        {...props}
+        containerStyle={{
+          marginBottom: 64,
+          borderTopWidth: 1,
+          borderTopColor: "hsl(var(--border))",
+          backgroundColor: "hsl(var(--background))",
+        }}
+      />
+    );
+  }, []);
 
   const handleCaptureSentence = () => {
     if (book) {
@@ -113,33 +151,19 @@ export default function BookDetailScreen() {
       </Card>
 
       {/* Middle Chat Area - Scrollable */}
-      <ScrollView className="flex-1 mx-4 mb-20" contentContainerStyle={{ paddingBottom: 16 }}>
-        <Card className="mb-4">
-          <CardHeader>
-            <Text variant="title" size="base">
-              Chat Area
-            </Text>
-          </CardHeader>
-          <CardContent>
-            <Text variant="muted">
-              This is where the chat messages will appear. You can capture sentences from the book
-              and discuss them here.
-            </Text>
-          </CardContent>
-        </Card>
-
-        {/* Example chat items - replace with actual chat data */}
-        {[1, 2, 3].map((item) => (
-          <Card key={item} className="mb-4">
-            <CardContent className="p-4">
-              <Text variant="muted" size="sm" className="mb-1">
-                Captured Sentence {item}
-              </Text>
-              <Text>Example captured text from the book that can be discussed.</Text>
-            </CardContent>
-          </Card>
-        ))}
-      </ScrollView>
+      <View className="flex-1">
+        <GiftedChat
+          messages={messages}
+          onSend={(messages) => onSend(messages)}
+          user={{
+            _id: 1,
+            name: user?.id || "User",
+          }}
+          placeholder="Type your thoughts..."
+          alwaysShowSend
+          renderInputToolbar={renderInputToolbar}
+        />
+      </View>
 
       {/* Bottom CTA Button - Fixed */}
       <View className="absolute bottom-0 left-0 right-0 p-4 border-t bg-card border-border">
