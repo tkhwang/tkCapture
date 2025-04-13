@@ -1,20 +1,21 @@
-import { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 import { supabase } from "@/lib/supabase";
-import { Database } from "@/types/types_db";
-
-type Book = Database["public"]["Tables"]["books"]["Row"];
 
 export function useBooks(userId?: string) {
-  const [books, setBooks] = useState<Book[]>([]);
-  const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (!userId) return;
+  const {
+    data: books = [],
+    isLoading: loading,
+    error,
+  } = useQuery({
+    queryKey: ["books", userId],
+    queryFn: async () => {
+      if (!userId) return [];
 
-    async function fetchBooks() {
       try {
-        setLoading(true);
         const { data, error } = await supabase
           .from("books")
           .select("*")
@@ -23,21 +24,31 @@ export function useBooks(userId?: string) {
 
         if (error) {
           console.error(`[-][useBooks] Error fetching books: ${JSON.stringify(error)}`);
-          setBooks([]);
-          return;
+          throw new Error(error.message);
         }
 
-        setBooks(data ?? []);
         console.log(`[+][useBooks] Fetched ${data?.length} books`);
+        return data ?? [];
       } catch (error) {
         console.error(`[-][useBooks] Unexpected error: ${JSON.stringify(error)}`);
-      } finally {
-        setLoading(false);
+        throw error;
       }
+    },
+    enabled: !!userId,
+  });
+
+  // 책 목록 데이터를 가져온 후 각 책을 ISBN 기준으로 캐시에 저장
+  useEffect(() => {
+    if (books && books.length > 0) {
+      books.forEach((book) => {
+        if (book.isbn) {
+          // 각 책의 데이터를 ['book', userId, isbn] 키로 캐시에 저장
+          queryClient.setQueryData(["book", userId, book.isbn], book);
+          console.log(`[+][useBooks] Cached book with ISBN: ${book.isbn}`);
+        }
+      });
     }
+  }, [books, queryClient, userId]);
 
-    fetchBooks();
-  }, []);
-
-  return { books, loading };
+  return { books, loading, error };
 }

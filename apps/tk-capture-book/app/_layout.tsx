@@ -1,5 +1,5 @@
 import "../global.css";
-import "../features/i18n";
+import "../utils/i18n";
 
 import { Theme, ThemeProvider, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -12,12 +12,12 @@ import { View, ActivityIndicator, Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { configureGoogleAuth } from "@/features/auth/google-auth";
-import i18n from "@/features/i18n";
 import { languageAtom } from "@/features/setting/states/language";
 import { NAV_THEME } from "@/lib/constants";
 import { queryClient } from "@/lib/react-query-client";
 import { useColorScheme } from "@/lib/useColorScheme";
 import { AuthProvider, useAuth } from "@/providers/auth-provider";
+import i18n from "@/utils/i18n";
 
 configureGoogleAuth();
 
@@ -62,10 +62,13 @@ function ProtectedLayout() {
 }
 
 export default function AppLayout() {
-  const [language] = useAtom(languageAtom);
-  const [isLoading, setIsLoading] = useState(true);
-  const { colorScheme, isDarkColorScheme } = useColorScheme();
   const hasMounted = useRef(false);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const { isDarkColorScheme } = useColorScheme();
+  const [isColorSchemeLoaded, setIsColorSchemeLoaded] = useState(false);
+
+  const [language] = useAtom(languageAtom);
 
   useEffect(() => {
     // 언어 설정이 로드되면 로딩 상태 해제
@@ -84,9 +87,13 @@ export default function AppLayout() {
       // Adds the background color to the html element to prevent white background on overscroll.
       document.documentElement.classList.add("bg-background");
     }
-
+    setIsColorSchemeLoaded(true);
     hasMounted.current = true;
   }, []);
+
+  if (!isColorSchemeLoaded) {
+    return null;
+  }
 
   if (isLoading) {
     return (

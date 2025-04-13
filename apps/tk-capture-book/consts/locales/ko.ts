@@ -33,6 +33,7 @@ export const ko = {
       tabTitle: "설정",
       bookSearchProvider: "도서 검색 제공자",
       menu: {
+        appearance: "색상 테마",
         profile: "프로필",
         settings: "설정",
         language: "언어",

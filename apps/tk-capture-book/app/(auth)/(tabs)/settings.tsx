@@ -1,7 +1,9 @@
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 
+import ToggleTheme from "@/components/ToggleTheme";
+import { Text } from "@/components/ui/text";
 import { BookSearchProviderAtom } from "@/features/book-search/states/book";
 import { BookSearchProviderSetting } from "@/features/setting/book-search-provider-setting";
 import { Profile } from "@/features/setting/components/profile";
@@ -20,22 +22,37 @@ export default function SettingsScreen() {
   };
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-background">
       <View className="flex-1 gap-8 p-4">
-        {/* User Profile Section */}
+        {/* User Profile Section - 테두리 유지 */}
         <View className="gap-3">
-          <Text className="text-xl font-bold text-gray-800">{t("settings.menu.profile")}</Text>
+          <Text variant="title" size="xl" className="text-foreground">
+            {t("settings.menu.profile")}
+          </Text>
           <Profile onLogout={handleLogout} />
         </View>
 
-        {/* Language Settings Section */}
-        <Text className="text-xl font-bold text-gray-800">{t("settings.menu.settings")}</Text>
+        {/* Color Scheme Section */}
         <View className="gap-3">
+          <Text variant="title" size="xl" className="text-foreground">
+            {t("settings.menu.appearance")}
+          </Text>
+          <ToggleTheme />
+        </View>
+
+        {/* Language Settings Section */}
+        <View className="gap-3">
+          <Text variant="title" size="xl" className="text-foreground">
+            {t("settings.menu.language")}
+          </Text>
           <LanguageSetting />
         </View>
 
         {/* Search Settings Section */}
         <View className="gap-3">
+          <Text variant="title" size="xl" className="text-foreground">
+            {t("settings.menu.bookSearchProvider")}
+          </Text>
           <BookSearchProviderSetting provider={provider} onProviderChange={setProvider} />
         </View>
       </View>
