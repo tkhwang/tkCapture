@@ -2,8 +2,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Text, View, Image, ScrollView, TouchableOpacity, SafeAreaView } from "react-native";
+import { Image, ScrollView, View } from "react-native";
 
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Text } from "@/components/ui/text";
 import { useBooks } from "@/features/book-search/hooks/useBooks";
 import { useSearchBookByISBN } from "@/features/book-search/hooks/useSearchBookByISBN";
 import { Book } from "@/features/book-search/models/book";
@@ -52,67 +55,82 @@ export default function BookSearchDetailScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <ScrollView className="flex-1 pb-20 bg-white">
-        {/* Title with icon */}
-        <View className="p-4 flex-row items-center">
-          <Ionicons name="book" size={24} color="#0284c7" />
-          <Text className="ml-2 text-2xl font-bold text-gray-800">{t("home.detail.title")}</Text>
-        </View>
-
-        {/* Book information with styled box */}
-        <View className="mx-4 p-4 bg-white border border-sky-100 rounded-xl shadow-md">
-          {/* Book title and basic info */}
-          <View className="border-b border-sky-100 pb-4">
-            <Text className="text-2xl font-bold text-gray-800">{selectedBook.title}</Text>
-            <Text className="mt-2 text-gray-700">
+    <View className="flex-1 bg-background">
+      <ScrollView className="flex-1 pb-20">
+        {/* Book information */}
+        <Card className="mx-4 mb-4 overflow-hidden">
+          <CardHeader className="pb-2 border-b border-border">
+            <Text variant="title" size="xl">
+              {selectedBook.title}
+            </Text>
+            <Text variant="muted" className="mt-1">
               {selectedBook.author} | {selectedBook.publisher}
             </Text>
-          </View>
+          </CardHeader>
 
           {/* Book cover image */}
-          <View className="items-center justify-center py-6">
-            {selectedBook.thumbnail && (
-              <View className="w-56 shadow-lg h-72">
+          <CardContent className="items-center justify-center py-6">
+            {selectedBook.thumbnail ? (
+              <View className="overflow-hidden rounded-md shadow-md h-72">
                 <Image
                   source={{ uri: selectedBook.thumbnail }}
-                  className="w-full h-full rounded-lg"
+                  className="w-56 h-full"
                   resizeMode="contain"
                 />
               </View>
+            ) : (
+              <View className="items-center justify-center w-56 rounded-md h-72 bg-muted">
+                <Ionicons name="image-outline" size={48} color="hsl(var(--muted-foreground))" />
+                <Text variant="muted" size="sm" className="mt-2">
+                  No Cover
+                </Text>
+              </View>
             )}
-          </View>
+          </CardContent>
 
           {/* Book description */}
-          <View className="pt-2">
-            <Text className="mb-2 text-lg font-semibold text-gray-800">Book Description</Text>
-            <Text className="leading-6 text-gray-700">{selectedBook.description}</Text>
-          </View>
-        </View>
+          <CardContent className="pt-2 border-t border-border">
+            <Text variant="title" size="lg" className="mb-2">
+              Book Description
+            </Text>
+            <Text variant="muted" className="leading-6">
+              {selectedBook.description}
+            </Text>
+          </CardContent>
+        </Card>
       </ScrollView>
 
       {/* Bottom Registration Button */}
-      <View className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
-        <TouchableOpacity
-          onPress={() => !isMyRegisteredBook && handleRegisterBook(selectedBook)}
-          className={`flex-row items-center justify-center py-3 px-4 ${
-            isMyRegisteredBook ? "bg-gray-400" : "bg-[#0284c7]"
-          } rounded-lg`}
-          activeOpacity={isMyRegisteredBook ? 1 : 0.8}
-          disabled={isMyRegisteredBook}
-        >
-          <Ionicons
-            name={isMyRegisteredBook ? "checkmark-circle" : "add-circle"}
-            size={20}
-            color="white"
-          />
-          <Text className="ml-2 text-base font-medium text-white">
-            {isMyRegisteredBook
-              ? t("search.register-book.registered")
-              : t("search.register-book.new")}
-          </Text>
-        </TouchableOpacity>
+      <View className="absolute bottom-0 left-0 right-0 p-4 border-t bg-card border-border">
+        {isMyRegisteredBook ? (
+          <Button
+            disabled
+            variant="outline"
+            className="flex-row items-center justify-center w-full h-12 border-muted-foreground"
+          >
+            <Ionicons
+              name="checkmark-circle"
+              size={20}
+              color="hsl(var(--muted-foreground))"
+              style={{ marginRight: 8 }}
+            />
+            <Text className="text-base font-medium text-muted-foreground">
+              {t("search.register-book.registered")}
+            </Text>
+          </Button>
+        ) : (
+          <Button
+            onPress={() => handleRegisterBook(selectedBook)}
+            variant="default"
+            className="flex-row items-center justify-center w-full h-12"
+          >
+            <Ionicons name="add-circle" size={20} color="white" style={{ marginRight: 8 }} />
+            <Text className="text-base font-medium text-white">
+              {t("search.register-book.new")}
+            </Text>
+          </Button>
+        )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
