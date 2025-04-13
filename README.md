@@ -7,7 +7,28 @@ tkCapture is a mobile application suite focused on AI-powered image capture and 
 
 ![img](./docs/figs/GitDiagram-Diagram.png)
 
-## [0] Common
+## Screenshot
+
+![img](./docs/figs/ui-screen-shot-1.png)
+
+![img](./docs/figs/ui-screen-shot-2.png)
+
+## [1] tkCaptureBook
+
+### Tech stack
+
+- app
+
+  - react native expo
+  - supabase
+  - jotai
+  - tailwind css
+  - shadcn/ui
+
+- backend
+
+  - supabase
+  - nest.js
 
 - development tool with AI
 
@@ -15,33 +36,18 @@ tkCapture is a mobile application suite focused on AI-powered image capture and 
   - windsurf
   - [a0.dev](https://a0.dev/)
 
-- backend
-  - supabase
-  - nest.js
-
-## [1] tkCaptureBook
-
-### Tech stack
-
-- app
-  - react native expo
-  - supabase
-  - jotai
-  - tailwind css
-  - shadcn/ui
-
 ## EAS Build
 
 ### iOS
 
 ```bash
-> build:ios
+> yarn build:ios
 # eas build --platform ios --profile production
 ```
 
 ### Android
 
 ```bash
-> build:android
+> yarn build:android
 # eas build --platform android --profile preview
 ```
