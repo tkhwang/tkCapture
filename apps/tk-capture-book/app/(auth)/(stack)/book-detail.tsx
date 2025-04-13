@@ -4,20 +4,32 @@ import { Image, ScrollView, View } from "react-native";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
-
-type BookParams = {
-  id: string;
-  title: string;
-  author: string;
-  publisher: string;
-  thumbnail?: string;
-  description?: string;
-};
+import { useBook } from "@/features/book-search/hooks/useBook";
+import { useAuth } from "@/providers/auth-provider";
 
 export default function BookDetailScreen() {
-  const params = useLocalSearchParams<BookParams>();
+  const params = useLocalSearchParams<{ id: string; isbn: string }>();
 
-  if (!params.id) {
+  const { user } = useAuth();
+
+  const { book, loading, error } = useBook(user?.id, params.isbn);
+
+  if (loading) {
+    return (
+      <View className="items-center justify-center flex-1 bg-background">
+        <Card className="p-6">
+          <CardContent className="items-center">
+            <Ionicons name="hourglass-outline" size={48} color="hsl(var(--muted-foreground))" />
+            <Text variant="title" className="mt-4">
+              Loading...
+            </Text>
+          </CardContent>
+        </Card>
+      </View>
+    );
+  }
+
+  if (error || !book) {
     return (
       <View className="items-center justify-center flex-1 bg-background">
         <Card className="p-6">
@@ -37,9 +49,9 @@ export default function BookDetailScreen() {
       <Card className="mb-6 overflow-hidden">
         <CardContent className="p-4">
           <View className="flex-row">
-            {params.thumbnail ? (
+            {book.thumbnail ? (
               <Image
-                source={{ uri: params.thumbnail }}
+                source={{ uri: book.thumbnail }}
                 className="w-32 mr-4 rounded-md shadow h-44"
                 resizeMode="cover"
               />
@@ -53,15 +65,15 @@ export default function BookDetailScreen() {
             )}
             <View className="flex-1">
               <Text variant="title" size="xl" className="mb-2" numberOfLines={2}>
-                {params.title}
+                {book.title}
               </Text>
               <View className="flex-row items-center mb-1">
                 <View className="w-1 h-1 mr-1 rounded-full bg-primary" />
-                <Text variant="default">{params.author}</Text>
+                <Text variant="default">{book.author}</Text>
               </View>
               <View className="flex-row items-center mb-1">
                 <View className="w-1 h-1 mr-1 rounded-full bg-primary" />
-                <Text variant="muted">{params.publisher}</Text>
+                <Text variant="muted">{book.publisher}</Text>
               </View>
             </View>
           </View>

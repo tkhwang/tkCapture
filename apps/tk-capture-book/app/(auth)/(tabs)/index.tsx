@@ -22,11 +22,7 @@ export default function HomeScreen() {
       pathname: "/(auth)/(stack)/book-detail",
       params: {
         id: book.id,
-        title: book.title,
-        author: book.author,
-        publisher: book.publisher,
-        thumbnail: book.thumbnail,
-        description: book.description,
+        isbn: book.isbn,
       },
     });
   };
