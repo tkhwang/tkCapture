@@ -60,60 +60,88 @@ export default function BookDetailScreen() {
 
   return (
     <View className="flex-1 bg-background">
-      <ScrollView className="flex-1 pb-20">
-        <Card className="mx-4 mb-4 overflow-hidden">
-          <CardHeader className="p-4 pb-0">
-            <Pressable onPress={toggleExpanded} className="flex-row items-center justify-between">
-              <View className="flex-1">
-                <Text variant="title" size="lg" numberOfLines={2}>
-                  {book.title}
-                </Text>
-                <Text variant="muted" size="sm" className="mt-1">
-                  {book.author}
-                </Text>
-              </View>
-              <Ionicons
-                name={expanded ? "chevron-up" : "chevron-down"}
-                size={20}
-                color="hsl(var(--foreground))"
-              />
-            </Pressable>
-          </CardHeader>
+      {/* Fixed Header with Book Info - Collapsible */}
+      <Card className="mx-4 mb-4 overflow-hidden">
+        <CardHeader className="p-4 pb-0">
+          <Pressable onPress={toggleExpanded} className="flex-row items-center justify-between">
+            <View className="flex-1">
+              <Text variant="title" size="lg" numberOfLines={2}>
+                {book.title}
+              </Text>
+              <Text variant="muted" size="sm" className="mt-1">
+                {book.author}
+              </Text>
+            </View>
+            <Ionicons
+              name={expanded ? "chevron-up" : "chevron-down"}
+              size={20}
+              color="hsl(var(--foreground))"
+            />
+          </Pressable>
+        </CardHeader>
 
-          {expanded && (
-            <CardContent className="p-4">
-              <View className="flex-row">
-                {book.thumbnail ? (
-                  <Image
-                    source={{ uri: book.thumbnail }}
-                    className="w-32 mr-4 rounded-md shadow h-44"
-                    resizeMode="cover"
-                  />
-                ) : (
-                  <View className="items-center justify-center w-32 mr-4 rounded-md h-44 bg-muted">
-                    <Ionicons name="image-outline" size={32} color="hsl(var(--muted-foreground))" />
-                    <Text variant="muted" size="sm" className="mt-2">
-                      No Image
-                    </Text>
-                  </View>
-                )}
-                <View className="flex-1">
-                  <View className="flex-row items-center mb-1">
-                    <View className="w-1 h-1 mr-1 rounded-full bg-primary" />
-                    <Text variant="muted">출판사: {book.publisher}</Text>
-                  </View>
-                  <View className="flex-row items-center mb-1">
-                    <View className="w-1 h-1 mr-1 rounded-full bg-primary" />
-                    <Text variant="muted">ISBN: {book.isbn}</Text>
-                  </View>
+        {expanded && (
+          <CardContent className="p-4">
+            <View className="flex-row">
+              {book.thumbnail ? (
+                <Image
+                  source={{ uri: book.thumbnail }}
+                  className="w-32 mr-4 rounded-md shadow h-44"
+                  resizeMode="cover"
+                />
+              ) : (
+                <View className="items-center justify-center w-32 mr-4 rounded-md h-44 bg-muted">
+                  <Ionicons name="image-outline" size={32} color="hsl(var(--muted-foreground))" />
+                  <Text variant="muted" size="sm" className="mt-2">
+                    No Image
+                  </Text>
+                </View>
+              )}
+              <View className="flex-1">
+                <View className="flex-row items-center mb-1">
+                  <View className="w-1 h-1 mr-1 rounded-full bg-primary" />
+                  <Text variant="muted">출판사: {book.publisher}</Text>
+                </View>
+                <View className="flex-row items-center mb-1">
+                  <View className="w-1 h-1 mr-1 rounded-full bg-primary" />
+                  <Text variant="muted">ISBN: {book.isbn}</Text>
                 </View>
               </View>
-            </CardContent>
-          )}
+            </View>
+          </CardContent>
+        )}
+      </Card>
+
+      {/* Middle Chat Area - Scrollable */}
+      <ScrollView className="flex-1 mx-4 mb-20" contentContainerStyle={{ paddingBottom: 16 }}>
+        <Card className="mb-4">
+          <CardHeader>
+            <Text variant="title" size="base">
+              Chat Area
+            </Text>
+          </CardHeader>
+          <CardContent>
+            <Text variant="muted">
+              This is where the chat messages will appear. You can capture sentences from the book
+              and discuss them here.
+            </Text>
+          </CardContent>
         </Card>
+
+        {/* Example chat items - replace with actual chat data */}
+        {[1, 2, 3].map((item) => (
+          <Card key={item} className="mb-4">
+            <CardContent className="p-4">
+              <Text variant="muted" size="sm" className="mb-1">
+                Captured Sentence {item}
+              </Text>
+              <Text>Example captured text from the book that can be discussed.</Text>
+            </CardContent>
+          </Card>
+        ))}
       </ScrollView>
 
-      {/* Bottom Capture Sentence Button */}
+      {/* Bottom CTA Button - Fixed */}
       <View className="absolute bottom-0 left-0 right-0 p-4 border-t bg-card border-border">
         <Button
           onPress={handleCaptureSentence}
