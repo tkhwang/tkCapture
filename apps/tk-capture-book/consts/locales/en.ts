@@ -34,6 +34,7 @@ export const en = {
         provider: "Book Search Provider",
       },
       menu: {
+        appearance: "Color Scheme",
         profile: "Profile",
         settings: "설정",
         language: "Language",

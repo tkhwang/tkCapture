@@ -25,12 +25,11 @@ export default function SettingsScreen() {
   return (
     <View className="flex-1 bg-background">
       <View className="flex-1 gap-8 p-4">
-        {/* Header with Theme Toggle */}
-        <View className="flex-row items-center justify-between mb-2">
+        {/* Header */}
+        <View className="flex-row items-center justify-between">
           <Text variant="heading" size="2xl">
             {t("settings.title")}
           </Text>
-          <ToggleTheme />
         </View>
 
         {/* User Profile Section */}
@@ -39,6 +38,14 @@ export default function SettingsScreen() {
             {t("settings.menu.profile")}
           </Text>
           <Profile onLogout={handleLogout} />
+        </View>
+
+        {/* Theme Toggle Section */}
+        <View className="gap-3">
+          <Text variant="title" size="xl" className="text-foreground">
+            {t("settings.menu.appearance")}
+          </Text>
+          <ToggleTheme />
         </View>
 
         {/* Language Settings Section */}

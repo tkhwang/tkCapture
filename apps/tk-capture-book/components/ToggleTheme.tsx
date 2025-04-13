@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 import { MoonStar } from "@/lib/icons/MoonStar";
 import { Sun } from "@/lib/icons/Sun";
@@ -14,20 +14,28 @@ export default function ToggleTheme({ className }: ToggleThemeProps) {
   const { isDarkColorScheme, toggleColorScheme } = useColorScheme();
 
   return (
-    <Pressable
-      className={cn(
-        "flex h-10 w-10 items-center justify-center rounded-md border border-input",
-        className,
-      )}
-      onPress={toggleColorScheme}
-      accessibilityRole="button"
-      accessibilityLabel={`Switch to ${isDarkColorScheme ? "light" : "dark"} mode`}
-    >
-      {isDarkColorScheme ? (
-        <Sun className="w-5 h-5 text-primary" />
-      ) : (
-        <MoonStar className="w-5 h-5 text-primary" />
-      )}
-    </Pressable>
+    <View className="w-full">
+      <Pressable
+        className={cn(
+          "w-full flex h-10 flex-row items-center justify-center gap-2 rounded-md border border-input",
+          className,
+        )}
+        onPress={toggleColorScheme}
+        accessibilityRole="button"
+        accessibilityLabel={`Switch to ${isDarkColorScheme ? "light" : "dark"} mode`}
+      >
+        {isDarkColorScheme ? (
+          <>
+            <Sun className="w-6 h-6 text-primary" />
+            <Text className="text-sm font-medium text-primary">Light Mode</Text>
+          </>
+        ) : (
+          <>
+            <MoonStar className="w-6 h-6 text-primary" />
+            <Text className="text-sm font-medium text-primary">Dark Mode</Text>
+          </>
+        )}
+      </Pressable>
+    </View>
   );
 }
