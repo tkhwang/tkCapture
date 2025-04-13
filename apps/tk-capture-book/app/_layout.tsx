@@ -62,10 +62,13 @@ function ProtectedLayout() {
 }
 
 export default function AppLayout() {
-  const [language] = useAtom(languageAtom);
-  const [isLoading, setIsLoading] = useState(true);
-  const { colorScheme, isDarkColorScheme } = useColorScheme();
   const hasMounted = useRef(false);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const { isDarkColorScheme } = useColorScheme();
+  const [isColorSchemeLoaded, setIsColorSchemeLoaded] = useState(false);
+
+  const [language] = useAtom(languageAtom);
 
   useEffect(() => {
     // 언어 설정이 로드되면 로딩 상태 해제
@@ -84,9 +87,13 @@ export default function AppLayout() {
       // Adds the background color to the html element to prevent white background on overscroll.
       document.documentElement.classList.add("bg-background");
     }
-
+    setIsColorSchemeLoaded(true);
     hasMounted.current = true;
   }, []);
+
+  if (!isColorSchemeLoaded) {
+    return null;
+  }
 
   if (isLoading) {
     return (

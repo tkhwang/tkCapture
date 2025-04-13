@@ -20,11 +20,13 @@ export default function ToggleTheme({ className }: ToggleThemeProps) {
         className,
       )}
       onPress={toggleColorScheme}
+      accessibilityRole="button"
+      accessibilityLabel={`Switch to ${isDarkColorScheme ? "light" : "dark"} mode`}
     >
       {isDarkColorScheme ? (
-        <Sun className="h-5 w-5 text-primary" />
+        <Sun className="w-5 h-5 text-primary" />
       ) : (
-        <MoonStar className="h-5 w-5 text-primary" />
+        <MoonStar className="w-5 h-5 text-primary" />
       )}
     </Pressable>
   );
