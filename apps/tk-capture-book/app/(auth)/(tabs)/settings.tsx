@@ -24,13 +24,6 @@ export default function SettingsScreen() {
   return (
     <View className="flex-1 bg-background">
       <View className="flex-1 gap-8 p-4">
-        {/* Header */}
-        <View className="flex-row items-center justify-between">
-          <Text variant="heading" size="2xl">
-            {t("settings.title")}
-          </Text>
-        </View>
-
         {/* User Profile Section - 테두리 유지 */}
         <View className="gap-3">
           <Text variant="title" size="xl" className="text-foreground">
@@ -50,7 +43,7 @@ export default function SettingsScreen() {
         {/* Language Settings Section - 테두리 제거 */}
         <View className="gap-3">
           <Text variant="title" size="xl" className="text-foreground">
-            {t("settings.menu.settings")}
+            {t("settings.menu.language")}
           </Text>
           <LanguageSetting />
         </View>

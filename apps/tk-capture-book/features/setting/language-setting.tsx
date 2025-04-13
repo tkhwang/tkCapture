@@ -15,7 +15,7 @@ export function LanguageSetting() {
   const [language, setLanguage] = useAtom(languageAtom);
 
   const languageOptions: LanguageOption[] = [
-    { code: "en", label: "English (Default)" },
+    { code: "en", label: "English" },
     { code: "ko", label: "한국어" },
   ];
 
