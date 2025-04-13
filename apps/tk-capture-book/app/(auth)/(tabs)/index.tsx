@@ -15,7 +15,7 @@ export default function HomeScreen() {
   const router = useRouter();
 
   const { user } = useAuth();
-  const { books, loading } = useBooks(user?.id);
+  const { books, loading, error } = useBooks(user?.id);
 
   const handleBookPress = (book: Book) => {
     router.push({
@@ -86,6 +86,25 @@ export default function HomeScreen() {
     </View>
   );
 
+  // Error state
+  const renderError = () => (
+    <View className="absolute inset-0 flex items-center justify-center px-4">
+      <Card className="items-center w-full max-w-sm p-6 bg-card/80">
+        <CardContent className="items-center p-0">
+          <View className="items-center justify-center w-12 h-12 mb-4 rounded-full bg-destructive/10">
+            <Text className="text-2xl">⚠️</Text>
+          </View>
+          <Text variant="title" size="lg" className="mb-2 text-center">
+            {t("common.error.title")}
+          </Text>
+          <Text variant="muted" className="text-center">
+            {error instanceof Error ? error.message : t("common.error.message")}
+          </Text>
+        </CardContent>
+      </Card>
+    </View>
+  );
+
   // Empty state
   const renderEmptyState = () => (
     <View className="absolute inset-0 flex items-center justify-center px-4">
@@ -111,6 +130,8 @@ export default function HomeScreen() {
     <View className="flex-1 py-2 bg-background">
       {loading ? (
         renderLoading()
+      ) : error ? (
+        renderError()
       ) : books.length > 0 ? (
         <FlatList
           data={books}
