@@ -1,8 +1,8 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-import { en } from "../../consts/locales/en";
-import { ko } from "../../consts/locales/ko";
+import { en } from "../consts/locales/en";
+import { ko } from "../consts/locales/ko";
 
 const resources = {
   ko,

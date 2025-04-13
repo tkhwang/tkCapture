@@ -1,5 +1,5 @@
 import "../global.css";
-import "../features/i18n";
+import "../utils/i18n";
 
 import { Theme, ThemeProvider, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -12,12 +12,12 @@ import { View, ActivityIndicator, Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { configureGoogleAuth } from "@/features/auth/google-auth";
-import i18n from "@/features/i18n";
 import { languageAtom } from "@/features/setting/states/language";
 import { NAV_THEME } from "@/lib/constants";
 import { queryClient } from "@/lib/react-query-client";
 import { useColorScheme } from "@/lib/useColorScheme";
 import { AuthProvider, useAuth } from "@/providers/auth-provider";
+import i18n from "@/utils/i18n";
 
 configureGoogleAuth();
 
