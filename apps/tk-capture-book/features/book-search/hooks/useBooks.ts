@@ -1,20 +1,18 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import { supabase } from "@/lib/supabase";
-import { Database } from "@/types/types_db";
-
-type Book = Database["public"]["Tables"]["books"]["Row"];
 
 export function useBooks(userId?: string) {
-  const [books, setBooks] = useState<Book[]>([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    data: books = [],
+    isLoading: loading,
+    error,
+  } = useQuery({
+    queryKey: ["books", userId],
+    queryFn: async () => {
+      if (!userId) return [];
 
-  useEffect(() => {
-    if (!userId) return;
-
-    async function fetchBooks() {
       try {
-        setLoading(true);
         const { data, error } = await supabase
           .from("books")
           .select("*")
@@ -23,21 +21,18 @@ export function useBooks(userId?: string) {
 
         if (error) {
           console.error(`[-][useBooks] Error fetching books: ${JSON.stringify(error)}`);
-          setBooks([]);
-          return;
+          throw new Error(error.message);
         }
 
-        setBooks(data ?? []);
         console.log(`[+][useBooks] Fetched ${data?.length} books`);
+        return data ?? [];
       } catch (error) {
         console.error(`[-][useBooks] Unexpected error: ${JSON.stringify(error)}`);
-      } finally {
-        setLoading(false);
+        throw error;
       }
-    }
+    },
+    enabled: !!userId,
+  });
 
-    fetchBooks();
-  }, []);
-
-  return { books, loading };
+  return { books, loading, error };
 }
