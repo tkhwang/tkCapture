@@ -1,20 +1,35 @@
 import "../global.css";
 import "../features/i18n";
 
+import { Theme, ThemeProvider, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Stack, useRouter, useSegments } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
-import { View, ActivityIndicator } from "react-native";
+import * as React from "react";
+import { useEffect, useState, useRef } from "react";
+import { View, ActivityIndicator, Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { configureGoogleAuth } from "@/features/auth/google-auth";
 import i18n from "@/features/i18n";
 import { languageAtom } from "@/features/setting/states/language";
+import { NAV_THEME } from "@/lib/constants";
 import { queryClient } from "@/lib/react-query-client";
+import { useColorScheme } from "@/lib/useColorScheme";
 import { AuthProvider, useAuth } from "@/providers/auth-provider";
 
 configureGoogleAuth();
+
+const LIGHT_THEME: Theme = {
+  ...DefaultTheme,
+  colors: NAV_THEME.light,
+};
+
+const DARK_THEME: Theme = {
+  ...DarkTheme,
+  colors: NAV_THEME.dark,
+};
 
 function ProtectedLayout() {
   const segments = useSegments();
@@ -49,6 +64,8 @@ function ProtectedLayout() {
 export default function AppLayout() {
   const [language] = useAtom(languageAtom);
   const [isLoading, setIsLoading] = useState(true);
+  const { colorScheme, isDarkColorScheme } = useColorScheme();
+  const hasMounted = useRef(false);
 
   useEffect(() => {
     // 언어 설정이 로드되면 로딩 상태 해제
@@ -57,6 +74,19 @@ export default function AppLayout() {
       setIsLoading(false);
     }
   }, [language]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (hasMounted.current) {
+      return;
+    }
+
+    if (Platform.OS === "web") {
+      // Adds the background color to the html element to prevent white background on overscroll.
+      document.documentElement.classList.add("bg-background");
+    }
+
+    hasMounted.current = true;
+  }, []);
 
   if (isLoading) {
     return (
@@ -67,12 +97,18 @@ export default function AppLayout() {
   }
 
   return (
-    <SafeAreaProvider>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <ProtectedLayout />
-        </AuthProvider>
-      </QueryClientProvider>
-    </SafeAreaProvider>
+    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+      <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+      <SafeAreaProvider>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <ProtectedLayout />
+          </AuthProvider>
+        </QueryClientProvider>
+      </SafeAreaProvider>
+    </ThemeProvider>
   );
 }
+
+const useIsomorphicLayoutEffect =
+  Platform.OS === "web" && typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
