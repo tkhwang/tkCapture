@@ -1,7 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
-import { useTranslation } from "react-i18next";
-import { Image, ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, View } from "react-native";
+
+import { Card, CardContent } from "@/components/ui/card";
+import { Text } from "@/components/ui/text";
 
 type BookParams = {
   id: string;
@@ -14,41 +16,57 @@ type BookParams = {
 
 export default function BookDetailScreen() {
   const params = useLocalSearchParams<BookParams>();
-  const { t } = useTranslation();
 
   if (!params.id) {
     return (
-      <View className="items-center justify-center flex-1">
-        <Text className="text-lg text-gray-600">Book not found</Text>
+      <View className="items-center justify-center flex-1 bg-background">
+        <Card className="p-6">
+          <CardContent className="items-center">
+            <Ionicons name="alert-circle-outline" size={48} color="hsl(var(--muted-foreground))" />
+            <Text variant="title" className="mt-4">
+              Book not found
+            </Text>
+          </CardContent>
+        </Card>
       </View>
     );
   }
 
   return (
-    <ScrollView className="flex-1 p-4 bg-white">
-      <View className="flex-row items-center mb-4">
-        <Ionicons name="book" size={24} color="#0284c7" />
-        <Text className="ml-2 text-2xl font-bold text-gray-800">{t("home.detail.title")}</Text>
-      </View>
-
-      <View className="p-4 mb-6 bg-white border shadow-md border-sky-100 rounded-xl">
-        <View className="flex-row">
-          {params.thumbnail && (
-            <Image
-              source={{ uri: params.thumbnail }}
-              className="w-32 mr-4 rounded-md shadow-md h-44"
-              resizeMode="cover"
-            />
-          )}
-          <View className="flex-1">
-            <Text className="mb-2 text-xl font-bold text-gray-800" numberOfLines={2}>
-              {params.title}
-            </Text>
-            <Text className="mb-1 text-gray-700">{params.author}</Text>
-            <Text className="mb-1 text-gray-600">{params.publisher}</Text>
+    <ScrollView className="flex-1 p-4 bg-background">
+      <Card className="mb-6 overflow-hidden">
+        <CardContent className="p-4">
+          <View className="flex-row">
+            {params.thumbnail ? (
+              <Image
+                source={{ uri: params.thumbnail }}
+                className="w-32 mr-4 rounded-md shadow h-44"
+                resizeMode="cover"
+              />
+            ) : (
+              <View className="items-center justify-center w-32 mr-4 rounded-md h-44 bg-muted">
+                <Ionicons name="image-outline" size={32} color="hsl(var(--muted-foreground))" />
+                <Text variant="muted" size="sm" className="mt-2">
+                  No Image
+                </Text>
+              </View>
+            )}
+            <View className="flex-1">
+              <Text variant="title" size="xl" className="mb-2" numberOfLines={2}>
+                {params.title}
+              </Text>
+              <View className="flex-row items-center mb-1">
+                <View className="w-1 h-1 mr-1 rounded-full bg-primary" />
+                <Text variant="default">{params.author}</Text>
+              </View>
+              <View className="flex-row items-center mb-1">
+                <View className="w-1 h-1 mr-1 rounded-full bg-primary" />
+                <Text variant="muted">{params.publisher}</Text>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
+        </CardContent>
+      </Card>
     </ScrollView>
   );
 }
