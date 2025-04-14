@@ -16,7 +16,7 @@ import {
 import { useDebounce } from "use-debounce";
 
 import { SEARCH_DEBOUNCE_MS, SEARCH_PAGE_SIZE } from "@/consts/appConsts";
-import { BookSearchItemView } from "@/features/book/components/BookSearchItem";
+import { BookSearchItemView } from "@/features/book/components/book-search-item";
 import { useSearchBooks } from "@/features/book/hooks/useSearchBooks";
 import { BookSearchProviderAtom } from "@/features/book/states/book";
 import { BookSearchItem } from "@/features/book/types/book-search-interface";

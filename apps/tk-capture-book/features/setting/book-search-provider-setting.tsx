@@ -1,6 +1,6 @@
 import { View } from "react-native";
 
-import { SearchProviderSelector } from "@/features/book/components/SearchProviderSelector";
+import { SearchProviderSelector } from "@/features/book/components/search-provider-selector";
 import { BookSearchProvider } from "@/features/book/types/book-search-interface";
 
 interface BookSearchProviderSettingProps {
