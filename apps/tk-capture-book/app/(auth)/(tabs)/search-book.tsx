@@ -19,7 +19,7 @@ import { SEARCH_DEBOUNCE_MS, SEARCH_PAGE_SIZE } from "@/consts/appConsts";
 import { BookSearchItemView } from "@/features/book/components/BookSearchItem";
 import { useSearchBooks } from "@/features/book/hooks/useSearchBooks";
 import { BookSearchProviderAtom } from "@/features/book/states/book";
-import { BookSearchItem } from "@/features/book/types/book-interface";
+import { BookSearchItem } from "@/features/book/types/book-search-interface";
 
 export default function SearchBookScreen() {
   const router = useRouter();
