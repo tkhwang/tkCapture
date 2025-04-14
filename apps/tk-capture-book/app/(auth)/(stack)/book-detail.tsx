@@ -7,7 +7,7 @@ import { GiftedChat, IMessage, InputToolbar } from "react-native-gifted-chat";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
-import { useBook } from "@/features/book-search/hooks/useBook";
+import { useBook } from "@/features/book/hooks/useBook";
 import { useAuth } from "@/providers/auth-provider";
 
 export default function BookDetailScreen() {

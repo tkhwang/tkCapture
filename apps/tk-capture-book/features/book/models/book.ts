@@ -1,4 +1,4 @@
-import { BookSearchItem } from "@/features/book-search/types/book-search-interface";
+import { BookSearchItem } from "@/features/book/types/book-search-interface";
 import { TablesInsert } from "@/types/types_db";
 
 /**

@@ -4,7 +4,7 @@ import { View, FlatList, Image, TouchableOpacity, ActivityIndicator } from "reac
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
-import { useBooks } from "@/features/book-search/hooks/useBooks";
+import { useBooks } from "@/features/book/hooks/useBooks";
 import { useAuth } from "@/providers/auth-provider";
 import { Database } from "@/types/types_db";
 
