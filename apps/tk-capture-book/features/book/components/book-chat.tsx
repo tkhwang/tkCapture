@@ -1,8 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import { FlatList, Keyboard, TextInput, View } from "react-native";
+import { FlatList, Keyboard, TextInput, View, Image } from "react-native";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { cn } from "@/lib/utils";
@@ -91,25 +90,33 @@ export function BookChat({ book, user }: BookChatProps) {
       {/* Chat Header */}
       <View className="flex-row items-center justify-between p-4 bg-secondary">
         <View className="flex-row items-center">
-          <Avatar className="mr-2 h-9 w-9">
-            <AvatarImage source={{ uri: "https://placeimg.com/140/140/any" }} alt="Book" />
-            <AvatarFallback>
-              <Text>{book.title.substring(0, 2).toUpperCase()}</Text>
-            </AvatarFallback>
-          </Avatar>
-          <View>
+          {/* Book-shaped thumbnail */}
+          <View className="w-10 mr-3 overflow-hidden border rounded-sm shadow-sm h-14 border-border">
+            {book.thumbnail ? (
+              <Image
+                source={{ uri: book.thumbnail }}
+                className="w-full h-full"
+                resizeMode="cover"
+              />
+            ) : (
+              <View className="items-center justify-center w-full h-full bg-primary/10">
+                <Text className="text-xs font-medium">
+                  {book.title.substring(0, 2).toUpperCase()}
+                </Text>
+              </View>
+            )}
+            {/* Book spine effect */}
+            <View className="absolute left-0 top-0 bottom-0 w-[2px] bg-primary/30" />
+          </View>
+          <View className="flex-1 gap-1 mr-3">
             <Text className="font-medium">{book.title}</Text>
-            <Text className="text-xs text-muted-foreground">Capture your thoughts</Text>
+            <Text className="text-xs text-muted-foreground">
+              {book.author} | {book.publisher}
+            </Text>
           </View>
         </View>
-        <View className="flex-row">
-          <Button size="icon" variant="ghost" className="ml-1">
-            <Ionicons name="camera-outline" size={20} color="hsl(var(--muted-foreground))" />
-          </Button>
-          <Button size="icon" variant="ghost" className="ml-1">
-            <Ionicons name="ellipsis-vertical" size={20} color="hsl(var(--muted-foreground))" />
-          </Button>
-        </View>
+        {/* Empty View for balance */}
+        <View className="w-10" />
       </View>
 
       {/* Chat Messages */}
