@@ -36,18 +36,40 @@ tkCapture is a mobile application suite focused on AI-powered image capture and 
   - windsurf
   - [a0.dev](https://a0.dev/)
 
-## EAS Build
+## EAS Build/Submit/Update
 
-### iOS
+### EAS Build
+
+#### iOS
 
 ```bash
 > yarn build:ios
 # eas build --platform ios --profile production
 ```
 
-### Android
+#### Android
 
 ```bash
 > yarn build:android
 # eas build --platform android --profile preview
+```
+
+### EAS Submit
+
+```bash
+eas submit
+```
+
+### EAS Update
+
+### iOS
+
+```bash
+eas update --branch production --message "[X.X.X] chnageNote"
+```
+
+### Android
+
+```bash
+eas update --branch preview --message "[X.X.X] chnageNote"
 ```
