@@ -9,9 +9,28 @@ tkCapture is a mobile application suite focused on AI-powered image capture and 
 
 ## Screenshot
 
-![img](./docs/figs/ui-screen-shot-1.png)
+### Book search
 
-![img](./docs/figs/ui-screen-shot-2.png)
+- search -> register
+
+![img](./docs/figs/ui-screen-shot-3.png)
+
+### Chat with LLM
+
+- registered book list in home
+- [TODO] Talk about book using LLM
+- [TODO] book capture sentence using camera
+- [TODO] share book sentence with book meta information
+
+![img](./docs/figs/ui-screen-shot-4.png)
+
+### Login/Setting
+
+![img](./docs/figs/ui-screen-shot-5.png)
+
+<!-- ![img](./docs/figs/ui-screen-shot-1.png) -->
+
+<!-- ![img](./docs/figs/ui-screen-shot-2.png) -->
 
 ## [1] tkCaptureBook
 
