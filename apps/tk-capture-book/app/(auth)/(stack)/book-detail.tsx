@@ -1,71 +1,17 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { useState, useCallback, useEffect } from "react";
+import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
-import { GiftedChat, IMessage, InputToolbar } from "react-native-gifted-chat";
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
-import { BookDetailHeader } from "@/features/book/components/book-detail-header";
+import { BookChat } from "@/features/book/components/book-chat";
 import { useBook } from "@/features/book/hooks/useBook";
 import { useAuth } from "@/providers/auth-provider";
 
 export default function BookDetailScreen() {
-  const router = useRouter();
   const params = useLocalSearchParams<{ id: string; isbn: string }>();
   const { user } = useAuth();
   const { book, loading, error } = useBook(user?.id, params.isbn);
-  const [expanded, setExpanded] = useState(true);
-  const [messages, setMessages] = useState<IMessage[]>([]);
-
-  useEffect(() => {
-    // Initialize with a welcome message
-    if (book) {
-      setMessages([
-        {
-          _id: 1,
-          text: `Welcome to ${book.title} capture space. You can add your thoughts and captured sentences here.`,
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: "Book Assistant",
-            avatar: "https://placeimg.com/140/140/any",
-          },
-        },
-      ]);
-    }
-  }, [book]);
-
-  const onSend = useCallback((newMessages: IMessage[] = []) => {
-    setMessages((previousMessages) => GiftedChat.append(previousMessages, newMessages));
-  }, []);
-
-  const renderInputToolbar = useCallback((props: any) => {
-    return (
-      <InputToolbar
-        {...props}
-        containerStyle={{
-          marginBottom: 64,
-          borderTopWidth: 1,
-          borderTopColor: "hsl(var(--border))",
-          backgroundColor: "hsl(var(--background))",
-        }}
-      />
-    );
-  }, []);
-
-  const toggleExpanded = () => {
-    setExpanded(!expanded);
-  };
-
-  const handleCaptureSentence = () => {
-    if (book) {
-      router.push({
-        pathname: "/(auth)/camera",
-      });
-    }
-  };
 
   if (loading) {
     return (
@@ -99,35 +45,7 @@ export default function BookDetailScreen() {
 
   return (
     <View className="flex-1 bg-background">
-      {/* Book Detail Header */}
-      <BookDetailHeader book={book} expanded={expanded} toggleExpanded={toggleExpanded} />
-
-      {/* Middle Chat Area - Scrollable */}
-      <View className="flex-1">
-        <GiftedChat
-          messages={messages}
-          onSend={(messages) => onSend(messages)}
-          user={{
-            _id: 1,
-            name: user?.id || "User",
-          }}
-          placeholder="Type your thoughts..."
-          alwaysShowSend
-          renderInputToolbar={renderInputToolbar}
-        />
-      </View>
-
-      {/* Bottom CTA Button - Fixed */}
-      <View className="absolute bottom-0 left-0 right-0 p-4 border-t bg-card border-border">
-        <Button
-          onPress={handleCaptureSentence}
-          variant="default"
-          className="flex-row items-center justify-center w-full h-12"
-        >
-          <Ionicons name="camera-outline" size={20} color="white" style={{ marginRight: 8 }} />
-          <Text className="text-base font-medium text-white">Capture Sentence</Text>
-        </Button>
-      </View>
+      <BookChat book={book} user={user} />
     </View>
   );
 }
