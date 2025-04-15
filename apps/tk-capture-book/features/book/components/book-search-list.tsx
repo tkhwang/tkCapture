@@ -1,6 +1,6 @@
 import { ScrollView } from "react-native";
 
-import { BookSearchItemView } from "./BookSearchItem";
+import { BookSearchItemView } from "./book-search-item";
 import { BookSearchItem } from "../types/book-search-interface";
 
 interface BookSearchListProps {

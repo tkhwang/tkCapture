@@ -2,10 +2,9 @@ import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 
 import { BOOK_LIST_QUERY_CACHE_TIME } from "@/consts/appConsts";
-import { searchBooks } from "@/features/book-search/api/search-books";
-import { Book } from "@/features/book-search/models/book";
-import { BookSearchProviderAtom } from "@/features/book-search/states/book";
-import { BookSearchParams } from "@/features/book-search/types/book-search-interface";
+import { searchBooks } from "@/features/book/api/search-books";
+import { BookSearchProviderAtom } from "@/features/book/states/book";
+import { BookSearchItem, BookSearchParams } from "@/features/book/types/book-search-interface";
 
 export function useSearchBooks(params: BookSearchParams) {
   const provider = useAtomValue(BookSearchProviderAtom);
@@ -21,7 +20,7 @@ export function useSearchBooks(params: BookSearchParams) {
 
       const results = await searchBooks(provider, searchParams);
 
-      results.items.forEach((book: Book) => {
+      results.items.forEach((book: BookSearchItem) => {
         if (book.isbn) {
           queryClient.setQueryData(["book", provider, book.isbn], book);
         }

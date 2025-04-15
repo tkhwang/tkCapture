@@ -4,7 +4,7 @@ import { View } from "react-native";
 
 import ToggleTheme from "@/components/ToggleTheme";
 import { Text } from "@/components/ui/text";
-import { BookSearchProviderAtom } from "@/features/book-search/states/book";
+import { BookSearchProviderAtom } from "@/features/book/states/book";
 import { BookSearchProviderSetting } from "@/features/setting/book-search-provider-setting";
 import { Profile } from "@/features/setting/components/profile";
 import { LanguageSetting } from "@/features/setting/language-setting";

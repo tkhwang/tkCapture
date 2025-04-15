@@ -1,8 +1,8 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 
-import { Book } from "@/features/book-search/models/book";
-import { BookSearchProviderAtom } from "@/features/book-search/states/book";
+import { Book } from "@/features/book/models/book";
+import { BookSearchProviderAtom } from "@/features/book/states/book";
 
 export function useSearchBookByISBN(isbn: string) {
   const provider = useAtomValue(BookSearchProviderAtom);

@@ -16,10 +16,10 @@ import {
 import { useDebounce } from "use-debounce";
 
 import { SEARCH_DEBOUNCE_MS, SEARCH_PAGE_SIZE } from "@/consts/appConsts";
-import { BookSearchItemView } from "@/features/book-search/components/BookSearchItem";
-import { useSearchBooks } from "@/features/book-search/hooks/useSearchBooks";
-import { BookSearchProviderAtom } from "@/features/book-search/states/book";
-import { BookSearchItem } from "@/features/book-search/types/book-search-interface";
+import { BookSearchItemView } from "@/features/book/components/book-search-item";
+import { useSearchBooks } from "@/features/book/hooks/useSearchBooks";
+import { BookSearchProviderAtom } from "@/features/book/states/book";
+import { BookSearchItem } from "@/features/book/types/book-search-interface";
 
 export default function SearchBookScreen() {
   const router = useRouter();

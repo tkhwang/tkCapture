@@ -7,9 +7,9 @@ import { Image, ScrollView, View } from "react-native";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
-import { useBooks } from "@/features/book-search/hooks/useBooks";
-import { useSearchBookByISBN } from "@/features/book-search/hooks/useSearchBookByISBN";
-import { Book } from "@/features/book-search/models/book";
+import { useBooks } from "@/features/book/hooks/useBooks";
+import { useSearchBookByISBN } from "@/features/book/hooks/useSearchBookByISBN";
+import { Book } from "@/features/book/models/book";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/providers/auth-provider";
 

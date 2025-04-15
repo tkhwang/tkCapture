@@ -1,8 +1,5 @@
-import { createBookSearchAdapter } from "@/features/book-search/factories/book-search-factory";
-import {
-  BookSearchParams,
-  BookSearchProvider,
-} from "@/features/book-search/types/book-search-interface";
+import { createBookSearchAdapter } from "@/features/book/factories/book-search-factory";
+import { BookSearchParams, BookSearchProvider } from "@/features/book/types/book-search-interface";
 
 export async function searchBooks(
   bookSearchProvider: BookSearchProvider,
