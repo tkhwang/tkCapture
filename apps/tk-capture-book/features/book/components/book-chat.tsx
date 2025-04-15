@@ -80,7 +80,6 @@ export function BookChat({ book, user }: BookChatProps) {
 
     setMessages((prevMessages) => [...prevMessages, newMessage]);
     setInputMessage("");
-    Keyboard.dismiss();
   };
 
   // Format timestamp for messages
