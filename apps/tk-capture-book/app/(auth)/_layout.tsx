@@ -20,6 +20,14 @@ export default function AuthLayout() {
         }}
       />
       <Stack.Screen
+        name="(stack)/book-chat"
+        options={{
+          headerBackTitle: "",
+          headerTitle: t("home.detail.title"),
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen
         name="(stack)/book-search-detail"
         options={{
           headerBackTitle: "",
