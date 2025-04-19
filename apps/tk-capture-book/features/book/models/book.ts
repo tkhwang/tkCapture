@@ -1,5 +1,8 @@
 import { BookSearchItem } from "@/features/book/types/book-search-interface";
-import { TablesInsert } from "@/types/types_db";
+import { TablesInsert, Database } from "@/types/types_db";
+
+// Define the BookStatus type from the Supabase schema
+type BookStatus = Database["public"]["Enums"]["book_status"];
 
 /**
  * Book model
@@ -19,6 +22,7 @@ export class Book implements BookSearchItem {
     public readonly isbn: string,
     public readonly publisher: string,
     public readonly description: string,
+    public readonly book_status: BookStatus,
   ) {}
 
   static fromBookSearchItem(item: BookSearchItem): Book {
@@ -30,6 +34,7 @@ export class Book implements BookSearchItem {
       item.isbn,
       item.publisher,
       item.description,
+      "unread", // Default book_status
     );
   }
 
@@ -43,6 +48,7 @@ export class Book implements BookSearchItem {
       isbn: this.isbn,
       publisher: this.publisher,
       description: this.description,
+      book_status: this.book_status,
     };
   }
 }
