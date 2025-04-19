@@ -33,9 +33,9 @@ export class Book implements BookSearchItem {
     );
   }
 
-  toDatabase(ownerId: string): TablesInsert<"books"> {
+  toDatabase(owner_id: string): TablesInsert<"books"> {
     return {
-      ownerId,
+      owner_id,
       title: this.title,
       link: this.link,
       thumbnail: this.thumbnail,
