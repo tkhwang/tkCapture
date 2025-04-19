@@ -101,13 +101,12 @@ export default function HomeScreen() {
     </View>
   );
 
-  // Empty state
-  const renderEmptyState = () => (
+  const renderNoRegisteredBook = () => (
     <View className="absolute inset-0 flex items-center justify-center px-4">
       <Card className="items-center w-full max-w-sm p-8 bg-card/80">
         <CardContent className="items-center p-0">
           <Image
-            source={require("../../../assets/images/woman-book-reading-green.png")}
+            source={require("../../../assets/images/man-book-reading-green.png")}
             className="mb-8 w-72 h-72"
             resizeMode="contain"
           />
@@ -137,7 +136,7 @@ export default function HomeScreen() {
           showsVerticalScrollIndicator={false}
         />
       ) : (
-        renderEmptyState()
+        renderNoRegisteredBook()
       )}
     </View>
   );
