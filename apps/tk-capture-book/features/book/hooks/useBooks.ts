@@ -19,7 +19,7 @@ export function useBooks(userId?: string) {
         const { data, error } = await supabase
           .from("books")
           .select("*")
-          .eq("ownerId", userId)
+          .eq("owner_id", userId)
           .order("created_at", { ascending: false });
 
         if (error) {

@@ -5,7 +5,6 @@ import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import {
   View,
-  Text,
   TextInput,
   ActivityIndicator,
   Pressable,
@@ -15,6 +14,8 @@ import {
 } from "react-native";
 import { useDebounce } from "use-debounce";
 
+import { Card, CardContent } from "@/components/ui";
+import { Text } from "@/components/ui/text";
 import { SEARCH_DEBOUNCE_MS, SEARCH_PAGE_SIZE } from "@/consts/appConsts";
 import { BookSearchItemView } from "@/features/book/components/book-search-item";
 import { useSearchBooks } from "@/features/book/hooks/useSearchBooks";
@@ -63,6 +64,26 @@ export default function SearchBookScreen() {
   // 검색 결과가 없는지 확인
   const hasNoResults = !isLoading && !error && allBooks.length === 0 && !debouncedSearchText;
 
+  const renderNoSearchedBook = () => (
+    <View className="absolute inset-0 flex items-center justify-center px-4">
+      <Card className="items-center w-full max-w-sm p-8 bg-card/80">
+        <CardContent className="items-center p-0">
+          <Image
+            source={require("../../../assets/images/woman-book-reading-green.png")}
+            className="mb-8 w-72 h-72"
+            resizeMode="contain"
+          />
+          <Text variant="heading" size="xl" className="mb-3 text-center">
+            {t("search.search-no-result.title")}
+          </Text>
+          <Text variant="muted" className="text-center">
+            {t("search.search-no-result.description")}
+          </Text>
+        </CardContent>
+      </Card>
+    </View>
+  );
+
   return (
     <View className="flex-1 bg-white">
       <View className="gap-4 p-4 space-y-2">
@@ -93,23 +114,7 @@ export default function SearchBookScreen() {
         </View>
       )}
 
-      {hasNoResults && (
-        <View className="absolute inset-0 flex items-center justify-center px-4">
-          <View className="items-center">
-            <Image
-              source={require("../../../assets/images/woman-book-flying-green.png")}
-              className="mb-8 w-72 h-72"
-              resizeMode="contain"
-            />
-            <Text className="mb-3 text-xl font-medium text-gray-800">
-              {t("search.search-no-result.title")}
-            </Text>
-            <Text className="text-base text-center text-gray-500">
-              {t("search.search-no-result.description")}
-            </Text>
-          </View>
-        </View>
-      )}
+      {hasNoResults && renderNoSearchedBook()}
 
       {/* 검색 결과 리스트 */}
       <ScrollView

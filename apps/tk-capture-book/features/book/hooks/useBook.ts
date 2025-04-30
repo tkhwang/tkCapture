@@ -31,9 +31,11 @@ export const useBook = (userId?: string, isbn?: string) => {
       const { data, error } = await supabase
         .from("books")
         .select("*")
-        .eq("user_id", userId)
+        .eq("owner_id", userId)
         .eq("isbn", isbn)
         .single();
+
+      console.log("TCL: useBook -> data", data);
 
       if (error) {
         throw error;
