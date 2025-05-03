@@ -30,16 +30,21 @@ export const ko = {
     },
     detail: {
       status: {
-        title: "읽기 상태",
+        title: "상태",
         unread: "읽지 않음",
         in_progress: "읽는 중",
         completed: "완료",
         on_hold: "보류",
       },
       chat: {
-        title: "챕터 및 독서 노트",
-        description: "이 책에 대한 생각과 인상적인 구절을 기록해보세요.",
-        button: "북챗 시작하기",
+        title: "채팅",
+        description: "이 책에 대해서 AI 와 함께 채팅해보세요.",
+        button: "북 채팅",
+      },
+      capture: {
+        title: "문장 수집",
+        description: "마음에 드는 문장을 수집해보세요.",
+        button: "문장 수집",
       },
     },
 

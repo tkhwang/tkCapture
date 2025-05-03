@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
 
+import { TextRowTitleDescription } from "@/components/text-row-title-description";
 import { Button, Card, CardContent, CardHeader } from "@/components/ui";
 import { Text } from "@/components/ui/text";
 
@@ -33,17 +34,16 @@ export function BookDetailChat({ onPressChat, bookId, bookIsbn }: BookDetailChat
   return (
     <Card className="mx-4 mb-6">
       <CardHeader>
-        <Text variant="title">{t("detail.chat.title")}</Text>
+        <TextRowTitleDescription description={t("detail.chat.description")} />
       </CardHeader>
       <CardContent>
-        <Text className="mb-4">{t("detail.chat.description")}</Text>
         <Button
           size="lg"
-          className="w-full"
           onPress={handlePressChat}
           disabled={!onPressChat && (!bookId || !bookIsbn)}
+          className="w-full gap-2"
         >
-          <Ionicons name="chatbubble-outline" size={20} className="mr-2" />
+          <Ionicons name="chatbubble-outline" size={20} color="white" />
           <Text className="font-medium text-primary-foreground">{t("detail.chat.button")}</Text>
         </Button>
       </CardContent>

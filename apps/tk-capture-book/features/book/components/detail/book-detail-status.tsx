@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
+import { TextRowTitleDescription } from "@/components/text-row-title-description";
 import { Button, Card, CardContent, CardHeader } from "@/components/ui";
-import { Text } from "@/components/ui/text";
 import { cn } from "@/lib/utils";
 import { Database } from "@/types/types_db";
 
@@ -24,7 +24,10 @@ export function BookDetailStatus({ loading, status, onUpdateStatus }: Props) {
   return (
     <Card className={cn("mx-4 mb-4")}>
       <CardHeader>
-        <Text variant="title">{`${t("detail.status.title")}: ${getStatusLabel(status)}`}</Text>
+        <TextRowTitleDescription
+          title={t("detail.status.title")}
+          description={getStatusLabel(status)}
+        />
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         <View className="flex flex-row justify-between gap-2">

@@ -30,16 +30,21 @@ export const en = {
     },
     detail: {
       status: {
-        title: "Reading Status",
+        title: "Status",
         unread: "Unread",
         in_progress: "In Progress",
         completed: "Completed",
         on_hold: "On Hold",
       },
       chat: {
-        title: "Chapters and Reading Notes",
-        description: "Record your thoughts and impressive passages about this book.",
-        button: "Start Book Chat",
+        title: "Chat",
+        description: "Chat with AI about this book.",
+        button: "Book Chat",
+      },
+      capture: {
+        title: "Capture Text",
+        description: "Capture meaningful text from this book.",
+        button: "Capture Text",
       },
     },
     settings: {

@@ -4,6 +4,7 @@ import { View, ScrollView } from "react-native";
 
 import { Text } from "@/components/ui/text";
 import { BookDetailHeader } from "@/features/book/components/book-detail-header";
+import { BookDetailCapture } from "@/features/book/components/detail/book-detail-capture";
 import { BookDetailChat } from "@/features/book/components/detail/book-detail-chat";
 import { BookDetailStatus } from "@/features/book/components/detail/book-detail-status";
 import { supabase } from "@/lib/supabase";
@@ -105,6 +106,8 @@ export default function BookDetailScreen() {
       />
 
       <BookDetailChat bookId={book.id} bookIsbn={book.isbn} />
+
+      <BookDetailCapture bookId={book.id} />
     </ScrollView>
   );
 }

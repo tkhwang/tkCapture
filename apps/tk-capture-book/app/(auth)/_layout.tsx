@@ -35,6 +35,14 @@ export default function AuthLayout() {
           headerShown: true,
         }}
       />
+      <Stack.Screen
+        name="(stack)/book-capture"
+        options={{
+          headerBackTitle: "",
+          headerTitle: t("capture.title", "Text Capture"),
+          headerShown: true,
+        }}
+      />
     </Stack>
   );
 }
