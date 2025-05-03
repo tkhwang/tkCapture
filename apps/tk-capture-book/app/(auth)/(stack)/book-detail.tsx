@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { View, ScrollView, ToastAndroid, Platform, Alert } from "react-native";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
 import { BookDetailHeader } from "@/features/book/components/book-detail-header";
 import { supabase } from "@/lib/supabase";
@@ -142,16 +142,9 @@ export default function BookDetailScreen() {
       {/* Book Status */}
       <Card className="mx-4 mb-4">
         <CardHeader>
-          <Text variant="title">읽기 상태</Text>
+          <Text variant="title">읽기 상태: {getStatusLabel(book.book_status)}</Text>
         </CardHeader>
-        <CardContent>
-          <View className="flex-row items-center">
-            <View className="w-2 h-2 mr-2 rounded-full bg-primary" />
-            <Text className="text-foreground">현재 상태: </Text>
-            <Text className="ml-1 font-semibold">{getStatusLabel(book.book_status)}</Text>
-          </View>
-        </CardContent>
-        <CardFooter className="flex-row flex-wrap gap-2">
+        <CardContent className="flex-row flex-wrap gap-2">
           <Button
             size="sm"
             variant={book.book_status === "unread" ? "default" : "outline"}
@@ -188,7 +181,7 @@ export default function BookDetailScreen() {
           >
             보류
           </Button>
-        </CardFooter>
+        </CardContent>
       </Card>
 
       {/* Book Chat Button */}
