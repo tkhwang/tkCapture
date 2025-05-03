@@ -36,6 +36,11 @@ export const ko = {
         completed: "완료",
         on_hold: "보류",
       },
+      chat: {
+        title: "챕터 및 독서 노트",
+        description: "이 책에 대한 생각과 인상적인 구절을 기록해보세요.",
+        button: "북챗 시작하기",
+      },
     },
 
     settings: {

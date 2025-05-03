@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { View } from "react-native";
 
 import { Button, Card, CardContent, CardHeader } from "@/components/ui";
 import { Text } from "@/components/ui/text";
@@ -25,19 +26,33 @@ export function BookDetailStatus({ loading, status, onUpdateStatus }: Props) {
       <CardHeader>
         <Text variant="title">{`${t("detail.status.title")}: ${getStatusLabel(status)}`}</Text>
       </CardHeader>
-      <CardContent className="flex-row flex-wrap gap-2">
-        {BOOK_STATUSES.map((statusOption) => (
+      <CardContent className="flex flex-col gap-2">
+        <View className="flex flex-row justify-between gap-2">
+          {BOOK_STATUSES.slice(0, 3).map((statusOption) => (
+            <Button
+              key={statusOption}
+              size="sm"
+              variant={status === statusOption ? "default" : "outline"}
+              disabled={loading}
+              onPress={() => onUpdateStatus(statusOption)}
+              className="flex-1"
+            >
+              {getStatusLabel(statusOption)}
+            </Button>
+          ))}
+        </View>
+        <View>
           <Button
-            key={statusOption}
+            key={BOOK_STATUSES[3]}
             size="sm"
-            variant={status === statusOption ? "default" : "outline"}
+            variant={status === BOOK_STATUSES[3] ? "default" : "outline"}
             disabled={loading}
-            onPress={() => onUpdateStatus(statusOption)}
-            className="flex-1 min-w-20"
+            onPress={() => onUpdateStatus(BOOK_STATUSES[3])}
+            className="w-full"
           >
-            {getStatusLabel(statusOption)}
+            {getStatusLabel(BOOK_STATUSES[3])}
           </Button>
-        ))}
+        </View>
       </CardContent>
     </Card>
   );

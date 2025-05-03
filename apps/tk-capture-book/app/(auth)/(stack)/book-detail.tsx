@@ -1,12 +1,10 @@
-import { Ionicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useState, useEffect } from "react";
 import { View, ScrollView } from "react-native";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
 import { BookDetailHeader } from "@/features/book/components/book-detail-header";
+import { BookDetailChat } from "@/features/book/components/detail/book-detail-chat";
 import { BookDetailStatus } from "@/features/book/components/detail/book-detail-status";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/providers/auth-provider";
@@ -67,19 +65,6 @@ export default function BookDetailScreen() {
     }
   };
 
-  // Navigate to book chat
-  const goToBookChat = () => {
-    if (book) {
-      router.push({
-        pathname: "/(auth)/(stack)/book-chat",
-        params: {
-          id: book.id,
-          isbn: book.isbn,
-        },
-      });
-    }
-  };
-
   if (loading) {
     return (
       <View className="items-center justify-center flex-1">
@@ -107,7 +92,6 @@ export default function BookDetailScreen() {
 
   return (
     <ScrollView className="flex-1 bg-background">
-      {/* Book Detail Header */}
       <BookDetailHeader
         book={simplifiedBook as any}
         expanded={expanded}
@@ -115,24 +99,12 @@ export default function BookDetailScreen() {
       />
 
       <BookDetailStatus
-        loading={loading}
+        loading={statusLoading}
         status={book.book_status}
         onUpdateStatus={updateBookStatus}
       />
 
-      {/* Book Chat Button */}
-      <Card className="mx-4 mb-6">
-        <CardHeader>
-          <Text variant="title">챕터 및 독서 노트</Text>
-        </CardHeader>
-        <CardContent>
-          <Text className="mb-4">이 책에 대한 생각과 인상적인 구절을 기록해보세요.</Text>
-          <Button size="lg" className="w-full" onPress={goToBookChat}>
-            <Ionicons name="chatbubble-outline" size={20} className="mr-2" />
-            <Text className="font-medium text-primary-foreground">북챗 시작하기</Text>
-          </Button>
-        </CardContent>
-      </Card>
+      <BookDetailChat bookId={book.id} bookIsbn={book.isbn} />
     </ScrollView>
   );
 }

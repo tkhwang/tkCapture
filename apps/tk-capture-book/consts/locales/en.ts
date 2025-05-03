@@ -36,6 +36,11 @@ export const en = {
         completed: "Completed",
         on_hold: "On Hold",
       },
+      chat: {
+        title: "Chapters and Reading Notes",
+        description: "Record your thoughts and impressive passages about this book.",
+        button: "Start Book Chat",
+      },
     },
     settings: {
       tabTitle: "Settings",
