@@ -28,6 +28,15 @@ export const en = {
         registered: "Already Unregistered Book",
       },
     },
+    detail: {
+      status: {
+        title: "Reading Status",
+        unread: "Unread",
+        in_progress: "In Progress",
+        completed: "Completed",
+        on_hold: "On Hold",
+      },
+    },
     settings: {
       tabTitle: "Settings",
       bookSearch: {

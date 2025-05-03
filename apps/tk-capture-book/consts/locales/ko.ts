@@ -28,6 +28,15 @@ export const ko = {
         registered: "이미 등록된 책",
       },
     },
+    detail: {
+      status: {
+        title: "읽기 상태",
+        unread: "읽지 않음",
+        in_progress: "읽는 중",
+        completed: "완료",
+        on_hold: "보류",
+      },
+    },
 
     settings: {
       tabTitle: "설정",
