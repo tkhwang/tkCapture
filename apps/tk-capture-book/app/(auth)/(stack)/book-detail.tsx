@@ -1,12 +1,12 @@
-import { Ionicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useState, useEffect } from "react";
-import { View, ScrollView, ToastAndroid, Platform, Alert } from "react-native";
+import { View, ScrollView } from "react-native";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
 import { BookDetailHeader } from "@/features/book/components/book-detail-header";
+import { BookDetailCapture } from "@/features/book/components/detail/book-detail-capture";
+import { BookDetailChat } from "@/features/book/components/detail/book-detail-chat";
+import { BookDetailStatus } from "@/features/book/components/detail/book-detail-status";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/providers/auth-provider";
 import { Database } from "@/types/types_db";
@@ -19,6 +19,7 @@ export default function BookDetailScreen() {
   const [book, setBook] = useState<Database["public"]["Tables"]["books"]["Row"] | null>(null);
   const [loading, setLoading] = useState(true);
   const [statusLoading, setStatusLoading] = useState(false);
+
   const { user } = useAuth();
 
   // Fetch book data
@@ -34,7 +35,6 @@ export default function BookDetailScreen() {
         setBook(data);
       } catch (error) {
         console.error("Error fetching book:", error);
-        showMessage("책 정보를 불러오는 데 실패했습니다.");
       } finally {
         setLoading(false);
       }
@@ -58,50 +58,11 @@ export default function BookDetailScreen() {
       if (error) throw error;
 
       setBook({ ...book, book_status: newStatus });
-      showMessage(`책 상태가 ${getStatusLabel(newStatus)}(으)로 변경되었습니다.`);
+      console.log(`[+][BookDetailScreen]: book status is changed to ${newStatus}.`);
     } catch (error) {
       console.error("Error updating book status:", error);
-      showMessage("책 상태 변경에 실패했습니다.");
     } finally {
       setStatusLoading(false);
-    }
-  };
-
-  // Show message (toast on Android, alert on iOS)
-  const showMessage = (message: string) => {
-    if (Platform.OS === "android") {
-      ToastAndroid.show(message, ToastAndroid.SHORT);
-    } else {
-      Alert.alert("알림", message);
-    }
-  };
-
-  // Get Korean label for book status
-  const getStatusLabel = (status: BookStatus): string => {
-    switch (status) {
-      case "unread":
-        return "읽지 않음";
-      case "in_progress":
-        return "읽는 중";
-      case "completed":
-        return "완료";
-      case "on_hold":
-        return "보류";
-      default:
-        return "알 수 없음";
-    }
-  };
-
-  // Navigate to book chat
-  const goToBookChat = () => {
-    if (book) {
-      router.push({
-        pathname: "/(auth)/(stack)/book-chat",
-        params: {
-          id: book.id,
-          isbn: book.isbn,
-        },
-      });
     }
   };
 
@@ -132,78 +93,21 @@ export default function BookDetailScreen() {
 
   return (
     <ScrollView className="flex-1 bg-background">
-      {/* Book Detail Header */}
       <BookDetailHeader
         book={simplifiedBook as any}
         expanded={expanded}
         toggleExpanded={() => setExpanded(!expanded)}
       />
 
-      {/* Book Status */}
-      <Card className="mx-4 mb-4">
-        <CardHeader>
-          <Text variant="title">읽기 상태</Text>
-        </CardHeader>
-        <CardContent>
-          <View className="flex-row items-center">
-            <View className="w-2 h-2 mr-2 rounded-full bg-primary" />
-            <Text className="text-foreground">현재 상태: </Text>
-            <Text className="ml-1 font-semibold">{getStatusLabel(book.book_status)}</Text>
-          </View>
-        </CardContent>
-        <CardFooter className="flex-row flex-wrap gap-2">
-          <Button
-            size="sm"
-            variant={book.book_status === "unread" ? "default" : "outline"}
-            disabled={statusLoading}
-            onPress={() => updateBookStatus("unread")}
-            className="flex-1 min-w-20"
-          >
-            읽지 않음
-          </Button>
-          <Button
-            size="sm"
-            variant={book.book_status === "in_progress" ? "default" : "outline"}
-            disabled={statusLoading}
-            onPress={() => updateBookStatus("in_progress")}
-            className="flex-1 min-w-20"
-          >
-            읽는 중
-          </Button>
-          <Button
-            size="sm"
-            variant={book.book_status === "completed" ? "default" : "outline"}
-            disabled={statusLoading}
-            onPress={() => updateBookStatus("completed")}
-            className="flex-1 min-w-20"
-          >
-            완료
-          </Button>
-          <Button
-            size="sm"
-            variant={book.book_status === "on_hold" ? "default" : "outline"}
-            disabled={statusLoading}
-            onPress={() => updateBookStatus("on_hold")}
-            className="flex-1 min-w-20"
-          >
-            보류
-          </Button>
-        </CardFooter>
-      </Card>
+      <BookDetailStatus
+        loading={statusLoading}
+        status={book.book_status}
+        onUpdateStatus={updateBookStatus}
+      />
 
-      {/* Book Chat Button */}
-      <Card className="mx-4 mb-6">
-        <CardHeader>
-          <Text variant="title">챕터 및 독서 노트</Text>
-        </CardHeader>
-        <CardContent>
-          <Text className="mb-4">이 책에 대한 생각과 인상적인 구절을 기록해보세요.</Text>
-          <Button size="lg" className="w-full" onPress={goToBookChat}>
-            <Ionicons name="chatbubble-outline" size={20} className="mr-2" />
-            <Text className="font-medium text-primary-foreground">북챗 시작하기</Text>
-          </Button>
-        </CardContent>
-      </Card>
+      <BookDetailChat bookId={book.id} bookIsbn={book.isbn} />
+
+      <BookDetailCapture bookId={book.id} />
     </ScrollView>
   );
 }

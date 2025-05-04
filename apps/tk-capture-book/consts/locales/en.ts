@@ -28,6 +28,25 @@ export const en = {
         registered: "Already Unregistered Book",
       },
     },
+    detail: {
+      status: {
+        title: "Status",
+        unread: "Unread",
+        in_progress: "In Progress",
+        completed: "Completed",
+        on_hold: "On Hold",
+      },
+      chat: {
+        title: "Chat",
+        description: "Chat with AI about this book.",
+        button: "Book Chat",
+      },
+      capture: {
+        title: "Capture Text",
+        description: "Capture meaningful text from this book.",
+        button: "Capture Text",
+      },
+    },
     settings: {
       tabTitle: "Settings",
       bookSearch: {

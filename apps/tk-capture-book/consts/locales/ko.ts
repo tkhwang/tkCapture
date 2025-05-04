@@ -28,6 +28,25 @@ export const ko = {
         registered: "이미 등록된 책",
       },
     },
+    detail: {
+      status: {
+        title: "상태",
+        unread: "읽지 않음",
+        in_progress: "읽는 중",
+        completed: "완료",
+        on_hold: "보류",
+      },
+      chat: {
+        title: "채팅",
+        description: "이 책에 대해서 AI 와 함께 채팅해보세요.",
+        button: "북 채팅",
+      },
+      capture: {
+        title: "문장 수집",
+        description: "마음에 드는 문장을 수집해보세요.",
+        button: "문장 수집",
+      },
+    },
 
     settings: {
       tabTitle: "설정",
