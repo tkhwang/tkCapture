@@ -15,7 +15,7 @@ export function useBooks() {
     isLoading: loading,
     error,
   } = useQuery({
-    queryKey: ["books", userId],
+    queryKey: [userId, "books"],
     queryFn: async () => {
       if (!userId) return [];
 

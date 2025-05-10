@@ -5,7 +5,7 @@ import { View } from "react-native";
 import { Card, CardContent } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
 import { BookChat } from "@/features/book/components/book-chat";
-import { useBook } from "@/features/book/hooks/useBook";
+import { useBook } from "@/features/book/hooks/queries/useBook";
 import { useAuth } from "@/providers/auth-provider";
 
 export default function BookChatScreen() {

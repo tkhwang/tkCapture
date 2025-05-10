@@ -7,7 +7,7 @@ import { Image, ScrollView, View } from "react-native";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
-import { useBooks } from "@/features/book/hooks/useBooks";
+import { useBooks } from "@/features/book/hooks/queries/useBooks";
 import { useSearchBookByISBN } from "@/features/book/hooks/useSearchBookByISBN";
 import { Book } from "@/features/book/models/book";
 import { supabase } from "@/lib/supabase";

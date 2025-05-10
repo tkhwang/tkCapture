@@ -1,8 +1,8 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { supabase } from "@/lib/supabase";
-import { Database } from "@/types/types_db";
 import { useAuth } from "@/providers/auth-provider";
+import { Database } from "@/types/types_db";
 
 type Book = Database["public"]["Tables"]["books"]["Row"];
 
@@ -17,7 +17,7 @@ export function useBook(bookId: string) {
     isLoading: loading,
     error,
   } = useQuery({
-    queryKey: ["book", userId, bookId],
+    queryKey: [userId, "book", bookId],
     queryFn: async () => {
       const cachedData = queryClient.getQueryData<Book>(["book", userId, bookId]);
       if (cachedData) {
