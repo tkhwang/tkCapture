@@ -2,10 +2,14 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { supabase } from "@/lib/supabase";
 import { Database } from "@/types/types_db";
+import { useAuth } from "@/providers/auth-provider";
 
 type Book = Database["public"]["Tables"]["books"]["Row"];
 
-export const useBook = (userId?: string, isbn?: string) => {
+export function useBook(isbn?: string) {
+  const { user } = useAuth();
+  const userId = user?.id;
+
   const queryClient = useQueryClient();
 
   const {
@@ -59,4 +63,4 @@ export const useBook = (userId?: string, isbn?: string) => {
     loading,
     error,
   };
-};
+}
