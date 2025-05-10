@@ -2,8 +2,12 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/providers/auth-provider";
 
-export function useBooks(userId?: string) {
+export function useBooks() {
+  const { user } = useAuth();
+  const userId = user?.id;
+
   const queryClient = useQueryClient();
 
   const {
