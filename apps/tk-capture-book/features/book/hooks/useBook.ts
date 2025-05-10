@@ -6,7 +6,7 @@ import { useAuth } from "@/providers/auth-provider";
 
 type Book = Database["public"]["Tables"]["books"]["Row"];
 
-export function useBook(isbn?: string) {
+export function useBook(bookId: string) {
   const { user } = useAuth();
   const userId = user?.id;
 
@@ -17,29 +17,22 @@ export function useBook(isbn?: string) {
     isLoading: loading,
     error,
   } = useQuery({
-    queryKey: ["book", userId, isbn],
+    queryKey: ["book", userId, bookId],
     queryFn: async () => {
-      if (!userId || !isbn) {
-        return null;
-      }
-
-      // 먼저 캐시에서 데이터 확인
-      const cachedData = queryClient.getQueryData<Book>(["book", userId, isbn]);
+      const cachedData = queryClient.getQueryData<Book>(["book", userId, bookId]);
       if (cachedData) {
-        console.log(`[+][useBook] Using cached book data for ISBN: ${isbn}`);
+        console.log(`[+][useBook] Using cached book data for bookId: ${bookId}`);
         return cachedData;
       }
 
       // 캐시에 없으면 DB에서 조회
-      console.log(`[+][useBook] Fetching book data from DB for ISBN: ${isbn}`);
+      console.log(`[+][useBook] Fetching book data from DB for bookId: ${bookId}`);
       const { data, error } = await supabase
         .from("books")
         .select("*")
         .eq("owner_id", userId)
-        .eq("isbn", isbn)
+        .eq("id", bookId)
         .single();
-
-      console.log("TCL: useBook -> data", data);
 
       if (error) {
         throw error;
@@ -47,14 +40,13 @@ export function useBook(isbn?: string) {
 
       // 결과를 캐시에 저장
       if (data) {
-        queryClient.setQueryData(["book", userId, isbn], data);
-        console.log(`[+][useBook] Cached book data for ISBN: ${isbn}`);
+        queryClient.setQueryData(["book", userId, bookId], data);
+        console.log(`[+][useBook] Cached book data for bookId: ${bookId}`);
       }
 
       return data;
     },
-    enabled: !!userId && !!isbn,
-    // 이미 캐시에서 처리하므로 staleTime을 길게 설정
+    enabled: !!userId,
     staleTime: 5 * 60 * 1000, // 5분
   });
 

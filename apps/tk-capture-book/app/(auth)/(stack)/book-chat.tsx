@@ -11,11 +11,11 @@ import { useAuth } from "@/providers/auth-provider";
 export default function BookChatScreen() {
   const params = useLocalSearchParams<{ id: string; isbn: string }>();
   const { user } = useAuth();
-  const { book, loading, error } = useBook(params.isbn);
+  const { book, loading, error } = useBook(params.id);
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center bg-background">
+      <View className="flex-1 items-center justify-center bg-background">
         <Card className="p-6">
           <CardContent className="items-center">
             <Ionicons name="hourglass-outline" size={48} color="hsl(var(--muted-foreground))" />
@@ -30,7 +30,7 @@ export default function BookChatScreen() {
 
   if (error || !book) {
     return (
-      <View className="flex-1 justify-center items-center bg-background">
+      <View className="flex-1 items-center justify-center bg-background">
         <Card className="p-6">
           <CardContent className="items-center">
             <Ionicons name="alert-circle-outline" size={48} color="hsl(var(--muted-foreground))" />
