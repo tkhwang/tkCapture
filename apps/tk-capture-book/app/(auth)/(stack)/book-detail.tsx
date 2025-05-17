@@ -17,7 +17,7 @@ export default function BookDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
 
   const { book, loading } = useBook(id);
-  const { mutate: updateBook } = useUpdateBook();
+  const { mutate: updateBook, isPending: updating } = useUpdateBook();
 
   const [expanded, setExpanded] = useState(true);
 
@@ -55,7 +55,7 @@ export default function BookDetailScreen() {
       />
 
       <BookDetailStatus
-        loading={loading}
+        loading={updating}
         status={book.book_status}
         onUpdateStatus={updateBookStatus}
       />
