@@ -73,14 +73,5 @@
     "react-test-renderer": "18.3.1",
     "typescript": "^5.3.3"
   },
-  "private": true,
-  "jest": {
-    "preset": "react-native",
-    "transformIgnorePatterns": [
-      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)"
-    ],
-    "moduleNameMapper": {
-      "\\.(ttf|otf|png|jpg|jpeg|gif|svg)$": "<rootDir>/__mocks__/fileMock.js"
-    }
-  }
+  "private": true
 }
