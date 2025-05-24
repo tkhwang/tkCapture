@@ -45,7 +45,7 @@ export const useUpdateBook = () => {
       const previousBooks = queryClient.getQueryData([userId, "books"]) as Book[];
 
       const updatedBook = {
-        ...(previousBook as object),
+        ...previousBook,
         book_status: newStatus,
         updated_at: new Date().toISOString(),
       };

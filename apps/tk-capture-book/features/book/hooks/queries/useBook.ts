@@ -35,6 +35,7 @@ export function useBook(bookId: string) {
         .single();
 
       if (error) {
+        console.error(`[-][useBook] Error fetching book: ${JSON.stringify(error)}`);
         throw error;
       }
 
