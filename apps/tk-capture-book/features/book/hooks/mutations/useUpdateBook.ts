@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { Book } from "@/features/book/models/book";
+import { Book } from "@/features/book/types/book";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/providers/auth-provider";
 import { Database } from "@/types/types_db";
@@ -51,9 +51,9 @@ export const useUpdateBook = () => {
       };
 
       queryClient.setQueryData([userId, "book", bookId], updatedBook);
-      queryClient.setQueryData([userId, "books"], (old: any) => {
+      queryClient.setQueryData([userId, "books"], (old: Book[] | undefined) => {
         if (!old) return old;
-        return old.map((book: any) => (book.id === bookId ? updatedBook : book));
+        return old.map((book: Book) => (book.id === bookId ? updatedBook : book));
       });
 
       return { previousBooks, previousBook };
