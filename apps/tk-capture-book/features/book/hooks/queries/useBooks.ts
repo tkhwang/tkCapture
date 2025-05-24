@@ -2,8 +2,12 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/providers/auth-provider";
 
-export function useBooks(userId?: string) {
+export function useBooks() {
+  const { user } = useAuth();
+  const userId = user?.id;
+
   const queryClient = useQueryClient();
 
   const {
@@ -11,7 +15,7 @@ export function useBooks(userId?: string) {
     isLoading: loading,
     error,
   } = useQuery({
-    queryKey: ["books", userId],
+    queryKey: [userId, "books"],
     queryFn: async () => {
       if (!userId) return [];
 
@@ -43,7 +47,7 @@ export function useBooks(userId?: string) {
       books.forEach((book) => {
         if (book.isbn) {
           // 각 책의 데이터를 ['book', userId, isbn] 키로 캐시에 저장
-          queryClient.setQueryData(["book", userId, book.isbn], book);
+          queryClient.setQueryData([userId, "book", book.isbn], book);
           console.log(`[+][useBooks] Cached book with ISBN: ${book.isbn}`);
         }
       });
