@@ -57,6 +57,7 @@ export function CameraView({
       <ExpoCameraView ref={cameraRef} facing={facing} style={styles.camera}>
         <View className="flex-1">
           <TouchableOpacity
+            testID="flip-camera-button"
             className="absolute right-8 bottom-8 justify-center items-center w-12 h-12 rounded-full bg-black/20"
             onPress={onFlipCamera}
           >
@@ -65,6 +66,7 @@ export function CameraView({
 
           <View className="absolute right-0 left-0 bottom-8 items-center">
             <TouchableOpacity
+              testID="take-picture-button"
               className="justify-center items-center w-16 h-16 bg-white rounded-full"
               onPress={takePicture}
             >
