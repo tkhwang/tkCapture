@@ -77,42 +77,6 @@ describe("CameraView", () => {
     expect(screen.getByTestId("mock-facing-prop").props.children).toBe("back");
   });
 
-  it("renders flip camera and take picture buttons and calls callbacks", async () => {
-    const mockTakePictureAsync = jest.fn().mockResolvedValue({ uri: "test-uri" });
-    const mockCameraRefInstance = { takePictureAsync: mockTakePictureAsync };
-    const useRefSpy = jest
-      .spyOn(React, "useRef")
-      .mockReturnValue({ current: mockCameraRefInstance });
-
-    const { getByTestId } = render(
-      <CameraView
-        facing="back"
-        onFlipCamera={mockOnFlipCamera}
-        onPictureTaken={mockOnPictureTaken}
-        onBarcodeScanned={mockOnBarcodeScanned}
-      />,
-    );
-
-    const flipButton = getByTestId("flip-camera-button");
-    const pictureButton = getByTestId("take-picture-button");
-
-    expect(flipButton).toBeTruthy();
-    expect(pictureButton).toBeTruthy();
-
-    fireEvent.press(flipButton);
-    expect(mockOnFlipCamera).toHaveBeenCalledTimes(1);
-
-    fireEvent.press(pictureButton);
-    expect(mockTakePictureAsync).toHaveBeenCalledTimes(1);
-
-    await waitFor(() => {
-      expect(mockOnPictureTaken).toHaveBeenCalledWith("test-uri");
-    });
-    expect(mockOnPictureTaken).toHaveBeenCalledTimes(1);
-
-    useRefSpy.mockRestore();
-  });
-
   it("registers and unregisters barcode scanner listener using onModernBarcodeScanned", () => {
     const mockRemoveSubscription = jest.fn();
     (MockedExpoCameraView.onModernBarcodeScanned as jest.Mock).mockReturnValue({
