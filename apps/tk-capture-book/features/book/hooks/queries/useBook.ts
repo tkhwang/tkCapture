@@ -19,7 +19,7 @@ export function useBook(bookId: string) {
   } = useQuery({
     queryKey: [userId, "book", bookId],
     queryFn: async () => {
-      const cachedData = queryClient.getQueryData<Book>(["book", userId, bookId]);
+      const cachedData = queryClient.getQueryData<Book>([userId, "book", bookId]);
       if (cachedData) {
         console.log(`[+][useBook] Using cached book data for bookId: ${bookId}`);
         return cachedData;
@@ -40,7 +40,7 @@ export function useBook(bookId: string) {
 
       // 결과를 캐시에 저장
       if (data) {
-        queryClient.setQueryData(["book", userId, bookId], data);
+        queryClient.setQueryData([userId, "book", bookId], data);
         console.log(`[+][useBook] Cached book data for bookId: ${bookId}`);
       }
 

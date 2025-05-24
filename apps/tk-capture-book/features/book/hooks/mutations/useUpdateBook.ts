@@ -60,7 +60,7 @@ export const useUpdateBook = () => {
     },
     onError: (err, variables, context) => {
       if (context?.previousBooks) {
-        queryClient.setQueryData(["books"], context.previousBooks);
+        queryClient.setQueryData([userId, "books"], context.previousBooks);
       }
       if (context?.previousBook) {
         queryClient.setQueryData([userId, "book", variables.bookId], context.previousBook);
