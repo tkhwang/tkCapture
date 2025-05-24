@@ -47,7 +47,7 @@ export function useBooks() {
       books.forEach((book) => {
         if (book.isbn) {
           // 각 책의 데이터를 ['book', userId, isbn] 키로 캐시에 저장
-          queryClient.setQueryData(["book", userId, book.isbn], book);
+          queryClient.setQueryData([userId, "book", book.isbn], book);
           console.log(`[+][useBooks] Cached book with ISBN: ${book.isbn}`);
         }
       });
