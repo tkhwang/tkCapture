@@ -43,5 +43,6 @@ yarn-error.*
 # testing
 coverage/
 *.lcov
+!jest.config.js
 
 .cursorrules
