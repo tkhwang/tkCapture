@@ -40,4 +40,8 @@ yarn-error.*
 .env.*
 !.env.example
 
+# testing
+coverage/
+*.lcov
+
 .cursorrules

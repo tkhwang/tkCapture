@@ -10,6 +10,11 @@
     "build:ios": "eas build --profile production --platform ios",
     "build:android": "eas build --profile preview --platform android",
     "lint": "eslint .",
+    "test": "jest --watchAll",
+    "test:ci": "jest",
+    "test:coverage": "jest --coverage",
+    "test:debug": "jest -o --watch --coverage=false",
+    "test:update-snapshots": "jest -u --coverage=false",
     "generate-types": "npx supabase gen types typescript --project-id zklqfvgqkpoxfsjkdeyz --schema public > ./types/types_db.ts"
   },
   "dependencies": {
@@ -67,5 +72,43 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript": "^5.3.3"
   },
-  "private": true
+  "private": true,
+  "jest": {
+    "preset": "jest-expo",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest-setup.ts"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.(ts|tsx|js|jsx)",
+      "**/*.(test|spec).(ts|tsx|js|jsx)"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx,js,jsx}",
+      "!**/coverage/**",
+      "!**/node_modules/**",
+      "!**/babel.config.js",
+      "!**/expo-env.d.ts",
+      "!**/.expo/**",
+      "!**/dist/**",
+      "!**/android/**",
+      "!**/ios/**",
+      "!**/metro.config.js",
+      "!**/tailwind.config.js",
+      "!**/*.d.ts",
+      "!**/jest-setup.ts"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg|@supabase/.*|@tanstack/.*)"
+    ]
+  }
 }
