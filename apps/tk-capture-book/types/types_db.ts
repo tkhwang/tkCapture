@@ -13,6 +13,7 @@ export type Database = {
           isbn: string;
           link: string | null;
           owner_id: string;
+          progress: number;
           publisher: string;
           thumbnail: string;
           title: string;
@@ -27,6 +28,7 @@ export type Database = {
           isbn: string;
           link?: string | null;
           owner_id: string;
+          progress?: number;
           publisher: string;
           thumbnail: string;
           title: string;
@@ -41,12 +43,52 @@ export type Database = {
           isbn?: string;
           link?: string | null;
           owner_id?: string;
+          progress?: number;
           publisher?: string;
           thumbnail?: string;
           title?: string;
           updated_at?: string;
         };
         Relationships: [];
+      };
+      chat_rooms: {
+        Row: {
+          book_id: string;
+          created_at: string;
+          id: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          book_id: string;
+          created_at?: string;
+          id?: string;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          book_id?: string;
+          created_at?: string;
+          id?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "chat_rooms_book_id_fkey";
+            columns: ["book_id"];
+            isOneToOne: false;
+            referencedRelation: "books";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "chat_rooms_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       profiles: {
         Row: {
@@ -108,6 +150,7 @@ export type Database = {
     };
     Enums: {
       book_status: "unread" | "in_progress" | "completed" | "on_hold";
+      chat_role: "assistant" | "user";
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -220,6 +263,7 @@ export const Constants = {
   public: {
     Enums: {
       book_status: ["unread", "in_progress", "completed", "on_hold"],
+      chat_role: ["assistant", "user"],
     },
   },
 } as const;
