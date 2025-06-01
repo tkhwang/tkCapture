@@ -52,16 +52,21 @@ export default function HomeScreen() {
               {item.title}
             </Text>
             <View className="mb-1 flex-row items-center">
-              <View className="mr-1 h-1 w-1 rounded-full bg-primary" />
-              <Text variant="muted" size="sm" numberOfLines={1}>
-                {item.author}
-              </Text>
-            </View>
-            <View className="flex-row items-center">
-              <View className="mr-1 h-1 w-1 rounded-full bg-primary" />
-              <Text variant="muted" size="sm" numberOfLines={1}>
-                {item.publisher}
-              </Text>
+              {item.author ? (
+                <Text variant="muted" size="sm" numberOfLines={1} className="shrink">
+                  {item.author}
+                </Text>
+              ) : null}
+              {item.author && item.publisher ? (
+                <Text variant="muted" size="sm" className="mx-1">
+                  |
+                </Text>
+              ) : null}
+              {item.publisher ? (
+                <Text variant="muted" size="sm" numberOfLines={1} className="shrink">
+                  {item.publisher}
+                </Text>
+              ) : null}
             </View>
           </View>
         </CardContent>
