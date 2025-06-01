@@ -26,7 +26,7 @@ export default function HomeScreen() {
     });
   };
 
-  const renderBookItem = ({ item }: { item: Book }) => (
+  const renderBook = ({ item }: { item: Book }) => (
     <TouchableOpacity
       onPress={() => handleBookPress(item)}
       activeOpacity={0.7}
@@ -134,7 +134,7 @@ export default function HomeScreen() {
       ) : books.length > 0 ? (
         <FlatList
           data={books}
-          renderItem={renderBookItem}
+          renderItem={renderBook}
           keyExtractor={(item) => item.id}
           contentContainerStyle={{ paddingHorizontal: 12 }}
           showsVerticalScrollIndicator={false}
