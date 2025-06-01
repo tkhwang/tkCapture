@@ -7,6 +7,7 @@ import { Text } from "@/components/ui/text";
 import { useBooks } from "@/features/book/hooks/queries/useBooks";
 import { useAuth } from "@/providers/auth-provider";
 import { Database } from "@/types/types_db";
+import { Progress } from "@/components/ui/progress";
 
 type Book = Database["public"]["Tables"]["books"]["Row"];
 
@@ -47,27 +48,39 @@ export default function HomeScreen() {
               </Text>
             </View>
           )}
-          <View className="ml-4 flex-1">
-            <Text variant="title" className="mb-1 text-foreground" numberOfLines={2}>
-              {item.title}
-            </Text>
-            <View className="mb-1 flex-row items-center">
-              {item.author ? (
-                <Text variant="muted" size="sm" numberOfLines={1} className="shrink">
-                  {item.author}
-                </Text>
-              ) : null}
-              {item.author && item.publisher ? (
-                <Text variant="muted" size="sm" className="mx-1">
-                  |
-                </Text>
-              ) : null}
-              {item.publisher ? (
-                <Text variant="muted" size="sm" numberOfLines={1} className="shrink">
-                  {item.publisher}
-                </Text>
-              ) : null}
+          <View className="ml-4 flex flex-1 flex-col justify-between">
+            <View className="flex flex-col">
+              <Text variant="title" className="mb-1 text-foreground" numberOfLines={2}>
+                {item.title}
+              </Text>
+              <View className="mb-1 flex-row items-center">
+                {item.author ? (
+                  <Text variant="muted" size="sm" numberOfLines={1} className="shrink">
+                    {item.author}
+                  </Text>
+                ) : null}
+                {item.author && item.publisher ? (
+                  <Text variant="muted" size="sm" className="mx-1">
+                    |
+                  </Text>
+                ) : null}
+                {item.publisher ? (
+                  <Text variant="muted" size="sm" numberOfLines={1} className="shrink">
+                    {item.publisher}
+                  </Text>
+                ) : null}
+              </View>
             </View>
+            {typeof item.progress === "number" && item.progress >= 0 && (
+              <View className="flex flex-row items-center justify-between gap-4">
+                <View className="flex-1">
+                  <Progress value={item.progress} indicatorClassName="bg-gray-400" />
+                </View>
+                <Text variant="muted" size="sm" className="min-w-[35px]">
+                  {Math.round(item.progress)}%
+                </Text>
+              </View>
+            )}
           </View>
         </CardContent>
       </Card>
