@@ -7,6 +7,7 @@ import { Text } from "@/components/ui/text";
 import { useBooks } from "@/features/book/hooks/queries/useBooks";
 import { useAuth } from "@/providers/auth-provider";
 import { Database } from "@/types/types_db";
+import { Progress } from "@/components/ui/progress";
 
 type Book = Database["public"]["Tables"]["books"]["Row"];
 
@@ -26,7 +27,7 @@ export default function HomeScreen() {
     });
   };
 
-  const renderBookItem = ({ item }: { item: Book }) => (
+  const renderBook = ({ item }: { item: Book }) => (
     <TouchableOpacity
       onPress={() => handleBookPress(item)}
       activeOpacity={0.7}
@@ -47,22 +48,39 @@ export default function HomeScreen() {
               </Text>
             </View>
           )}
-          <View className="ml-4 flex-1">
-            <Text variant="title" className="mb-1 text-foreground" numberOfLines={2}>
-              {item.title}
-            </Text>
-            <View className="mb-1 flex-row items-center">
-              <View className="mr-1 h-1 w-1 rounded-full bg-primary" />
-              <Text variant="muted" size="sm" numberOfLines={1}>
-                {item.author}
+          <View className="ml-4 flex flex-1 flex-col justify-between">
+            <View className="flex flex-col">
+              <Text variant="title" className="mb-1 text-foreground" numberOfLines={2}>
+                {item.title}
               </Text>
+              <View className="mb-1 flex-row items-center">
+                {item.author ? (
+                  <Text variant="muted" size="sm" numberOfLines={1} className="shrink">
+                    {item.author}
+                  </Text>
+                ) : null}
+                {item.author && item.publisher ? (
+                  <Text variant="muted" size="sm" className="mx-1">
+                    |
+                  </Text>
+                ) : null}
+                {item.publisher ? (
+                  <Text variant="muted" size="sm" numberOfLines={1} className="shrink">
+                    {item.publisher}
+                  </Text>
+                ) : null}
+              </View>
             </View>
-            <View className="flex-row items-center">
-              <View className="mr-1 h-1 w-1 rounded-full bg-primary" />
-              <Text variant="muted" size="sm" numberOfLines={1}>
-                {item.publisher}
-              </Text>
-            </View>
+            {typeof item.progress === "number" && item.progress >= 0 && (
+              <View className="flex flex-row items-center justify-between gap-4">
+                <View className="flex-1">
+                  <Progress value={item.progress} indicatorClassName="bg-gray-400" />
+                </View>
+                <Text variant="muted" size="sm" className="min-w-[35px]">
+                  {Math.round(item.progress)}%
+                </Text>
+              </View>
+            )}
           </View>
         </CardContent>
       </Card>
@@ -129,7 +147,7 @@ export default function HomeScreen() {
       ) : books.length > 0 ? (
         <FlatList
           data={books}
-          renderItem={renderBookItem}
+          renderItem={renderBook}
           keyExtractor={(item) => item.id}
           contentContainerStyle={{ paddingHorizontal: 12 }}
           showsVerticalScrollIndicator={false}
