@@ -8,13 +8,13 @@ export default function HomeLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
+        headerBackTitle: "",
       }}
     >
       <Stack.Screen name="index" />
       <Stack.Screen
         name="book-detail"
         options={{
-          headerBackTitle: "",
           headerTitle: t("home.detail.title"),
           headerShown: true,
         }}
@@ -22,7 +22,6 @@ export default function HomeLayout() {
       <Stack.Screen
         name="book-chat"
         options={{
-          headerBackTitle: "",
           headerTitle: t("home.detail.title"),
           headerShown: true,
         }}
@@ -30,7 +29,6 @@ export default function HomeLayout() {
       <Stack.Screen
         name="book-search-detail"
         options={{
-          headerBackTitle: "",
           headerTitle: t("home.detail.title"),
           headerShown: true,
         }}
@@ -38,7 +36,6 @@ export default function HomeLayout() {
       <Stack.Screen
         name="book-capture"
         options={{
-          headerBackTitle: "",
           headerTitle: t("capture.title", "Text Capture"),
           headerShown: true,
         }}
