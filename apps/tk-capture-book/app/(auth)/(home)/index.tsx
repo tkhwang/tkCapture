@@ -94,7 +94,7 @@ export default function HomeScreen() {
     if (searchError) {
       return (
         <View className="flex-1 items-center justify-center">
-          <Text className="text-red-500">검색 중 오류가 발생했습니다.</Text>
+          <Text className="text-red-500">{t("error.search.message")}</Text>
         </View>
       );
     }

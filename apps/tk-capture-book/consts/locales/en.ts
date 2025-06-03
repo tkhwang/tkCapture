@@ -69,5 +69,10 @@ export const en = {
         bookSearchProvider: "Book Search Provider",
       },
     },
+    error: {
+      search: {
+        message: "An error occurred while searching.",
+      },
+    },
   },
 };
