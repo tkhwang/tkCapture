@@ -20,10 +20,7 @@
     "production": {
       "ios": {
         "image": "latest",
-        "resourceClass": "m-medium",
-        "cache": {
-          "disabled": true
-        }
+        "resourceClass": "m-medium"
       },
       "channel": "production"
     }
