@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { CameraType, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Button, Text, TouchableOpacity, View } from "react-native";
 
 import { GOOGLE_CLOUD_API_KEY } from "@/consts/appConsts";
