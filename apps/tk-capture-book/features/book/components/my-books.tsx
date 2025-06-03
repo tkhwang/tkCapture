@@ -99,8 +99,7 @@ export function MyBooks() {
     </View>
   );
 
-  // Error state
-  const Error = () => (
+  const ErrorState = () => (
     <View className="flex-1 bg-background">
       <View className="absolute inset-0 flex items-center justify-center px-4">
         <Card className="w-full max-w-sm items-center bg-card/80 p-6">
@@ -112,7 +111,7 @@ export function MyBooks() {
               {t("common.error.title")}
             </Text>
             <Text variant="muted" className="text-center">
-              {error instanceof Error ? error.message : t("common.error.message")}
+              {error instanceof ErrorState ? error.message : t("common.error.message")}
             </Text>
           </CardContent>
         </Card>
@@ -143,7 +142,7 @@ export function MyBooks() {
   );
 
   if (loading) return <Loading />;
-  if (error) return <Error />;
+  if (error) return <ErrorState />;
   if (!books || books.length === 0) return <Empty />;
 
   return (
