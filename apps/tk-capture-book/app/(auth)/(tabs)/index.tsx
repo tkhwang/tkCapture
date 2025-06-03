@@ -18,10 +18,10 @@ export default function HomeScreen() {
   const router = useRouter();
   const { t } = useTranslation();
 
-  const [refreshing, setRefreshing] = useState(false);
   const [searchText, setSearchText] = useState("");
-
   const [debouncedSearchText] = useDebounce(searchText, SEARCH_DEBOUNCE_MS);
+
+  const [refreshing, setRefreshing] = useState(false);
 
   const { books, loading, error } = useBooks();
   const {
@@ -39,7 +39,6 @@ export default function HomeScreen() {
   });
 
   const allBooks = data?.pages.flatMap((page) => page.items) || [];
-
   const hasNoResults = !isLoading && !error && allBooks.length === 0 && debouncedSearchText;
 
   const renderNoSearchedBook = () => (
