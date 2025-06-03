@@ -75,7 +75,7 @@ export default function HomeScreen() {
 
   const handleBookPress = (book: BookSearchItem) => {
     router.push({
-      pathname: "/(stack)/book-search-detail",
+      pathname: "/book-search-detail",
       params: { isbn: book.isbn },
     });
   };

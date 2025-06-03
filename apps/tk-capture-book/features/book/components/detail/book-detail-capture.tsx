@@ -17,7 +17,7 @@ export function BookDetailCapture({ bookId }: Props) {
 
   const handleCaptureText = () => {
     router.push({
-      pathname: "/(auth)/(stack)/book-capture",
+      pathname: "/book-capture",
       params: { id: bookId },
     });
   };
@@ -36,7 +36,7 @@ export function BookDetailCapture({ bookId }: Props) {
         <View className="flex flex-col gap-3">
           <Button
             onPress={handleCaptureText}
-            className="flex flex-row items-center justify-center w-full gap-2"
+            className="flex w-full flex-row items-center justify-center gap-2"
           >
             <Ionicons name="camera" size={20} color="white" />
             <Text className="text-white">{t("detail.capture.button")}</Text>

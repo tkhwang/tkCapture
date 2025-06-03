@@ -45,7 +45,7 @@ function ProtectedLayout() {
       router.replace("/(public)/login");
     } else if (isAuthenticated && inPublicGroup) {
       // 인증된 상태에서 public 그룹이면 auth 그룹으로 이동
-      router.replace("/(auth)/(tabs)");
+      router.replace("/(auth)/(home)");
     }
   }, [isAuthenticated, segments]);
 

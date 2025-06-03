@@ -1,48 +1,73 @@
-import { Stack } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
 import { useTranslation } from "react-i18next";
 
-export default function AuthLayout() {
+export default function TabLayout() {
   const { t } = useTranslation();
 
   return (
-    <Stack
+    <Tabs
       screenOptions={{
-        headerShown: false,
+        tabBarActiveTintColor: "#0284c7",
+        tabBarInactiveTintColor: "#64748b",
+        tabBarIconStyle: {
+          marginBottom: -4,
+        },
+        tabBarLabelStyle: {
+          marginTop: 4,
+          fontSize: 12,
+        },
       }}
     >
-      <Stack.Screen name="(tabs)" />
-      <Stack.Screen
-        name="(stack)/book-detail"
+      <Tabs.Screen
+        name="(home)"
         options={{
-          headerBackTitle: "",
-          headerTitle: t("home.detail.title"),
-          headerShown: true,
+          title: t("home.tabTitle"),
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "home" : "home-outline"} size={size} color={color} />
+          ),
         }}
       />
-      <Stack.Screen
-        name="(stack)/book-chat"
+      <Tabs.Screen
+        name="frame"
         options={{
-          headerBackTitle: "",
-          headerTitle: t("home.detail.title"),
-          headerShown: true,
+          title: t("frame.tabTitle"),
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "film" : "film-outline"} size={size} color={color} />
+          ),
         }}
       />
-      <Stack.Screen
-        name="(stack)/book-search-detail"
+      <Tabs.Screen
+        name="camera"
         options={{
-          headerBackTitle: "",
-          headerTitle: t("home.detail.title"),
-          headerShown: true,
+          title: t("collectSentence.tabTitle"),
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "list" : "list-outline"} size={size} color={color} />
+          ),
         }}
       />
-      <Stack.Screen
-        name="(stack)/book-capture"
+      <Tabs.Screen
+        name="book-talk"
         options={{
-          headerBackTitle: "",
-          headerTitle: t("capture.title", "Text Capture"),
-          headerShown: true,
+          title: t("bookTalk.tabTitle"),
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "chatbubble-ellipses" : "chatbubble-ellipses-outline"}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
-    </Stack>
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: t("settings.tabTitle"),
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "settings" : "settings-outline"} size={size} color={color} />
+          ),
+        }}
+      />
+    </Tabs>
   );
 }

@@ -18,7 +18,7 @@ export function MyBooks() {
 
   const handleBookPress = (book: Book) => {
     router.push({
-      pathname: "/(auth)/(stack)/book-detail",
+      pathname: "/book-detail",
       params: {
         id: book.id,
         isbn: book.isbn,
