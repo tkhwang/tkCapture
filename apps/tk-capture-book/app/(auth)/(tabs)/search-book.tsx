@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { BookSearchInput } from "@/features/book/components/book-search-input";
 import { useRouter } from "expo-router";
 import { useAtomValue } from "jotai";
 import { useState, useCallback } from "react";
@@ -87,19 +88,7 @@ export default function SearchBookScreen() {
   return (
     <View className="flex-1 bg-white">
       <View className="gap-4 p-4 space-y-2">
-        <View className="relative flex-row items-center">
-          <TextInput
-            className="flex-1 p-2 pr-8 border border-gray-300 rounded-lg"
-            placeholder="검색어를 입력하세요"
-            value={searchText}
-            onChangeText={setSearchText}
-          />
-          {searchText.length > 0 && (
-            <Pressable className="absolute right-2" onPress={() => setSearchText("")}>
-              <Ionicons name="close-circle" size={20} color="#9CA3AF" />
-            </Pressable>
-          )}
-        </View>
+        <BookSearchInput searchText={searchText} setSearchText={setSearchText} />
       </View>
 
       {isLoading && !isFetchingNextPage && (

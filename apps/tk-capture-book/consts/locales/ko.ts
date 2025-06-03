@@ -3,6 +3,9 @@ export const ko = {
     camera: {
       tabTitle: "카메라",
     },
+    frame: {
+      tabTitle: "프레임",
+    },
     login: {
       title: "환영합니다",
       subtitle: "계정에 로그인하세요",

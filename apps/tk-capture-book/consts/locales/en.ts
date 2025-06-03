@@ -3,6 +3,9 @@ export const en = {
     camera: {
       tabTitle: "Camera",
     },
+    frame: {
+      tabTitle: "Frame",
+    },
     login: {
       title: "Welcome",
       subtitle: "Login to your account",
