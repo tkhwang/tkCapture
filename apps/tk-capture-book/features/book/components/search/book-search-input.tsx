@@ -16,16 +16,13 @@ export const BookSearchInput: React.FC<BookSearchInputProps> = ({
   return (
     <View className="relative flex-row items-center">
       <TextInput
-        className="flex-1 p-2 pr-8 border border-gray-300 rounded-lg"
+        className="flex-1 rounded-lg border border-gray-300 p-2 pr-8"
         placeholder={placeholder}
         value={searchText}
         onChangeText={setSearchText}
       />
       {searchText.length > 0 && (
-        <Pressable
-          className="absolute right-2"
-          onPress={() => setSearchText("")}
-        >
+        <Pressable className="absolute right-2" onPress={() => setSearchText("")}>
           <Ionicons name="close-circle" size={20} color="#9CA3AF" />
         </Pressable>
       )}

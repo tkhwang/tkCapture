@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai";
 import { RefreshControl, ScrollView, View, ActivityIndicator } from "react-native";
 
-import { BookSearchItemView } from "@/features/book/components/book-search-item";
+import { BookSearchItemView } from "@/features/book/components/search/book-search-item";
 import { BookSearchProviderAtom } from "@/features/book/states/book";
 import { BookSearchItem } from "@/features/book/types/book-search-interface";
 

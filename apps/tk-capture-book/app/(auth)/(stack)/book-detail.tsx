@@ -3,9 +3,9 @@ import { useState } from "react";
 import { View, ScrollView } from "react-native";
 
 import { Text } from "@/components/ui/text";
-import { BookDetailHeader } from "@/features/book/components/book-detail-header";
 import { BookDetailCapture } from "@/features/book/components/detail/book-detail-capture";
 import { BookDetailChat } from "@/features/book/components/detail/book-detail-chat";
+import { BookDetailHeader } from "@/features/book/components/detail/book-detail-header";
 import { BookDetailStatus } from "@/features/book/components/detail/book-detail-status";
 import { useUpdateBook } from "@/features/book/hooks/mutations/useUpdateBook";
 import { useBook } from "@/features/book/hooks/queries/useBook";
