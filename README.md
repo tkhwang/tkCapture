@@ -1,5 +1,7 @@
 # tkCapture
 
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/tkhwang/tkCapture?utm_source=oss&utm_medium=github&utm_campaign=tkhwang%2FtkCapture&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+
 tkCapture is a mobile application suite focused on AI-powered image capture and analysis.
 
 - (ING) tkCaptureBook : Capture book pages, analyze them with AI, discuss insights, and beautifully share your reading experience.
