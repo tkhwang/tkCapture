@@ -115,14 +115,20 @@ export default function HomeScreen() {
     );
   };
 
-  if (!books || books.length === 0) return null;
-
   return (
     <View className="flex-1 bg-white">
-      <View className="gap-4 space-y-2 p-4">
+      <View className="p-4">
         <BookSearchInput searchText={searchText} setSearchText={setSearchText} />
       </View>
-      {renderBody()}
+      {!books || books.length === 0 ? (
+        isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <MyBooks />
+        )
+      ) : (
+        renderBody()
+      )}
     </View>
   );
 }
