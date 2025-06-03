@@ -27,13 +27,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="search-book"
-        options={{
-          title: t("search.tabTitle"),
-          tabBarIcon: ({ color, size }) => <Ionicons name="search" size={size} color={color} />,
-        }}
-      />
-      <Tabs.Screen
         name="frame"
         options={{
           title: t("frame.tabTitle"),
