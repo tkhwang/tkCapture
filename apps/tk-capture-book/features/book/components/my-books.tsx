@@ -86,74 +86,75 @@ export function MyBooks() {
     </TouchableOpacity>
   );
 
-  // Loading state
-  const renderLoading = () => (
-    <View className="flex-1 items-center justify-center">
-      <Card className="items-center justify-center border-border/20 bg-card/50 p-6">
-        <ActivityIndicator size="large" color="hsl(var(--primary))" />
-        <Text variant="muted" size="sm" className="mt-4">
-          {t("common.loading")}
-        </Text>
-      </Card>
+  const Loading = () => (
+    <View className="flex-1 bg-background">
+      <View className="flex-1 items-center justify-center">
+        <Card className="items-center justify-center border-border/20 bg-card/50 p-6">
+          <ActivityIndicator size="large" color="hsl(var(--primary))" />
+          <Text variant="muted" size="sm" className="mt-4">
+            {t("common.loading")}
+          </Text>
+        </Card>
+      </View>
     </View>
   );
 
   // Error state
-  const renderError = () => (
-    <View className="absolute inset-0 flex items-center justify-center px-4">
-      <Card className="w-full max-w-sm items-center bg-card/80 p-6">
-        <CardContent className="items-center p-0">
-          <View className="mb-4 h-12 w-12 items-center justify-center rounded-full bg-destructive/10">
-            <Text className="text-2xl">⚠️</Text>
-          </View>
-          <Text variant="title" size="lg" className="mb-2 text-center">
-            {t("common.error.title")}
-          </Text>
-          <Text variant="muted" className="text-center">
-            {error instanceof Error ? error.message : t("common.error.message")}
-          </Text>
-        </CardContent>
-      </Card>
+  const Error = () => (
+    <View className="flex-1 bg-background">
+      <View className="absolute inset-0 flex items-center justify-center px-4">
+        <Card className="w-full max-w-sm items-center bg-card/80 p-6">
+          <CardContent className="items-center p-0">
+            <View className="mb-4 h-12 w-12 items-center justify-center rounded-full bg-destructive/10">
+              <Text className="text-2xl">⚠️</Text>
+            </View>
+            <Text variant="title" size="lg" className="mb-2 text-center">
+              {t("common.error.title")}
+            </Text>
+            <Text variant="muted" className="text-center">
+              {error instanceof Error ? error.message : t("common.error.message")}
+            </Text>
+          </CardContent>
+        </Card>
+      </View>
     </View>
   );
 
-  const renderNoRegisteredBook = () => (
-    <View className="absolute inset-0 flex items-center justify-center px-4">
-      <Card className="w-full max-w-sm items-center bg-card/80 p-8">
-        <CardContent className="items-center p-0">
-          <Image
-            source={require("../../../assets/images/man-book-reading-green.png")}
-            className="mb-8 h-72 w-72"
-            resizeMode="contain"
-          />
-          <Text variant="heading" size="xl" className="mb-3 text-center">
-            {t("search.search-no-result.title")}
-          </Text>
-          <Text variant="muted" className="text-center">
-            {t("search.search-no-result.description")}
-          </Text>
-        </CardContent>
-      </Card>
+  const Empty = () => (
+    <View className="flex-1 bg-background">
+      <View className="absolute inset-0 flex items-center justify-center px-4">
+        <Card className="w-full max-w-sm items-center bg-card/80 p-8">
+          <CardContent className="items-center p-0">
+            <Image
+              source={require("../../../assets/images/man-book-reading-green.png")}
+              className="mb-8 h-72 w-72"
+              resizeMode="contain"
+            />
+            <Text variant="heading" size="xl" className="mb-3 text-center">
+              {t("search.search-no-result.title")}
+            </Text>
+            <Text variant="muted" className="text-center">
+              {t("search.search-no-result.description")}
+            </Text>
+          </CardContent>
+        </Card>
+      </View>
     </View>
   );
+
+  if (loading) return <Loading />;
+  if (error) return <Error />;
+  if (!books || books.length === 0) return <Empty />;
 
   return (
     <View className="flex-1 bg-background">
-      {loading ? (
-        renderLoading()
-      ) : error ? (
-        renderError()
-      ) : books.length === 0 ? (
-        renderNoRegisteredBook()
-      ) : (
-        <FlatList
-          data={books}
-          renderItem={renderBook}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingHorizontal: 16 }}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
+      <FlatList
+        data={books}
+        renderItem={renderBook}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingHorizontal: 16 }}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 }
