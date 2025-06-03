@@ -6,6 +6,12 @@ export const en = {
     frame: {
       tabTitle: "Frame",
     },
+    collectSentence: {
+      tabTitle: "Sentence",
+    },
+    bookTalk: {
+      tabTitle: "Talk",
+    },
     login: {
       title: "Welcome",
       subtitle: "Login to your account",

@@ -36,8 +36,17 @@ export default function TabLayout() {
       <Tabs.Screen
         name="camera"
         options={{
-          title: t("camera.tabTitle"),
-          tabBarIcon: ({ color, size }) => <Ionicons name="camera" size={size} color={color} />,
+          title: t("collectSentence.tabTitle"),
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="document-text" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="book-talk"
+        options={{
+          title: t("bookTalk.tabTitle"),
+          tabBarIcon: ({ color, size }) => <Ionicons name="chatbubble" size={size} color={color} />,
         }}
       />
       <Tabs.Screen

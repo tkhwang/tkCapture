@@ -100,12 +100,12 @@ export default function CameraScreen() {
             onBarcodeScanned={handleBarcodeScanned}
           />
           {recognizedText ? (
-            <View className="absolute right-0 bottom-0 left-0 bg-black/50">
+            <View className="absolute bottom-0 left-0 right-0 bg-black/50">
               <View className="p-4">
                 <Text className="text-white">{recognizedText}</Text>
               </View>
               <TouchableOpacity
-                className="flex-row justify-center items-center p-4 space-x-2 border-t border-white/20 bg-black/80 active:bg-white/10"
+                className="flex-row items-center justify-center space-x-2 border-t border-white/20 bg-black/80 p-4 active:bg-white/10"
                 onPress={handleTextRemoved}
               >
                 <Ionicons name="trash-outline" size={20} color="white" />
@@ -114,7 +114,7 @@ export default function CameraScreen() {
             </View>
           ) : null}
           {isProcessing && (
-            <View className="absolute inset-0 justify-center items-center bg-black/30">
+            <View className="absolute inset-0 items-center justify-center bg-black/30">
               <Text className="text-white">처리 중...</Text>
             </View>
           )}
