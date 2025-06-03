@@ -1,11 +1,12 @@
-import { Card, CardContent } from "@/components/ui";
-import { useBooks } from "@/features/book/hooks/queries/useBooks";
-import { Database } from "@/types/types_db";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, Image, TouchableOpacity, View } from "react-native";
-import { Text } from "@/components/ui/text";
+
+import { Card, CardContent } from "@/components/ui";
 import { Progress } from "@/components/ui/progress";
+import { Text } from "@/components/ui/text";
+import { useBooks } from "@/features/book/hooks/queries/useBooks";
+import { Database } from "@/types/types_db";
 
 type Book = Database["public"]["Tables"]["books"]["Row"];
 
@@ -29,7 +30,7 @@ export function MyBooks() {
     <TouchableOpacity
       onPress={() => handleBookPress(item)}
       activeOpacity={0.7}
-      className="px-3 pb-2 pt-1"
+      className="pb-2 pt-1"
     >
       <Card className="mb-1 overflow-hidden border border-border/90 shadow-lg">
         <CardContent className="flex-row bg-card p-4">
@@ -142,16 +143,16 @@ export function MyBooks() {
         renderLoading()
       ) : error ? (
         renderError()
-      ) : books.length > 0 ? (
+      ) : books.length === 0 ? (
+        renderNoRegisteredBook()
+      ) : (
         <FlatList
           data={books}
           renderItem={renderBook}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingHorizontal: 12 }}
+          contentContainerStyle={{ paddingHorizontal: 16 }}
           showsVerticalScrollIndicator={false}
         />
-      ) : (
-        renderNoRegisteredBook()
       )}
     </View>
   );
