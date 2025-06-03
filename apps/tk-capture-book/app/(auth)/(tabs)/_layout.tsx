@@ -23,22 +23,26 @@ export default function TabLayout() {
         name="index"
         options={{
           title: t("home.tabTitle"),
-          tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "home" : "home-outline"} size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="frame"
         options={{
           title: t("frame.tabTitle"),
-          tabBarIcon: ({ color, size }) => <Ionicons name="image" size={size} color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "film" : "film-outline"} size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="camera"
         options={{
           title: t("collectSentence.tabTitle"),
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="document-text" size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "list" : "list-outline"} size={size} color={color} />
           ),
         }}
       />
@@ -46,14 +50,22 @@ export default function TabLayout() {
         name="book-talk"
         options={{
           title: t("bookTalk.tabTitle"),
-          tabBarIcon: ({ color, size }) => <Ionicons name="chatbubble" size={size} color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "chatbubble-ellipses" : "chatbubble-ellipses-outline"}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: t("settings.tabTitle"),
-          tabBarIcon: ({ color, size }) => <Ionicons name="settings" size={size} color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "settings" : "settings-outline"} size={size} color={color} />
+          ),
         }}
       />
     </Tabs>
