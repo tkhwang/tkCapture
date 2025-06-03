@@ -1,6 +1,6 @@
 import { Image, Pressable, Text, View } from "react-native";
 
-import { BookSearchItem } from "../types/book-search-interface";
+import { BookSearchItem } from "../../types/book-search-interface";
 
 interface BookSearchItemProps {
   book: BookSearchItem;
@@ -12,18 +12,18 @@ export function BookSearchItemView({ book, onPress }: BookSearchItemProps) {
     <Pressable className="w-1/3 p-2" onPress={() => onPress?.(book as BookSearchItem)}>
       <View className="overflow-hidden">
         {/* 이미지 */}
-        <View className="w-full aspect-[3/4] mb-2 bg-gray-50 border border-gray-200 rounded-md">
+        <View className="mb-2 aspect-[3/4] w-full rounded-md border border-gray-200 bg-gray-50">
           {book.thumbnail ? (
-            <View className="w-full h-full p-0">
+            <View className="h-full w-full p-0">
               <Image
                 source={{ uri: book.thumbnail }}
-                className="w-full h-full rounded-md"
+                className="h-full w-full rounded-md"
                 resizeMode="contain"
                 style={{ backgroundColor: "#F8FAFC" }}
               />
             </View>
           ) : (
-            <View className="w-full h-full bg-gray-100 rounded-md" />
+            <View className="h-full w-full rounded-md bg-gray-100" />
           )}
         </View>
 

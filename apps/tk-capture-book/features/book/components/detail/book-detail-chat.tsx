@@ -22,7 +22,7 @@ export function BookDetailChat({ onPressChat, bookId, bookIsbn }: BookDetailChat
     } else if (bookId && bookIsbn) {
       // Navigate to chat screen with the provided IDs
       router.push({
-        pathname: "/(auth)/(stack)/book-chat",
+        pathname: "/book-chat",
         params: {
           id: bookId,
           isbn: bookIsbn,

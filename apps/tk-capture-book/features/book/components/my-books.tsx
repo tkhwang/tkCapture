@@ -1,17 +1,16 @@
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { View, FlatList, Image, TouchableOpacity, ActivityIndicator } from "react-native";
+import { ActivityIndicator, FlatList, Image, TouchableOpacity, View } from "react-native";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui";
+import { Progress } from "@/components/ui/progress";
 import { Text } from "@/components/ui/text";
 import { useBooks } from "@/features/book/hooks/queries/useBooks";
-import { useAuth } from "@/providers/auth-provider";
 import { Database } from "@/types/types_db";
-import { Progress } from "@/components/ui/progress";
 
 type Book = Database["public"]["Tables"]["books"]["Row"];
 
-export default function HomeScreen() {
+export function MyBooks() {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -19,7 +18,7 @@ export default function HomeScreen() {
 
   const handleBookPress = (book: Book) => {
     router.push({
-      pathname: "/(auth)/(stack)/book-detail",
+      pathname: "/book-detail",
       params: {
         id: book.id,
         isbn: book.isbn,
@@ -31,7 +30,7 @@ export default function HomeScreen() {
     <TouchableOpacity
       onPress={() => handleBookPress(item)}
       activeOpacity={0.7}
-      className="px-3 pb-2 pt-1"
+      className="pb-2 pt-1"
     >
       <Card className="mb-1 overflow-hidden border border-border/90 shadow-lg">
         <CardContent className="flex-row bg-card p-4">
@@ -87,74 +86,74 @@ export default function HomeScreen() {
     </TouchableOpacity>
   );
 
-  // Loading state
-  const renderLoading = () => (
-    <View className="flex-1 items-center justify-center">
-      <Card className="items-center justify-center border-border/20 bg-card/50 p-6">
-        <ActivityIndicator size="large" color="hsl(var(--primary))" />
-        <Text variant="muted" size="sm" className="mt-4">
-          {t("common.loading")}
-        </Text>
-      </Card>
+  const Loading = () => (
+    <View className="flex-1 bg-background">
+      <View className="flex-1 items-center justify-center">
+        <Card className="items-center justify-center border-border/20 bg-card/50 p-6">
+          <ActivityIndicator size="large" color="hsl(var(--primary))" />
+          <Text variant="muted" size="sm" className="mt-4">
+            {t("common.loading")}
+          </Text>
+        </Card>
+      </View>
     </View>
   );
 
-  // Error state
-  const renderError = () => (
-    <View className="absolute inset-0 flex items-center justify-center px-4">
-      <Card className="w-full max-w-sm items-center bg-card/80 p-6">
-        <CardContent className="items-center p-0">
-          <View className="mb-4 h-12 w-12 items-center justify-center rounded-full bg-destructive/10">
-            <Text className="text-2xl">⚠️</Text>
-          </View>
-          <Text variant="title" size="lg" className="mb-2 text-center">
-            {t("common.error.title")}
-          </Text>
-          <Text variant="muted" className="text-center">
-            {error instanceof Error ? error.message : t("common.error.message")}
-          </Text>
-        </CardContent>
-      </Card>
+  const ErrorState = () => (
+    <View className="flex-1 bg-background">
+      <View className="absolute inset-0 flex items-center justify-center px-4">
+        <Card className="w-full max-w-sm items-center bg-card/80 p-6">
+          <CardContent className="items-center p-0">
+            <View className="mb-4 h-12 w-12 items-center justify-center rounded-full bg-destructive/10">
+              <Text className="text-2xl">⚠️</Text>
+            </View>
+            <Text variant="title" size="lg" className="mb-2 text-center">
+              {t("common.error.title")}
+            </Text>
+            <Text variant="muted" className="text-center">
+              {error instanceof ErrorState ? error.message : t("common.error.message")}
+            </Text>
+          </CardContent>
+        </Card>
+      </View>
     </View>
   );
 
-  const renderNoRegisteredBook = () => (
-    <View className="absolute inset-0 flex items-center justify-center px-4">
-      <Card className="w-full max-w-sm items-center bg-card/80 p-8">
-        <CardContent className="items-center p-0">
-          <Image
-            source={require("../../../assets/images/man-book-reading-green.png")}
-            className="mb-8 h-72 w-72"
-            resizeMode="contain"
-          />
-          <Text variant="heading" size="xl" className="mb-3 text-center">
-            {t("search.search-no-result.title")}
-          </Text>
-          <Text variant="muted" className="text-center">
-            {t("search.search-no-result.description")}
-          </Text>
-        </CardContent>
-      </Card>
+  const Empty = () => (
+    <View className="flex-1 bg-background">
+      <View className="absolute inset-0 flex items-center justify-center px-4">
+        <Card className="w-full max-w-sm items-center bg-card/80 p-8">
+          <CardContent className="items-center p-0">
+            <Image
+              source={require("../../../assets/images/man-book-reading-green.png")}
+              className="mb-8 h-72 w-72"
+              resizeMode="contain"
+            />
+            <Text variant="heading" size="xl" className="mb-3 text-center">
+              {t("search.search-no-result.title")}
+            </Text>
+            <Text variant="muted" className="text-center">
+              {t("search.search-no-result.description")}
+            </Text>
+          </CardContent>
+        </Card>
+      </View>
     </View>
   );
+
+  if (loading) return <Loading />;
+  if (error) return <ErrorState />;
+  if (!books || books.length === 0) return <Empty />;
 
   return (
-    <View className="flex-1 bg-background py-2">
-      {loading ? (
-        renderLoading()
-      ) : error ? (
-        renderError()
-      ) : books.length > 0 ? (
-        <FlatList
-          data={books}
-          renderItem={renderBook}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingHorizontal: 12 }}
-          showsVerticalScrollIndicator={false}
-        />
-      ) : (
-        renderNoRegisteredBook()
-      )}
+    <View className="flex-1 bg-background">
+      <FlatList
+        data={books}
+        renderItem={renderBook}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingHorizontal: 16 }}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 }

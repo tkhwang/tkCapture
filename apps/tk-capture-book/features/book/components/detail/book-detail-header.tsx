@@ -38,11 +38,11 @@ export function BookDetailHeader({ book, expanded, toggleExpanded }: BookDetailH
             {book.thumbnail ? (
               <Image
                 source={{ uri: book.thumbnail }}
-                className="w-32 mr-4 rounded-md shadow h-44"
+                className="mr-4 h-44 w-32 rounded-md shadow"
                 resizeMode="cover"
               />
             ) : (
-              <View className="items-center justify-center w-32 mr-4 rounded-md h-44 bg-muted">
+              <View className="mr-4 h-44 w-32 items-center justify-center rounded-md bg-muted">
                 <Ionicons name="image-outline" size={32} color="hsl(var(--muted-foreground))" />
                 <Text variant="muted" size="sm" className="mt-2">
                   No Image
@@ -50,12 +50,12 @@ export function BookDetailHeader({ book, expanded, toggleExpanded }: BookDetailH
               </View>
             )}
             <View className="flex-1">
-              <View className="flex-row items-center mb-1">
-                <View className="w-1 h-1 mr-1 rounded-full bg-primary" />
+              <View className="mb-1 flex-row items-center">
+                <View className="mr-1 h-1 w-1 rounded-full bg-primary" />
                 <Text variant="muted">출판사: {book.publisher}</Text>
               </View>
-              <View className="flex-row items-center mb-1">
-                <View className="w-1 h-1 mr-1 rounded-full bg-primary" />
+              <View className="mb-1 flex-row items-center">
+                <View className="mr-1 h-1 w-1 rounded-full bg-primary" />
                 <Text variant="muted">ISBN: {book.isbn}</Text>
               </View>
             </View>

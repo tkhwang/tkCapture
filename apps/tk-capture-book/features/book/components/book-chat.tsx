@@ -100,27 +100,27 @@ export function BookChat({ book, user }: BookChatProps) {
     >
       <View className="flex-1 bg-card">
         {/* Chat Header */}
-        <View className="flex-row items-center justify-between p-4 bg-secondary">
+        <View className="flex-row items-center justify-between bg-secondary p-4">
           <View className="flex-row items-center">
             {/* Book-shaped thumbnail */}
-            <View className="w-10 mr-3 overflow-hidden border rounded-sm shadow-sm h-14 border-border">
+            <View className="mr-3 h-14 w-10 overflow-hidden rounded-sm border border-border shadow-sm">
               {book.thumbnail ? (
                 <Image
                   source={{ uri: book.thumbnail }}
-                  className="w-full h-full"
+                  className="h-full w-full"
                   resizeMode="cover"
                 />
               ) : (
-                <View className="items-center justify-center w-full h-full bg-primary/10">
+                <View className="h-full w-full items-center justify-center bg-primary/10">
                   <Text className="text-xs font-medium">
                     {book.title.substring(0, 2).toUpperCase()}
                   </Text>
                 </View>
               )}
               {/* Book spine effect */}
-              <View className="absolute left-0 top-0 bottom-0 w-[2px] bg-primary/30" />
+              <View className="absolute bottom-0 left-0 top-0 w-[2px] bg-primary/30" />
             </View>
-            <View className="flex-1 gap-1 mr-3">
+            <View className="mr-3 flex-1 gap-1">
               <Text className="font-medium">{book.title}</Text>
               <Text className="text-xs text-muted-foreground">
                 {book.author} | {book.publisher}
@@ -139,15 +139,15 @@ export function BookChat({ book, user }: BookChatProps) {
           keyExtractor={(date) => date}
           renderItem={({ item: date }) => (
             <View>
-              <Text className="my-2 text-xs text-center">{date}</Text>
+              <Text className="my-2 text-center text-xs">{date}</Text>
               {groupedMessages[date].map((msg) => (
                 <View
                   key={msg._id.toString()}
                   className={cn(
-                    "mb-4 p-3 max-w-3/4 rounded-2xl",
+                    "max-w-3/4 mb-4 rounded-2xl p-3",
                     msg.user._id === 1
-                      ? "self-end bg-primary ml-auto rounded-tr-none"
-                      : "self-start bg-secondary mr-auto rounded-tl-none",
+                      ? "ml-auto self-end rounded-tr-none bg-primary"
+                      : "mr-auto self-start rounded-tl-none bg-secondary",
                   )}
                 >
                   <Text
@@ -174,9 +174,9 @@ export function BookChat({ book, user }: BookChatProps) {
         />
 
         {/* Message Input */}
-        <View className="p-4 border-t border-border">
-          <View className="flex-row items-center p-2 border rounded-md border-input">
-            <View className="flex-row mr-2">
+        <View className="border-t border-border p-4">
+          <View className="flex-row items-center rounded-md border border-input p-2">
+            <View className="mr-2 flex-row">
               <Button size="icon" variant="ghost">
                 <Ionicons name="add" size={20} color="hsl(var(--muted-foreground))" />
               </Button>

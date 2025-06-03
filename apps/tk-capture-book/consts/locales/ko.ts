@@ -3,6 +3,15 @@ export const ko = {
     camera: {
       tabTitle: "카메라",
     },
+    frame: {
+      tabTitle: "프레임",
+    },
+    collectSentence: {
+      tabTitle: "문장",
+    },
+    bookTalk: {
+      tabTitle: "이야기",
+    },
     login: {
       title: "환영합니다",
       subtitle: "계정에 로그인하세요",
@@ -57,6 +66,11 @@ export const ko = {
         settings: "설정",
         language: "언어",
         bookSearchProvider: "도서 검색 제공자",
+      },
+    },
+    error: {
+      search: {
+        message: "검색 중 오류가 발생했습니다.",
       },
     },
   },

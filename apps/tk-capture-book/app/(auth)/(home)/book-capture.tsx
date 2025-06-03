@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { CameraType, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import { useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, Button, TouchableOpacity, View } from "react-native";
 
@@ -37,7 +37,7 @@ export default function BookCaptureScreen() {
 
   if (!permission.granted) {
     return (
-      <View className="justify-center flex-1">
+      <View className="flex-1 justify-center">
         <Text className="pb-3 text-center">
           {t("capture.camera_permission", "We need your permission to show the camera")}
         </Text>
@@ -51,7 +51,7 @@ export default function BookCaptureScreen() {
 
   if (!mediaPermission.granted) {
     return (
-      <View className="justify-center flex-1">
+      <View className="flex-1 justify-center">
         <Text className="pb-3 text-center">
           {t("capture.media_permission", "We need your permission to save photos")}
         </Text>
@@ -146,9 +146,9 @@ export default function BookCaptureScreen() {
               <View className="p-4">
                 <Text className="text-white">{recognizedText}</Text>
               </View>
-              <View className="flex-row justify-between p-4 border-t border-white/20 bg-black/80">
+              <View className="flex-row justify-between border-t border-white/20 bg-black/80 p-4">
                 <TouchableOpacity
-                  className="flex-row items-center p-2 space-x-2 active:bg-white/10"
+                  className="flex-row items-center space-x-2 p-2 active:bg-white/10"
                   onPress={handleTextRemoved}
                 >
                   <Ionicons name="trash-outline" size={20} color="white" />
@@ -156,7 +156,7 @@ export default function BookCaptureScreen() {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  className="flex-row items-center p-2 space-x-2 active:bg-white/10"
+                  className="flex-row items-center space-x-2 p-2 active:bg-white/10"
                   onPress={handleSaveText}
                 >
                   <Ionicons name="save-outline" size={20} color="white" />
@@ -172,7 +172,7 @@ export default function BookCaptureScreen() {
           )}
         </>
       ) : (
-        <View className="justify-center flex-1">
+        <View className="flex-1 justify-center">
           <Text className="pb-3 text-center">
             {t("capture.camera_permission", "Camera permission is required")}
           </Text>

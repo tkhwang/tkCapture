@@ -3,6 +3,15 @@ export const en = {
     camera: {
       tabTitle: "Camera",
     },
+    frame: {
+      tabTitle: "Frame",
+    },
+    collectSentence: {
+      tabTitle: "Sentence",
+    },
+    bookTalk: {
+      tabTitle: "Talk",
+    },
     login: {
       title: "Welcome",
       subtitle: "Login to your account",
@@ -58,6 +67,11 @@ export const en = {
         settings: "설정",
         language: "Language",
         bookSearchProvider: "Book Search Provider",
+      },
+    },
+    error: {
+      search: {
+        message: "An error occurred while searching.",
       },
     },
   },
