@@ -32,6 +32,10 @@ export const ko = {
         description:
           "도서명이나 저자명으로 검색해보세요.\n설정에서 도서 검색 제공자를 변경할 수 있습니다.",
       },
+      "no-registered-book": {
+        title: "등록된 책이 없습니다",
+        description: "도서명이나 저자명으로 검색한 후 등록하세요.",
+      },
       "register-book": {
         new: "책 등록하기",
         registered: "이미 등록된 책",
