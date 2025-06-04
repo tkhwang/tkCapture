@@ -38,7 +38,7 @@ export const en = {
       },
       "register-book": {
         new: "Register book",
-        registered: "Already Unregistered Book",
+        registered: "Already Registered Book",
       },
     },
     detail: {
