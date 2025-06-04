@@ -44,7 +44,7 @@ export default function BookSearchDetailScreen() {
       }
 
       console.log(`[+][BookDetailScreen] book registered: ${JSON.stringify(data)}`);
-      router.replace("/(auth)/(tabs)");
+      router.replace("/(auth)/(home)");
     } catch (error) {
       console.error(`[-][BookDetailScreen] error: ${JSON.stringify(error)}`);
     }
