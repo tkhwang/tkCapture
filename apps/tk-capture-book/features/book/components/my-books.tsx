@@ -130,10 +130,10 @@ export function MyBooks() {
               resizeMode="contain"
             />
             <Text variant="heading" size="xl" className="mb-3 text-center">
-              {t("search.search-no-result.title")}
+              {t("search.no-registered-book.title")}
             </Text>
             <Text variant="muted" className="text-center">
-              {t("search.search-no-result.description")}
+              {t("search.no-registered-book.description")}
             </Text>
           </CardContent>
         </Card>

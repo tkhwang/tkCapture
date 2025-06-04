@@ -32,9 +32,13 @@ export const en = {
         description:
           "Try searching for a book by name or author.\nYou can change the book search provider in the settings.",
       },
+      "no-registered-book": {
+        title: "No registered books",
+        description: "Search for a book by name or author and register it.",
+      },
       "register-book": {
         new: "Register book",
-        registered: "Already Unregistered Book",
+        registered: "Already Registered Book",
       },
     },
     detail: {
