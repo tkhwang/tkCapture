@@ -120,7 +120,13 @@ export default function HomeScreen() {
       <View className="p-4">
         <BookSearchInput searchText={searchText} setSearchText={setSearchText} />
       </View>
-      {!books || books.length === 0 ? loading ? <ActivityIndicator /> : <MyBooks /> : renderBody()}
+      {searchText.length > 0 || (books && books.length > 0) ? (
+        renderBody()
+      ) : loading ? (
+        <ActivityIndicator />
+      ) : (
+        <MyBooks />
+      )}
     </View>
   );
 }
