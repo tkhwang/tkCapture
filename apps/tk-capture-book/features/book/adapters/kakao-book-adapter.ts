@@ -1,3 +1,5 @@
+import { Book } from "@/features/book/models/book";
+
 import { searchKakaoBooks } from "../api/vendors/search-kakao-books";
 import {
   BookSearchAdapter,
@@ -5,8 +7,6 @@ import {
   BookSearchParams,
   BookSearchResponse,
 } from "../types/book-search-interface";
-
-import { Book } from "@/features/book/models/book";
 
 export class KakaoBookAdapter implements BookSearchAdapter {
   async search(params: BookSearchParams): Promise<BookSearchResponse> {

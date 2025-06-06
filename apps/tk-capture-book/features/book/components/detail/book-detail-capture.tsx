@@ -1,7 +1,9 @@
+import { View } from "react-native";
+
+import { useTranslation } from "react-i18next";
+
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useTranslation } from "react-i18next";
-import { View } from "react-native";
 
 import { TextRowTitleDescription } from "@/components/text-row-title-description";
 import { Button, Card, CardContent, CardHeader } from "@/components/ui";

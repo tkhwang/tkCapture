@@ -1,8 +1,10 @@
 import * as React from "react";
+
 import Svg, { Path } from "react-native-svg";
 
-import { IconProps } from "./iconWithClassName";
 import { cn } from "../utils";
+
+import { IconProps } from "./iconWithClassName";
 
 export function Sun({ className, ...props }: IconProps) {
   return (

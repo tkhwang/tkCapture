@@ -1,6 +1,7 @@
+import { View } from "react-native";
+
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
-import { View } from "react-native";
 
 import ToggleTheme from "@/components/ToggleTheme";
 import { Text } from "@/components/ui/text";

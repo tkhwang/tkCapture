@@ -1,8 +1,11 @@
+import { useState } from "react";
+
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Platform } from "react-native";
+
+import { useTranslation } from "react-i18next";
+
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Platform } from "react-native";
 
 import { AppName } from "@/components/app-name";
 import { useAppleSignIn } from "@/features/auth/hooks/useAppleSignIn";

@@ -1,6 +1,8 @@
-import { useRouter } from "expo-router";
-import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, Image, TouchableOpacity, View } from "react-native";
+
+import { useTranslation } from "react-i18next";
+
+import { useRouter } from "expo-router";
 
 import { Card, CardContent } from "@/components/ui";
 import { Progress } from "@/components/ui/progress";

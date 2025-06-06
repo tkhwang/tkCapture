@@ -1,6 +1,7 @@
+import { View } from "react-native";
+
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
-import { View } from "react-native";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";

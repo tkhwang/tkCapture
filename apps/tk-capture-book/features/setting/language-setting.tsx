@@ -1,6 +1,8 @@
-import { Ionicons } from "@expo/vector-icons";
-import { useAtom } from "jotai";
 import { View, TouchableOpacity } from "react-native";
+
+import { useAtom } from "jotai";
+
+import { Ionicons } from "@expo/vector-icons";
 
 import { Text } from "@/components/ui/text";
 import { Language, languageAtom } from "@/features/setting/states/language";
@@ -26,10 +28,10 @@ export function LanguageSetting() {
           <TouchableOpacity
             key={option.code}
             className={cn(
-              "p-3 rounded-lg flex-row justify-between items-center",
+              "flex-row items-center justify-between rounded-lg p-3",
               language === option.code
-                ? "bg-primary/10 border border-primary/20"
-                : "bg-card border border-border",
+                ? "border border-primary/20 bg-primary/10"
+                : "border border-border bg-card",
             )}
             onPress={() => setLanguage(option.code)}
           >

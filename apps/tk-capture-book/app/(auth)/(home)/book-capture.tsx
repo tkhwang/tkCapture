@@ -1,10 +1,13 @@
+import React, { useEffect, useState } from "react";
+
+import { Alert, Button, TouchableOpacity, View } from "react-native";
+
+import { useTranslation } from "react-i18next";
+
 import { Ionicons } from "@expo/vector-icons";
 import { CameraType, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import { useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Alert, Button, TouchableOpacity, View } from "react-native";
 
 import { Text } from "@/components/ui/text";
 import { GOOGLE_CLOUD_API_KEY } from "@/consts/appConsts";

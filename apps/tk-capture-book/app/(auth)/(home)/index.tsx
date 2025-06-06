@@ -1,8 +1,11 @@
-import { useRouter } from "expo-router";
 import { useCallback, useState } from "react";
-import { useTranslation } from "react-i18next";
+
 import { ActivityIndicator, Image, View } from "react-native";
+
+import { useTranslation } from "react-i18next";
 import { useDebounce } from "use-debounce";
+
+import { useRouter } from "expo-router";
 
 import { Card, CardContent } from "@/components/ui";
 import { Text } from "@/components/ui/text";

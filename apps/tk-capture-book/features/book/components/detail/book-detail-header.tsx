@@ -1,5 +1,6 @@
-import { Ionicons } from "@expo/vector-icons";
 import { Image, Pressable, View } from "react-native";
+
+import { Ionicons } from "@expo/vector-icons";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";

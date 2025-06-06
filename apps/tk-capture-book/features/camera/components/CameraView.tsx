@@ -1,7 +1,9 @@
+import { useEffect, useRef } from "react";
+
+import { StyleSheet, TouchableOpacity, View, Alert } from "react-native";
+
 import { Ionicons } from "@expo/vector-icons";
 import { CameraView as ExpoCameraView, CameraType } from "expo-camera";
-import { useEffect, useRef } from "react";
-import { StyleSheet, TouchableOpacity, View, Alert } from "react-native";
 
 interface CameraViewProps {
   facing: CameraType;
@@ -57,18 +59,18 @@ export function CameraView({
       <ExpoCameraView ref={cameraRef} facing={facing} style={styles.camera}>
         <View className="flex-1">
           <TouchableOpacity
-            className="absolute right-8 bottom-8 justify-center items-center w-12 h-12 rounded-full bg-black/20"
+            className="absolute bottom-8 right-8 h-12 w-12 items-center justify-center rounded-full bg-black/20"
             onPress={onFlipCamera}
           >
             <Ionicons name="sync-outline" size={28} color="white" />
           </TouchableOpacity>
 
-          <View className="absolute right-0 left-0 bottom-8 items-center">
+          <View className="absolute bottom-8 left-0 right-0 items-center">
             <TouchableOpacity
-              className="justify-center items-center w-16 h-16 bg-white rounded-full"
+              className="h-16 w-16 items-center justify-center rounded-full bg-white"
               onPress={takePicture}
             >
-              <View className="w-14 h-14 rounded-full border-4 border-sky-600" />
+              <View className="h-14 w-14 rounded-full border-4 border-sky-600" />
             </TouchableOpacity>
           </View>
         </View>
