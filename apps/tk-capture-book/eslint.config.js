@@ -99,6 +99,7 @@ module.exports = [
       "node_modules/**",
       ".expo/**",
       ".next/**",
+      ".vscode/**",
       "dist/**",
       "build/**",
       "coverage/**",
@@ -114,6 +115,8 @@ module.exports = [
       "*.lock",
       "*.cache",
       ".eslintcache",
+      "android/**",
+      "ios/**",
     ],
   },
 ];
