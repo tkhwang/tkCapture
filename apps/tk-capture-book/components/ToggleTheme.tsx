@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Pressable, Text, View } from "react-native";
 
 import { MoonStar } from "@/lib/icons/MoonStar";
@@ -17,7 +18,7 @@ export default function ToggleTheme({ className }: ToggleThemeProps) {
     <View className="w-full">
       <Pressable
         className={cn(
-          "w-full flex h-10 flex-row items-center justify-center gap-2 rounded-md bg-card border border-input",
+          "flex h-10 w-full flex-row items-center justify-center gap-2 rounded-md border border-input bg-card",
           className,
         )}
         onPress={toggleColorScheme}
@@ -26,12 +27,12 @@ export default function ToggleTheme({ className }: ToggleThemeProps) {
       >
         {isDarkColorScheme ? (
           <>
-            <Sun className="w-6 h-6 text-primary" />
+            <Sun className="h-6 w-6 text-primary" />
             <Text className="text-sm font-medium text-primary">Light Mode</Text>
           </>
         ) : (
           <>
-            <MoonStar className="w-6 h-6 text-primary" />
+            <MoonStar className="h-6 w-6 text-primary" />
             <Text className="text-sm font-medium text-primary">Dark Mode</Text>
           </>
         )}

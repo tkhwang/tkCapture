@@ -1,8 +1,11 @@
+import { useMemo } from "react";
+
+import { Image, ScrollView, View } from "react-native";
+
+import { useTranslation } from "react-i18next";
+
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { Image, ScrollView, View } from "react-native";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";

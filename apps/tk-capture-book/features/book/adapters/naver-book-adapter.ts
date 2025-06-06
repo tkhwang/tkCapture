@@ -1,3 +1,5 @@
+import { Book } from "@/features/book/models/book";
+
 import { searchNaverBooks } from "../api/vendors/search-naver-books";
 import {
   BookSearchAdapter,
@@ -5,8 +7,6 @@ import {
   BookSearchParams,
   BookSearchResponse,
 } from "../types/book-search-interface";
-
-import { Book } from "@/features/book/models/book";
 
 export class NaverBookAdapter implements BookSearchAdapter {
   async search(params: BookSearchParams): Promise<BookSearchResponse> {

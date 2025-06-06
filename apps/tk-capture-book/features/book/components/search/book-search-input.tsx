@@ -1,6 +1,8 @@
-import { Ionicons } from "@expo/vector-icons";
 import React from "react";
+
 import { Pressable, TextInput, View } from "react-native";
+
+import { Ionicons } from "@expo/vector-icons";
 
 interface BookSearchInputProps {
   searchText: string;

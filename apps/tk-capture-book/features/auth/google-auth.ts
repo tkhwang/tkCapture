@@ -1,5 +1,6 @@
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { Platform } from "react-native";
+
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 import { GOOGLE_IOS_CLIENT_ID, GOOGLE_WEB_CLIENT_ID } from "@/consts/appConsts";
 

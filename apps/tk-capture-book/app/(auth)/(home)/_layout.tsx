@@ -1,5 +1,6 @@
-import { Stack } from "expo-router";
 import { useTranslation } from "react-i18next";
+
+import { Stack } from "expo-router";
 
 export default function HomeLayout() {
   const { t } = useTranslation();

@@ -1,15 +1,18 @@
 import "../global.css";
 import "../utils/i18n";
 
-import { Theme, ThemeProvider, DefaultTheme, DarkTheme } from "@react-navigation/native";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { Stack, useRouter, useSegments } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import { useAtom } from "jotai";
 import * as React from "react";
 import { useEffect, useState, useRef } from "react";
+
 import { View, ActivityIndicator, Platform } from "react-native";
+
+import { Theme, ThemeProvider, DefaultTheme, DarkTheme } from "@react-navigation/native";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { useAtom } from "jotai";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+
+import { Stack, useRouter, useSegments } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 
 import { configureGoogleAuth } from "@/features/auth/google-auth";
 import { languageAtom } from "@/features/setting/states/language";

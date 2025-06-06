@@ -1,5 +1,5 @@
-import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
+
 import {
   FlatList,
   Keyboard,
@@ -9,6 +9,8 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+
+import { Ionicons } from "@expo/vector-icons";
 
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";

@@ -1,6 +1,8 @@
-import { useRouter } from "expo-router";
-import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, Image, TouchableOpacity, View } from "react-native";
+
+import { useTranslation } from "react-i18next";
+
+import { useRouter } from "expo-router";
 
 import { Card, CardContent } from "@/components/ui";
 import { Progress } from "@/components/ui/progress";
@@ -119,7 +121,7 @@ export function MyBooks() {
     </View>
   );
 
-  const Empty = () => (
+  const NoRegisteredBook = () => (
     <View className="flex-1 bg-background">
       <View className="absolute inset-0 flex items-center justify-center px-4">
         <Card className="w-full max-w-sm items-center bg-card/80 p-8">
@@ -143,7 +145,7 @@ export function MyBooks() {
 
   if (loading) return <Loading />;
   if (error) return <ErrorState />;
-  if (!books || books.length === 0) return <Empty />;
+  if (!books || books.length === 0) return <NoRegisteredBook />;
 
   return (
     <View className="flex-1 bg-background">

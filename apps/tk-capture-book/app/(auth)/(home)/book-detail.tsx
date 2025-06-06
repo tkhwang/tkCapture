@@ -1,6 +1,8 @@
-import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
+
 import { View, ScrollView } from "react-native";
+
+import { useLocalSearchParams } from "expo-router";
 
 import { Text } from "@/components/ui/text";
 import { BookDetailCapture } from "@/features/book/components/detail/book-detail-capture";

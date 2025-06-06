@@ -1,5 +1,6 @@
-import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { View } from "react-native";
+
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -25,11 +26,11 @@ export function Profile({ onLogout }: ProfileProps) {
   };
 
   return (
-    <Card className="p-4 bg-card">
+    <Card className="bg-card p-4">
       <CardContent className="p-0">
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center gap-3">
-            <Avatar className="w-12 h-12 bg-background">
+            <Avatar className="h-12 w-12 bg-background">
               <AvatarFallback>{getProviderIcon()}</AvatarFallback>
             </Avatar>
             <View>
@@ -38,7 +39,7 @@ export function Profile({ onLogout }: ProfileProps) {
               </Text>
             </View>
           </View>
-          <Button variant="secondary" className="px-5 rounded-full bg-slate-200" onPress={onLogout}>
+          <Button variant="secondary" className="rounded-full bg-slate-200 px-5" onPress={onLogout}>
             로그아웃
           </Button>
         </View>

@@ -1,5 +1,6 @@
-import { Session } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState } from "react";
+
+import { Session } from "@supabase/supabase-js";
 
 import { User } from "@/features/user/models/user";
 import { IUser } from "@/features/user/types/user";
