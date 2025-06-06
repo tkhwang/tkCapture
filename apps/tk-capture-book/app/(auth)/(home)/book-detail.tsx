@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { View, ScrollView } from "react-native";
+
+import { useSetAtom } from "jotai";
 
 import { useLocalSearchParams } from "expo-router";
 
@@ -11,6 +13,7 @@ import { BookDetailHeader } from "@/features/book/components/detail/book-detail-
 import { BookDetailStatus } from "@/features/book/components/detail/book-detail-status";
 import { useUpdateBook } from "@/features/book/hooks/mutations/useUpdateBook";
 import { useBook } from "@/features/book/hooks/queries/useBook";
+import { selectedBookAtom } from "@/features/book/states/book";
 import { Database } from "@/types/types_db";
 
 type BookStatus = Database["public"]["Enums"]["book_status"];
@@ -22,6 +25,14 @@ export default function BookDetailScreen() {
   const { mutate: updateBook, isPending: updating } = useUpdateBook();
 
   const [expanded, setExpanded] = useState(true);
+
+  const setSelectedBook = useSetAtom(selectedBookAtom);
+
+  useEffect(() => {
+    return () => {
+      setSelectedBook(null);
+    };
+  }, [id, setSelectedBook]);
 
   const updateBookStatus = (newStatus: BookStatus) => {
     if (!book) return;
