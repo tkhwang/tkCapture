@@ -47,7 +47,7 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="camera"
+          name="sentence"
           options={{
             title: t("collectSentence.tabTitle"),
             tabBarIcon: ({ color, size, focused }) => (
