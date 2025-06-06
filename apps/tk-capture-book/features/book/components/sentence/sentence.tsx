@@ -95,7 +95,7 @@ export default function SentenceScreen() {
 
   return (
     <View className="flex-1 bg-background">
-      <SelectedBookHeader screen={t("sentence.screen")} />
+      <SelectedBookHeader screen={t("sentence.title")} />
       {permission?.granted ? (
         <>
           <CameraView
