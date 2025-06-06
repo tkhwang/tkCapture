@@ -3,21 +3,21 @@ export const en = {
     header: {
       selectBookFirst: "Please select a book first for {{feature}}.",
     },
-    sentence: {
-      tabTitle: "Sentence",
-      screen: "sentence",
-    },
     frame: {
       tabTitle: "Frame",
       screen: "frame",
     },
-    collectSentence: {
+    sentence: {
       tabTitle: "Sentence",
       screen: "sentence",
     },
-    bookTalk: {
+    talk: {
       tabTitle: "Talk",
       screen: "talk",
+    },
+    collectSentence: {
+      tabTitle: "Sentence",
+      screen: "sentence",
     },
     login: {
       title: "Welcome",
