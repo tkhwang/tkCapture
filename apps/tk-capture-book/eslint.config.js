@@ -20,6 +20,10 @@ module.exports = [
           jsx: true,
         },
       },
+      globals: {
+        console: "readonly",
+        require: "readonly",
+      },
     },
     plugins: {
       import: importPlugin,
