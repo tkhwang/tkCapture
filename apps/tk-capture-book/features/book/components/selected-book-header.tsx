@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 
-import { Card, CardContent } from "@/components/ui";
+import { Button, Card, CardContent } from "@/components/ui";
 import { Text } from "@/components/ui/text";
 import { selectedBookAtom } from "@/features/book/states/book";
 
@@ -26,9 +26,14 @@ export function SelectedBookHeader({ screen }: Props) {
 
   const NoSelectedBook = () => {
     return (
-      <TouchableOpacity onPress={handleSelectBook} activeOpacity={0.7}>
-        <Card className="mx-4 mb-4 border-dashed border-muted-foreground/30">
-          <CardContent className="flex-row items-center justify-between p-4">
+      <View className="mx-4 mb-4">
+        <Button
+          variant="outline"
+          size="lg"
+          onPress={handleSelectBook}
+          className="h-auto border-dashed border-muted-foreground/30 bg-background p-4"
+        >
+          <View className="w-full flex-row items-center justify-between">
             <Text variant="muted" className="flex-1 text-center">
               {t("header.selectBookFirst", { feature: screen })}
             </Text>
@@ -37,9 +42,9 @@ export function SelectedBookHeader({ screen }: Props) {
               <Ionicons name="chevron-forward" size={16} color="#9ca3af" />
               <Ionicons name="library" size={16} color="#9ca3af" />
             </View>
-          </CardContent>
-        </Card>
-      </TouchableOpacity>
+          </View>
+        </Button>
+      </View>
     );
   };
 
