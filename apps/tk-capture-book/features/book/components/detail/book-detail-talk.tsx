@@ -13,7 +13,7 @@ interface BookDetailChatProps {
   bookIsbn?: string;
 }
 
-export function BookDetailChat({ onPressChat, bookId, bookIsbn }: BookDetailChatProps) {
+export function BookDetailTalk({ onPressChat, bookId, bookIsbn }: BookDetailChatProps) {
   const { t } = useTranslation();
 
   // Default handler if onPressChat not provided but IDs are
