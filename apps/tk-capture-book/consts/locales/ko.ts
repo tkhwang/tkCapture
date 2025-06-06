@@ -1,16 +1,23 @@
 export const ko = {
   translation: {
-    camera: {
-      tabTitle: "카메라",
+    header: {
+      selectBookFirst: "{{feature}} 기능을 위해 먼저 책을 선택해주세요",
+    },
+    sentence: {
+      tabTitle: "문장",
+      screen: "문장",
     },
     frame: {
       tabTitle: "프레임",
+      screen: "프레임",
     },
     collectSentence: {
       tabTitle: "문장",
+      screen: "문장",
     },
     bookTalk: {
-      tabTitle: "이야기",
+      tabTitle: "토크",
+      screen: "토크",
     },
     login: {
       title: "환영합니다",
@@ -76,6 +83,9 @@ export const ko = {
       search: {
         message: "검색 중 오류가 발생했습니다.",
       },
+    },
+    common: {
+      loading: "로딩 중...",
     },
   },
 };

@@ -1,16 +1,23 @@
 export const en = {
   translation: {
-    camera: {
-      tabTitle: "Camera",
+    header: {
+      selectBookFirst: "Please select a book first for {{feature}}.",
+    },
+    sentence: {
+      tabTitle: "Sentence",
+      screen: "sentence",
     },
     frame: {
       tabTitle: "Frame",
+      screen: "frame",
     },
     collectSentence: {
       tabTitle: "Sentence",
+      screen: "sentence",
     },
     bookTalk: {
       tabTitle: "Talk",
+      screen: "talk",
     },
     login: {
       title: "Welcome",
@@ -77,6 +84,9 @@ export const en = {
       search: {
         message: "An error occurred while searching.",
       },
+    },
+    common: {
+      loading: "Loading...",
     },
   },
 };
