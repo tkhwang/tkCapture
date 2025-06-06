@@ -41,25 +41,27 @@ export default function HomeScreen() {
   const allBooks = data?.pages.flatMap((page) => page.items) || [];
   const hasNoResults = !isLoading && !error && allBooks.length === 0 && debouncedSearchText;
 
-  const renderNoSearchedBook = () => (
-    <View className="absolute inset-0 flex items-center justify-center px-4">
-      <Card className="w-full max-w-sm items-center bg-card/80 p-8">
-        <CardContent className="items-center p-0">
-          <Image
-            source={require("../../../assets/images/woman-book-reading-green.png")}
-            className="mb-8 h-72 w-72"
-            resizeMode="contain"
-          />
-          <Text variant="heading" size="xl" className="mb-3 text-center">
-            {t("search.search-no-result.title")}
-          </Text>
-          <Text variant="muted" className="text-center">
-            {t("search.search-no-result.description")}
-          </Text>
-        </CardContent>
-      </Card>
-    </View>
-  );
+  const NoSearchedBook = () => {
+    return (
+      <View className="absolute inset-0 flex items-center justify-center px-4">
+        <Card className="w-full max-w-sm items-center bg-card/80 p-8">
+          <CardContent className="items-center p-0">
+            <Image
+              source={require("../../../assets/images/woman-book-reading-green.png")}
+              className="mb-8 h-72 w-72"
+              resizeMode="contain"
+            />
+            <Text variant="heading" size="xl" className="mb-3 text-center">
+              {t("search.search-no-result.title")}
+            </Text>
+            <Text variant="muted" className="text-center">
+              {t("search.search-no-result.description")}
+            </Text>
+          </CardContent>
+        </Card>
+      </View>
+    );
+  };
 
   const handleLoadMore = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -80,7 +82,7 @@ export default function HomeScreen() {
     });
   };
 
-  const renderBody = () => {
+  const SearchResult = () => {
     if (searchText.length === 0) return <MyBooks />;
 
     if (isLoading && !isFetchingNextPage) {
@@ -100,7 +102,7 @@ export default function HomeScreen() {
     }
 
     if (hasNoResults) {
-      return renderNoSearchedBook();
+      return <NoSearchedBook />;
     }
 
     return (
@@ -121,7 +123,7 @@ export default function HomeScreen() {
         <BookSearchInput searchText={searchText} setSearchText={setSearchText} />
       </View>
       {searchText.length > 0 || (books && books.length > 0) ? (
-        renderBody()
+        <SearchResult />
       ) : loading ? (
         <ActivityIndicator />
       ) : (
