@@ -15,7 +15,7 @@ export default function TalkScreen() {
 
   return (
     <View className="flex-1 bg-background">
-      <SelectedBookHeader screen={t("talk.screen")} />
+      <SelectedBookHeader screen={t("talk.title")} />
       {selectedBook ? <BookTalk /> : <BookTalkGuide />}
     </View>
   );

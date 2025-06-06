@@ -15,7 +15,7 @@ export default function FrameScreen() {
 
   return (
     <View className="flex-1 bg-background">
-      <SelectedBookHeader screen={t("frame.screen")} />
+      <SelectedBookHeader screen={t("frame.title")} />
       {selectedBook ? <BookFrame /> : <BookFrameGuide />}
     </View>
   );

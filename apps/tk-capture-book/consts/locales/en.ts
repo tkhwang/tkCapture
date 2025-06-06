@@ -4,13 +4,13 @@ export const en = {
       selectBookFirst: "Please select a book first for {{feature}}.",
     },
     frame: {
-      title: "Frame",
+      title: "frame",
     },
     sentence: {
-      title: "Sentence",
+      title: "sentence",
     },
     talk: {
-      title: "Talk",
+      title: "talk",
     },
     login: {
       title: "Welcome",
