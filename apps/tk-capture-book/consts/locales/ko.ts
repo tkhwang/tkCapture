@@ -4,17 +4,14 @@ export const ko = {
       selectBookFirst: "{{feature}} 기능을 위해 먼저 책을 선택해주세요",
     },
     frame: {
-      tabTitle: "프레임",
-      screen: "프레임",
+      title: "프레임",
     },
     sentence: {
-      tabTitle: "문장",
-      screen: "문장",
+      title: "문장",
     },
 
     talk: {
-      tabTitle: "토크",
-      screen: "토크",
+      title: "토크",
     },
     collectSentence: {
       tabTitle: "문장",

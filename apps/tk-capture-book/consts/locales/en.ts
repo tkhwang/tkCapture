@@ -4,20 +4,13 @@ export const en = {
       selectBookFirst: "Please select a book first for {{feature}}.",
     },
     frame: {
-      tabTitle: "Frame",
-      screen: "frame",
+      title: "Frame",
     },
     sentence: {
-      tabTitle: "Sentence",
-      screen: "sentence",
+      title: "Sentence",
     },
     talk: {
-      tabTitle: "Talk",
-      screen: "talk",
-    },
-    collectSentence: {
-      tabTitle: "Sentence",
-      screen: "sentence",
+      title: "Talk",
     },
     login: {
       title: "Welcome",

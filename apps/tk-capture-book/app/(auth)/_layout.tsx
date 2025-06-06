@@ -40,7 +40,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="frame"
           options={{
-            title: t("frame.tabTitle"),
+            title: t("frame.title"),
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons name={focused ? "film" : "film-outline"} size={size} color={color} />
             ),
@@ -49,7 +49,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="sentence"
           options={{
-            title: t("collectSentence.tabTitle"),
+            title: t("sentence.title"),
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons name={focused ? "list" : "list-outline"} size={size} color={color} />
             ),
@@ -58,7 +58,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="talk"
           options={{
-            title: t("talk.tabTitle"),
+            title: t("talk.title"),
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons
                 name={focused ? "chatbubble-ellipses" : "chatbubble-ellipses-outline"}
