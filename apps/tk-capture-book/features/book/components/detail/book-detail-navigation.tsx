@@ -8,6 +8,12 @@ import { router } from "expo-router";
 import { Button } from "@/components/ui";
 import { Text } from "@/components/ui/text";
 
+const NAVIGATION_COLORS = {
+  frame: "#3b82f6",
+  sentence: "#10b981",
+  talk: "#f59e0b",
+} as const;
+
 interface Props {
   bookId: string;
   bookIsbn: string;
@@ -21,19 +27,19 @@ export function BookDetailNavigation({ bookId: _bookId, bookIsbn: _bookIsbn }: P
       title: t("frame.title"),
       icon: "film" as const,
       path: "/(auth)/frame",
-      color: "#3b82f6", // blue
+      color: NAVIGATION_COLORS.frame,
     },
     {
       title: t("sentence.title"),
       icon: "list" as const,
       path: "/(auth)/sentence",
-      color: "#10b981", // green
+      color: NAVIGATION_COLORS.sentence,
     },
     {
       title: t("talk.title"),
       icon: "chatbubble-ellipses" as const,
       path: "/(auth)/talk",
-      color: "#f59e0b", // yellow
+      color: NAVIGATION_COLORS.talk,
     },
   ];
 
@@ -45,7 +51,7 @@ export function BookDetailNavigation({ bookId: _bookId, bookIsbn: _bookIsbn }: P
     <View className="flex-row gap-3 p-4">
       {navigationItems.map((item) => {
         const buttonColor = item.color;
-        const backgroundColor = `${item.color}10`;
+        const backgroundColor = item.color.replace("#", "#") + "10";
 
         return (
           <View key={item.path} className="flex-1">
@@ -58,6 +64,9 @@ export function BookDetailNavigation({ bookId: _bookId, bookIsbn: _bookIsbn }: P
                 borderColor: item.color,
                 backgroundColor: backgroundColor,
               }}
+              accessibilityLabel={`${item.title} screen`}
+              accessibilityHint={`Navigate to ${item.title} screen`}
+              accessibilityRole="button"
             >
               <Ionicons name={item.icon} size={24} color={buttonColor} />
               <Text
