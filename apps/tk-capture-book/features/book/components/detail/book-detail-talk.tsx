@@ -22,13 +22,7 @@ export function BookDetailTalk({ onPressChat, bookId, bookIsbn }: BookDetailChat
       onPressChat();
     } else if (bookId && bookIsbn) {
       // Navigate to chat screen with the provided IDs
-      router.push({
-        pathname: "/book-chat",
-        params: {
-          id: bookId,
-          isbn: bookIsbn,
-        },
-      });
+      router.push("/(auth)/talk");
     }
   };
 

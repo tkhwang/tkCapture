@@ -19,8 +19,7 @@ export function BookDetailSentence({ bookId }: Props) {
 
   const handleCaptureText = () => {
     router.push({
-      pathname: "/book-capture",
-      params: { id: bookId },
+      pathname: "/sentence",
     });
   };
 
