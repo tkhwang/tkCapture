@@ -14,7 +14,7 @@ interface Props {
   bookId: string;
 }
 
-export function BookDetailCapture({ bookId }: Props) {
+export function BookDetailSentence({ bookId }: Props) {
   const { t } = useTranslation();
 
   const handleCaptureText = () => {

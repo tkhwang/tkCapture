@@ -7,8 +7,8 @@ import { useSetAtom } from "jotai";
 import { useLocalSearchParams } from "expo-router";
 
 import { Text } from "@/components/ui/text";
-import { BookDetailCapture } from "@/features/book/components/detail/book-detail-capture";
 import { BookDetailHeader } from "@/features/book/components/detail/book-detail-header";
+import { BookDetailSentence } from "@/features/book/components/detail/book-detail-sentence";
 import { BookDetailStatus } from "@/features/book/components/detail/book-detail-status";
 import { BookDetailTalk } from "@/features/book/components/detail/book-detail-talk";
 import { useUpdateBook } from "@/features/book/hooks/mutations/useUpdateBook";
@@ -75,7 +75,7 @@ export default function BookDetailScreen() {
 
       <BookDetailTalk bookId={book.id} bookIsbn={book.isbn} />
 
-      <BookDetailCapture bookId={book.id} />
+      <BookDetailSentence bookId={book.id} />
     </ScrollView>
   );
 }
