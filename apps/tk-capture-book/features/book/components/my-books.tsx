@@ -1,6 +1,5 @@
 import { ActivityIndicator, FlatList, Image, TouchableOpacity, View } from "react-native";
 
-import { useSetAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 
 import { useRouter } from "expo-router";
@@ -9,7 +8,6 @@ import { Card, CardContent } from "@/components/ui";
 import { Progress } from "@/components/ui/progress";
 import { Text } from "@/components/ui/text";
 import { useBooks } from "@/features/book/hooks/queries/useBooks";
-import { selectedBookAtom } from "@/features/book/states/book";
 import { Database } from "@/types/types_db";
 
 type Book = Database["public"]["Tables"]["books"]["Row"];
@@ -18,12 +16,9 @@ export function MyBooks() {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const setSelectedBook = useSetAtom(selectedBookAtom);
-
   const { books, loading, error } = useBooks();
 
   const handleBookPress = (book: Book) => {
-    setSelectedBook(book);
     router.push({
       pathname: "/book-detail",
       params: {

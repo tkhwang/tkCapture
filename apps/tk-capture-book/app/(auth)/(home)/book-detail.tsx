@@ -13,9 +13,7 @@ import { BookDetailStatus } from "@/features/book/components/detail/book-detail-
 import { useUpdateBook } from "@/features/book/hooks/mutations/useUpdateBook";
 import { useBook } from "@/features/book/hooks/queries/useBook";
 import { selectedBookAtom } from "@/features/book/states/book";
-import { Database } from "@/types/types_db";
-
-type BookStatus = Database["public"]["Enums"]["book_status"];
+import { BookStatus } from "@/features/book/types/book";
 
 export default function BookDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -28,10 +26,13 @@ export default function BookDetailScreen() {
   const setSelectedBook = useSetAtom(selectedBookAtom);
 
   useEffect(() => {
+    if (book) {
+      setSelectedBook(book);
+    }
     return () => {
       setSelectedBook(null);
     };
-  }, [id, setSelectedBook]);
+  }, [book, setSelectedBook]);
 
   const updateBookStatus = (newStatus: BookStatus) => {
     if (!book) return;
