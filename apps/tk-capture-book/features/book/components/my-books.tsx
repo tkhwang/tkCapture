@@ -72,16 +72,14 @@ export function MyBooks() {
                 ) : null}
               </View>
             </View>
-            {typeof item.progress === "number" && item.progress >= 0 && (
-              <View className="flex flex-row items-center justify-between gap-4">
-                <View className="flex-1">
-                  <Progress value={item.progress} indicatorClassName="bg-gray-400" />
-                </View>
-                <Text variant="muted" size="sm" className="min-w-[35px]">
-                  {Math.round(item.progress)}%
-                </Text>
+            <View className="flex flex-row items-center justify-between gap-4">
+              <View className="flex-1">
+                <Progress value={item.progress} indicatorClassName="bg-gray-400" />
               </View>
-            )}
+              <Text variant="muted" size="sm" className="min-w-[35px]">
+                {Math.round(item.progress)}%
+              </Text>
+            </View>
           </View>
         </CardContent>
       </Card>
