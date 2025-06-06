@@ -2,15 +2,20 @@ import React, { useEffect, useState } from "react";
 
 import { Alert, Button, Text, TouchableOpacity, View } from "react-native";
 
+import { useTranslation } from "react-i18next";
+
 import { Ionicons } from "@expo/vector-icons";
 import { CameraType, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 
 import { GOOGLE_CLOUD_API_KEY } from "@/consts/appConsts";
+import { SelectedBookHeader } from "@/features/book/components/selected-book-header";
 import { CameraView } from "@/features/camera/components/CameraView";
 import { performOCR } from "@/features/camera/utils/googleVision";
 
-export default function CameraScreen() {
+export default function SentenceScreen() {
+  const { t } = useTranslation();
+
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
   const [mediaPermission, requestMediaPermission] = MediaLibrary.usePermissions();
@@ -22,7 +27,7 @@ export default function CameraScreen() {
     if (!mediaPermission?.granted) {
       requestMediaPermission();
     }
-  }, [mediaPermission]);
+  }, [mediaPermission, requestMediaPermission]);
 
   if (!permission || !mediaPermission) {
     return <View />;
@@ -70,11 +75,9 @@ export default function CameraScreen() {
           Alert.alert("알림", "텍스트가 발견되지 않았습니다.");
         }
       } catch (error) {
-        console.error("OCR Error:", error);
         Alert.alert("OCR 오류", "텍스트 추출 중 오류가 발생했습니다.");
       }
     } catch (error) {
-      console.error("Error saving picture:", error);
       Alert.alert("오류", "사진 저장 중 오류가 발생했습니다.");
     } finally {
       setIsProcessing(false);
@@ -82,7 +85,6 @@ export default function CameraScreen() {
   };
 
   const handleBarcodeScanned = (data: string) => {
-    console.log("Barcode scanned:", data);
     // TODO: 스캔된 ISBN으로 원하는 작업 수행
     // 예: 책 정보 검색, 데이터베이스 저장 등
   };
@@ -92,7 +94,8 @@ export default function CameraScreen() {
   };
 
   return (
-    <View className="flex-1">
+    <View className="flex-1 bg-background">
+      <SelectedBookHeader screen={t("sentence.title")} />
       {permission?.granted ? (
         <>
           <CameraView

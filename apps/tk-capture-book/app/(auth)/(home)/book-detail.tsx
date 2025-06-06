@@ -1,19 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { View, ScrollView } from "react-native";
+
+import { useSetAtom } from "jotai";
 
 import { useLocalSearchParams } from "expo-router";
 
 import { Text } from "@/components/ui/text";
-import { BookDetailCapture } from "@/features/book/components/detail/book-detail-capture";
-import { BookDetailChat } from "@/features/book/components/detail/book-detail-chat";
 import { BookDetailHeader } from "@/features/book/components/detail/book-detail-header";
+import { BookDetailNavigation } from "@/features/book/components/detail/book-detail-navigation";
 import { BookDetailStatus } from "@/features/book/components/detail/book-detail-status";
 import { useUpdateBook } from "@/features/book/hooks/mutations/useUpdateBook";
 import { useBook } from "@/features/book/hooks/queries/useBook";
-import { Database } from "@/types/types_db";
-
-type BookStatus = Database["public"]["Enums"]["book_status"];
+import { selectedBookAtom } from "@/features/book/states/book";
+import { BookStatus } from "@/features/book/types/book";
 
 export default function BookDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -22,6 +22,17 @@ export default function BookDetailScreen() {
   const { mutate: updateBook, isPending: updating } = useUpdateBook();
 
   const [expanded, setExpanded] = useState(true);
+
+  const setSelectedBook = useSetAtom(selectedBookAtom);
+
+  useEffect(() => {
+    if (book) {
+      setSelectedBook(book);
+    }
+    return () => {
+      setSelectedBook(null);
+    };
+  }, [book, setSelectedBook]);
 
   const updateBookStatus = (newStatus: BookStatus) => {
     if (!book) return;
@@ -62,9 +73,7 @@ export default function BookDetailScreen() {
         onUpdateStatus={updateBookStatus}
       />
 
-      <BookDetailChat bookId={book.id} bookIsbn={book.isbn} />
-
-      <BookDetailCapture bookId={book.id} />
+      <BookDetailNavigation bookId={book.id} bookIsbn={book.isbn} />
     </ScrollView>
   );
 }

@@ -21,23 +21,9 @@ export default function HomeLayout() {
         }}
       />
       <Stack.Screen
-        name="book-chat"
-        options={{
-          headerTitle: t("home.detail.title"),
-          headerShown: true,
-        }}
-      />
-      <Stack.Screen
         name="book-search-detail"
         options={{
           headerTitle: t("home.detail.title"),
-          headerShown: true,
-        }}
-      />
-      <Stack.Screen
-        name="book-capture"
-        options={{
-          headerTitle: t("capture.title", "Text Capture"),
           headerShown: true,
         }}
       />
