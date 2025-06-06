@@ -8,9 +8,8 @@ import { useLocalSearchParams } from "expo-router";
 
 import { Text } from "@/components/ui/text";
 import { BookDetailHeader } from "@/features/book/components/detail/book-detail-header";
-import { BookDetailSentence } from "@/features/book/components/detail/book-detail-sentence";
+import { BookDetailNavigation } from "@/features/book/components/detail/book-detail-navigation";
 import { BookDetailStatus } from "@/features/book/components/detail/book-detail-status";
-import { BookDetailTalk } from "@/features/book/components/detail/book-detail-talk";
 import { useUpdateBook } from "@/features/book/hooks/mutations/useUpdateBook";
 import { useBook } from "@/features/book/hooks/queries/useBook";
 import { selectedBookAtom } from "@/features/book/states/book";
@@ -73,9 +72,7 @@ export default function BookDetailScreen() {
         onUpdateStatus={updateBookStatus}
       />
 
-      <BookDetailTalk bookId={book.id} bookIsbn={book.isbn} />
-
-      <BookDetailSentence bookId={book.id} />
+      <BookDetailNavigation bookId={book.id} bookIsbn={book.isbn} />
     </ScrollView>
   );
 }
