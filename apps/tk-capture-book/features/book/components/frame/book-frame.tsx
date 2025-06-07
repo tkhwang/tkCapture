@@ -3,7 +3,6 @@ import { useState, useRef } from "react";
 import { StyleSheet, TouchableOpacity, View, Modal, Image, Alert } from "react-native";
 
 import { useTranslation } from "react-i18next";
-import ViewShot from "react-native-view-shot";
 
 import { Ionicons } from "@expo/vector-icons";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
@@ -22,7 +21,7 @@ interface FrameItem {
 
 export function BookFrame() {
   const { t } = useTranslation();
-  const viewShotRef = useRef<ViewShot>(null);
+  const cameraRef = useRef<CameraView>(null);
 
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
@@ -62,16 +61,26 @@ export function BookFrame() {
   }
 
   const handleTakeSnapshot = async () => {
-    if (viewShotRef.current?.capture) {
-      try {
-        const uri = await viewShotRef.current.capture();
-        console.log("Captured image URI:", uri);
-        setCapturedImageUri(uri);
-        setIsModalVisible(true);
-      } catch (error) {
-        console.error("Error capturing image:", error);
-        Alert.alert("Error", "Failed to capture image");
+    if (!cameraRef.current || !selectedFrame) return;
+
+    try {
+      // Take picture directly from camera
+      const cameraPhoto = await cameraRef.current.takePictureAsync({
+        quality: 0.9,
+        base64: false,
+      });
+
+      if (!cameraPhoto?.uri) {
+        Alert.alert("Error", "Failed to capture camera image");
+        return;
       }
+
+      // Show the captured image directly in modal
+      setCapturedImageUri(cameraPhoto.uri);
+      setIsModalVisible(true);
+    } catch (error) {
+      console.error("Error in snapshot process:", error);
+      Alert.alert("Error", "Failed to capture image");
     }
   };
 
@@ -106,43 +115,41 @@ export function BookFrame() {
     <View className="flex-1 bg-black">
       {/* Camera Preview Section */}
       <View className="flex-1 items-center justify-center p-5">
-        <ViewShot ref={viewShotRef} options={{ format: "jpg", quality: 0.9 }}>
-          <View style={styles.cameraContainer}>
-            <CameraView
-              style={styles.camera}
-              facing={facing}
-              onMountError={(error) => {
-                console.error(`[-] BookFrame: Camera mount error: ${error}`);
-              }}
-            >
-              {/* Frame Overlay */}
-              {selectedFrame && selectedFrame.type === "frame" && (
-                <View style={styles.frameOverlay}>
-                  <View style={styles.frameContent}>
-                    {/* Mock frame overlay - replace with actual frame design */}
-                    <View style={styles.frameTop} />
-                    <View style={styles.frameBottom}>
-                      <Text style={styles.frameTimestamp}>{selectedFrame.timestamp}</Text>
-                    </View>
+        <View style={styles.cameraContainer}>
+          <CameraView
+            ref={cameraRef}
+            style={styles.camera}
+            facing={facing}
+            onMountError={(error) => {
+              console.error(`[-] BookFrame: Camera mount error: ${error}`);
+            }}
+          >
+            {/* Frame Overlay */}
+            {selectedFrame && selectedFrame.type === "frame" && (
+              <View style={styles.frameOverlay}>
+                <View style={styles.frameContent}>
+                  <View style={styles.frameTop} />
+                  <View style={styles.frameBottom}>
+                    <Text style={styles.frameTimestamp}>{selectedFrame.timestamp}</Text>
                   </View>
                 </View>
-              )}
-
-              {/* Camera Controls Overlay */}
-              <View className="absolute left-5 top-[80%] gap-4">
-                <TouchableOpacity
-                  className="flex-row items-center gap-2 rounded-full bg-black/60 px-3 py-2"
-                  onPress={toggleCameraFacing}
-                >
-                  <Ionicons name="camera-reverse" size={20} color="white" />
-                  <Text className="text-xs font-medium text-white">
-                    {t("frame.camera.flip-camera")}
-                  </Text>
-                </TouchableOpacity>
               </View>
-            </CameraView>
-          </View>
-        </ViewShot>
+            )}
+
+            {/* Camera Controls Overlay */}
+            <View className="absolute left-5 top-[80%] gap-4">
+              <TouchableOpacity
+                className="flex-row items-center gap-2 rounded-full bg-black/60 px-3 py-2"
+                onPress={toggleCameraFacing}
+              >
+                <Ionicons name="camera-reverse" size={20} color="white" />
+                <Text className="text-xs font-medium text-white">
+                  {t("frame.camera.flip-camera")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </CameraView>
+        </View>
       </View>
 
       {/* Camera Button Section */}
@@ -172,11 +179,24 @@ export function BookFrame() {
         <View className="flex-1 items-center justify-center bg-background">
           <View style={styles.modalContent}>
             {capturedImageUri && (
-              <Image
-                source={{ uri: capturedImageUri }}
-                style={styles.modalImage}
-                resizeMode="contain"
-              />
+              <View style={styles.modalImageContainer}>
+                <Image
+                  source={{ uri: capturedImageUri }}
+                  style={styles.modalImage}
+                  resizeMode="contain"
+                />
+                {/* Frame overlay preview on captured image */}
+                {selectedFrame && selectedFrame.type === "frame" && (
+                  <View style={styles.modalFrameOverlay}>
+                    <View style={styles.frameContent}>
+                      <View style={styles.frameTop} />
+                      <View style={styles.frameBottom}>
+                        <Text style={styles.frameTimestamp}>{selectedFrame.timestamp}</Text>
+                      </View>
+                    </View>
+                  </View>
+                )}
+              </View>
             )}
             <View style={styles.modalButtons}>
               <Button onPress={handleSaveToAlbum} className="mt-4 bg-blue-600">
@@ -287,5 +307,12 @@ const styles = StyleSheet.create({
   },
   modalButtons: {
     width: "100%",
+  },
+  modalImageContainer: {
+    position: "relative",
+  },
+  modalFrameOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 2,
   },
 });
