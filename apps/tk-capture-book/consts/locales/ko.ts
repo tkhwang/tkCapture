@@ -29,6 +29,12 @@ export const ko = {
       detail: {
         title: "도서 정보",
       },
+      list: {
+        "loading-error": {
+          title: "로딩 중 오류",
+          description: "로딩 중 오류가 발생했습니다.",
+        },
+      },
     },
     search: {
       tabTitle: "도서 검색",

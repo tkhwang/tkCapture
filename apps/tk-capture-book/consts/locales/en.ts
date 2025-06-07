@@ -24,6 +24,12 @@ export const en = {
       detail: {
         title: "Book information",
       },
+      list: {
+        "loading-error": {
+          title: "loading error",
+          description: "An error occurred while loading.",
+        },
+      },
     },
     search: {
       tabTitle: "Book Search",
