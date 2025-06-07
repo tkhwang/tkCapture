@@ -37,7 +37,7 @@ export function BookFrame() {
             {t("frame.camera.no-permission.description")}
           </Text>
           <Button onPress={requestPermission} className="mt-4">
-            <Text className="font-medium text-white">권한 허용</Text>
+            <Text className="font-medium text-white">{t("frame.camera.permission.action")}</Text>
           </Button>
         </View>
       </View>
