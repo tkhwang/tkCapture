@@ -70,9 +70,7 @@ export function BookDetailNavigation({ bookId: _bookId, bookIsbn: _bookIsbn }: P
             >
               <Ionicons name={item.icon} size={24} color={buttonColor} />
               <Text
-                variant="title"
-                size="xs"
-                className="mt-2 text-center"
+                className="mt-2 text-center text-xs font-semibold"
                 style={{ color: buttonColor }}
                 numberOfLines={1}
               >
