@@ -7,9 +7,9 @@ import { useSetAtom } from "jotai";
 import { useLocalSearchParams } from "expo-router";
 
 import { Text } from "@/components/ui/text";
+import { BookDetailEdit } from "@/features/book/components/detail/book-detail-edit";
 import { BookDetailHeader } from "@/features/book/components/detail/book-detail-header";
 import { BookDetailNavigation } from "@/features/book/components/detail/book-detail-navigation";
-import { BookDetailStatus } from "@/features/book/components/detail/book-detail-status";
 import { useUpdateBook } from "@/features/book/hooks/mutations/useUpdateBook";
 import { useBook } from "@/features/book/hooks/queries/useBook";
 import { selectedBookAtom } from "@/features/book/states/book";
@@ -67,11 +67,7 @@ export default function BookDetailScreen() {
         toggleExpanded={() => setExpanded(!expanded)}
       />
 
-      <BookDetailStatus
-        loading={updating}
-        status={book.book_status}
-        onUpdateStatus={updateBookStatus}
-      />
+      <BookDetailEdit loading={updating} book={book} onUpdateStatus={updateBookStatus} />
 
       <BookDetailNavigation bookId={book.id} bookIsbn={book.isbn} />
     </ScrollView>
