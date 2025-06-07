@@ -2,15 +2,14 @@ import { ActivityIndicator, FlatList, Image, TouchableOpacity, View } from "reac
 
 import { useTranslation } from "react-i18next";
 
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 
 import { Card, CardContent } from "@/components/ui";
 import { Progress } from "@/components/ui/progress";
 import { Text } from "@/components/ui/text";
 import { useBooks } from "@/features/book/hooks/queries/useBooks";
-import { Database } from "@/types/types_db";
-
-type Book = Database["public"]["Tables"]["books"]["Row"];
+import { Book } from "@/features/book/types/book";
 
 export function MyBooks() {
   const { t } = useTranslation();
@@ -80,6 +79,10 @@ export function MyBooks() {
                 {Math.round(item.progress)}%
               </Text>
             </View>
+          </View>
+
+          <View className="ml-3 flex items-center justify-center">
+            <Ionicons name="chevron-forward" size={20} color="#9CA3AF" style={{ opacity: 0.6 }} />
           </View>
         </CardContent>
       </Card>
