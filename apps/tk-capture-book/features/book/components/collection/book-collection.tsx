@@ -98,7 +98,7 @@ export function BookCollection() {
               {t("home.list.loading-error.title")}
             </Text>
             <Text className="text-center text-muted-foreground">
-              {loadingBooksError instanceof ErrorState
+              {loadingBooksError instanceof Error
                 ? loadingBooksError.message
                 : t("home.list.loading-error.description")}
             </Text>

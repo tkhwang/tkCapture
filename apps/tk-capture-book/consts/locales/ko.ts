@@ -5,6 +5,13 @@ export const ko = {
     },
     frame: {
       title: "프레임",
+      camera: {
+        "loading-permission": "카메라 권한 로딩 중...",
+        "no-permission": {
+          title: "카메라 권한",
+          description: "프레임 기능을 이용하기 위해서는 카메라 권한이 필요합니다.",
+        },
+      },
     },
     sentence: {
       title: "문장",

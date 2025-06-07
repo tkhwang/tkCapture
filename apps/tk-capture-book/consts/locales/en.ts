@@ -5,6 +5,13 @@ export const en = {
     },
     frame: {
       title: "frame",
+      camera: {
+        "loading-permission": "Loading camera permission...",
+        "no-permission": {
+          title: "Camera Permission",
+          description: "To use the frame feature, you need camera permission.",
+        },
+      },
     },
     sentence: {
       title: "sentence",
