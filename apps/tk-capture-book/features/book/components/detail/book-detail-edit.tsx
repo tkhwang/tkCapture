@@ -24,17 +24,8 @@ export function BookDetailEdit({ loading, book, onUpdateStatus }: Props) {
   const { t } = useTranslation();
 
   const getStatusLabel = (status: BookStatus) => t(`detail.status.${status}`);
-
-  const getProgressValue = () => {
-    const progress = book.progress;
-    if (typeof progress !== "number" || isNaN(progress)) return 0;
-    return Math.max(0, Math.min(100, progress));
-  };
-
-  const getProgressPercentage = () => {
-    const progress = getProgressValue();
-    return `${Math.round(progress)}%`;
-  };
+  const getProgressValue = () => Math.max(0, Math.min(100, book.progress));
+  const getProgressPercentage = () => `${Math.round(book.progress)}%`;
 
   return (
     <Card className={cn("mx-4 mb-4")}>
