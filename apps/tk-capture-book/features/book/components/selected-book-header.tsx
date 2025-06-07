@@ -34,7 +34,7 @@ export function SelectedBookHeader({ screen }: Props) {
           className="h-auto border-dashed border-muted-foreground/30 bg-background p-4"
         >
           <View className="w-full flex-row items-center justify-between">
-            <Text variant="muted" className="flex-1 text-center">
+            <Text className="flex-1 text-center text-muted-foreground">
               {t("header.selectBookFirst", { feature: screen })}
             </Text>
 
@@ -66,10 +66,10 @@ export function SelectedBookHeader({ screen }: Props) {
         )}
 
         <View className="ml-3 flex-1">
-          <Text variant="title" size="sm" numberOfLines={1} className="text-foreground">
+          <Text className="text-sm font-semibold text-foreground" numberOfLines={1}>
             {selectedBook.title}
           </Text>
-          <Text variant="muted" size="xs" numberOfLines={1} className="mt-0.5">
+          <Text className="mt-0.5 text-xs text-muted-foreground" numberOfLines={1}>
             {selectedBook.author}
             {selectedBook.author && selectedBook.publisher && " | "}
             {selectedBook.publisher}
