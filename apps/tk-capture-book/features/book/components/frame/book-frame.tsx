@@ -101,7 +101,7 @@ export function BookFrame() {
               )}
 
               {/* Camera Controls Overlay */}
-              <View className="absolute left-5 top-[70%] gap-4">
+              <View className="absolute left-5 top-[80%] gap-4">
                 <TouchableOpacity
                   className="flex-row items-center gap-2 rounded-full bg-black/60 px-3 py-2"
                   onPress={toggleCameraFacing}
@@ -111,22 +111,23 @@ export function BookFrame() {
                     {t("frame.camera.flip-camera")}
                   </Text>
                 </TouchableOpacity>
-
-                {selectedFrame && (
-                  <TouchableOpacity
-                    className="flex-row items-center gap-2 rounded-full bg-white/20 px-3 py-2"
-                    onPress={handleTakeSnapshot}
-                  >
-                    <Ionicons name="camera" size={20} color="white" />
-                    <Text className="text-xs font-medium text-white">
-                      {t("frame.camera.capture", { defaultValue: "Capture" })}
-                    </Text>
-                  </TouchableOpacity>
-                )}
               </View>
             </CameraView>
           </View>
         </ViewShot>
+      </View>
+
+      {/* Camera Button Section */}
+      <View style={styles.cameraButtonSection}>
+        <TouchableOpacity
+          style={[styles.cameraButton, !selectedFrame && styles.cameraButtonDisabled]}
+          onPress={handleTakeSnapshot}
+          disabled={!selectedFrame}
+        >
+          <View style={styles.cameraButtonInner}>
+            <Ionicons name="camera" size={32} color={selectedFrame ? "white" : "#666"} />
+          </View>
+        </TouchableOpacity>
       </View>
 
       {/* Frame Preview Carousel */}
@@ -177,5 +178,36 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 2,
     lineHeight: 14,
+  },
+  cameraButtonSection: {
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cameraButton: {
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    borderRadius: 40,
+    padding: 4,
+    marginBottom: 8,
+  },
+  cameraButtonDisabled: {
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+  },
+  cameraButtonInner: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 3,
+    borderColor: "rgba(255, 255, 255, 0.3)",
+  },
+  cameraButtonText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "rgba(255, 255, 255, 0.9)",
+    textAlign: "center",
   },
 });

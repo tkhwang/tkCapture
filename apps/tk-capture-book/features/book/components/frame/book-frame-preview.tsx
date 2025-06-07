@@ -30,7 +30,7 @@ export function BookFramePreview({ onFrameSelect, selectedFrameId }: BookFramePr
     { id: "2", type: "frame", image: null, timestamp: "Frame #2" },
     { id: "3", type: "frame", image: null, timestamp: "Frame #3" },
     { id: "4", type: "frame", image: null, timestamp: "Frame #4" },
-    { id: "4", type: "frame", image: null, timestamp: "Frame #5" },
+    { id: "5", type: "frame", image: null, timestamp: "Frame #5" },
   ];
 
   const handleFramePress = (item: FrameItem) => {
