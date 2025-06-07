@@ -1,12 +1,13 @@
 import { useState, useRef } from "react";
 
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Modal, Image, Alert } from "react-native";
 
 import { useTranslation } from "react-i18next";
 import ViewShot from "react-native-view-shot";
 
 import { Ionicons } from "@expo/vector-icons";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
 
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
@@ -26,6 +27,8 @@ export function BookFrame() {
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
   const [selectedFrame, setSelectedFrame] = useState<FrameItem | null>(null);
+  const [capturedImageUri, setCapturedImageUri] = useState<string | null>(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   if (!permission) {
     return (
@@ -63,11 +66,36 @@ export function BookFrame() {
       try {
         const uri = await viewShotRef.current.capture();
         console.log("Captured image URI:", uri);
-        // Handle the captured image here (save, share, etc.)
+        setCapturedImageUri(uri);
+        setIsModalVisible(true);
       } catch (error) {
         console.error("Error capturing image:", error);
+        Alert.alert("Error", "Failed to capture image");
       }
     }
+  };
+
+  const handleSaveToAlbum = async () => {
+    if (!capturedImageUri) return;
+
+    try {
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission Required", "Please grant permission to save photos to your album");
+        return;
+      }
+
+      await MediaLibrary.saveToLibraryAsync(capturedImageUri);
+      setIsModalVisible(false);
+      setCapturedImageUri(null);
+    } catch (error) {
+      console.error("Error saving to album:", error);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+    setCapturedImageUri(null);
   };
 
   const handleFrameSelect = (frame: FrameItem) => {
@@ -132,6 +160,39 @@ export function BookFrame() {
 
       {/* Frame Preview Carousel */}
       <BookFramePreview onFrameSelect={handleFrameSelect} selectedFrameId={selectedFrame?.id} />
+
+      {/* Modal for Image Preview */}
+      <Modal
+        visible={isModalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={handleCloseModal}
+      >
+        {/* <View style={styles.modalContainer}> */}
+        <View className="flex-1 items-center justify-center bg-background">
+          <View style={styles.modalContent}>
+            {capturedImageUri && (
+              <Image
+                source={{ uri: capturedImageUri }}
+                style={styles.modalImage}
+                resizeMode="contain"
+              />
+            )}
+            <View style={styles.modalButtons}>
+              <Button onPress={handleSaveToAlbum} className="mt-4 bg-blue-600">
+                <Text className="font-medium text-white">
+                  {t("frame.camera.save-to-album", { defaultValue: "Save to Album" })}
+                </Text>
+              </Button>
+              <Button onPress={handleCloseModal} className="mt-2 bg-gray-600">
+                <Text className="font-medium text-white">
+                  {t("frame.camera.close", { defaultValue: "Close" })}
+                </Text>
+              </Button>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -204,10 +265,27 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "rgba(255, 255, 255, 0.3)",
   },
-  cameraButtonText: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "rgba(255, 255, 255, 0.9)",
-    textAlign: "center",
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 20,
+    width: "90%",
+    maxHeight: "80%",
+    alignItems: "center",
+  },
+  modalImage: {
+    width: "100%",
+    height: 300,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  modalButtons: {
+    width: "100%",
   },
 });
