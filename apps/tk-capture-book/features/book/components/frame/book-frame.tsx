@@ -54,7 +54,13 @@ export function BookFrame() {
 
       <View className="flex-1 items-center justify-center p-5">
         <View style={styles.cameraContainer}>
-          <CameraView style={styles.camera} facing={facing}>
+          <CameraView
+            style={styles.camera}
+            facing={facing}
+            onMountError={(error) => {
+              console.error(`[-] BookFrame: Camera mount error: ${error}`);
+            }}
+          >
             {/* Camera Controls Overlay */}
             <View className="absolute left-5 top-[80%] gap-4">
               <TouchableOpacity
