@@ -32,14 +32,17 @@ export const en = {
     },
     home: {
       tabTitle: "Home",
-      detail: {
-        title: "Book information",
-      },
+
       list: {
         "loading-error": {
           title: "loading error",
           description: "An error occurred while loading.",
         },
+      },
+      detail: {
+        title: "Book information",
+        status: "Status",
+        progress: "Progress",
       },
     },
     search: {

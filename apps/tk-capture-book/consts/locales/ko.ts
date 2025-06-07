@@ -37,14 +37,16 @@ export const ko = {
     },
     home: {
       tabTitle: "홈",
-      detail: {
-        title: "도서 정보",
-      },
       list: {
         "loading-error": {
           title: "로딩 중 오류",
           description: "로딩 중 오류가 발생했습니다.",
         },
+      },
+      detail: {
+        title: "도서 정보",
+        status: "상태",
+        progress: "진행율",
       },
     },
     search: {

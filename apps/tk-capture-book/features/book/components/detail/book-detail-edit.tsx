@@ -21,7 +21,7 @@ interface Props {
 }
 
 export function BookDetailEdit({ loading, book, onUpdateStatus }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const getStatusLabel = (status: BookStatus) => t(`detail.status.${status}`);
   const getProgressValue = () => Math.max(0, Math.min(100, book.progress));
@@ -30,7 +30,7 @@ export function BookDetailEdit({ loading, book, onUpdateStatus }: Props) {
   return (
     <Card className={cn("mx-4 mb-4")}>
       <CardHeader>
-        <TextRowTitleDescription description="Status" />
+        <TextRowTitleDescription description={t("home.detail.status")} />
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <View className="flex flex-row justify-between gap-2">
@@ -42,13 +42,14 @@ export function BookDetailEdit({ loading, book, onUpdateStatus }: Props) {
               disabled={loading}
               onPress={() => onUpdateStatus(statusOption)}
               className="flex-1"
+              textClass={i18n.language === "ko" ? "text-sm" : "text-[9px]"}
             >
               {getStatusLabel(statusOption)}
             </Button>
           ))}
         </View>
         <CardDescription>
-          <TextRowTitleDescription description="Progress" />
+          <TextRowTitleDescription description={t("home.detail.progress")} />
         </CardDescription>
         <View className="flex flex-row items-center justify-between gap-4">
           <View className="flex-1">
