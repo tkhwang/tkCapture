@@ -11,6 +11,7 @@ export const en = {
           title: "Camera Permission",
           description: "To use the frame feature, you need camera permission.",
         },
+        "flip-camera": "Flip Camera",
       },
     },
     sentence: {

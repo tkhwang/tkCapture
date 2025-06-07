@@ -49,16 +49,22 @@ export function BookFrame() {
   }
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1 bg-black">
       {/* Camera Preview Section */}
-      <View style={styles.cameraSection}>
+
+      <View className="flex-1 items-center justify-center p-5">
         <View style={styles.cameraContainer}>
           <CameraView style={styles.camera} facing={facing}>
             {/* Camera Controls Overlay */}
-            <View style={styles.cameraControlsOverlay}>
-              <TouchableOpacity style={styles.cameraControlButton} onPress={toggleCameraFacing}>
+            <View className="absolute left-5 top-[80%] gap-4">
+              <TouchableOpacity
+                className="flex-row items-center gap-2 rounded-full bg-black/60 px-3 py-2"
+                onPress={toggleCameraFacing}
+              >
                 <Ionicons name="camera-reverse" size={20} color="white" />
-                <Text style={styles.controlButtonText}>Flip Camera</Text>
+                <Text className="text-xs font-medium text-white">
+                  {t("frame.camera.flip-camera")}
+                </Text>
               </TouchableOpacity>
             </View>
           </CameraView>
@@ -70,18 +76,7 @@ export function BookFrame() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "black",
-  },
-  cameraSection: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20, // Equal margin on all sides
-  },
   cameraContainer: {
     aspectRatio: 1, // 1:1 square aspect ratio
     width: "100%",
@@ -91,25 +86,5 @@ const styles = StyleSheet.create({
   },
   camera: {
     flex: 1,
-  },
-  cameraControlsOverlay: {
-    position: "absolute",
-    left: 20,
-    top: "20%",
-    gap: 16,
-  },
-  cameraControlButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 20,
-    gap: 8,
-  },
-  controlButtonText: {
-    color: "white",
-    fontSize: 12,
-    fontWeight: "500",
   },
 });

@@ -11,6 +11,7 @@ export const ko = {
           title: "카메라 권한",
           description: "프레임 기능을 이용하기 위해서는 카메라 권한이 필요합니다.",
         },
+        "flip-camera": "카메라 전환",
       },
     },
     sentence: {
