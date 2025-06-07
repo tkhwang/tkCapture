@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { BookFrame } from "@/features/book/components/frame/book-frame";
 import { BookFrameGuide } from "@/features/book/components/frame/book-frame-guide";
-import { SelectedBookHeader } from "@/features/book/components/selected-book-header";
+import { SelectedBookHeader } from "@/features/book/components/selected-book/selected-book-header";
 import { selectedBookAtom } from "@/features/book/states/book";
 
 export default function FrameScreen() {

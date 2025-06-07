@@ -9,7 +9,7 @@ import { CameraType, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 
 import { GOOGLE_CLOUD_API_KEY } from "@/consts/appConsts";
-import { SelectedBookHeader } from "@/features/book/components/selected-book-header";
+import { SelectedBookHeader } from "@/features/book/components/selected-book/selected-book-header";
 import { CameraView } from "@/features/camera/components/CameraView";
 import { performOCR } from "@/features/camera/utils/googleVision";
 

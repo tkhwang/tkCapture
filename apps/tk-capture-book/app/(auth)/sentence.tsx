@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 
-import { SelectedBookHeader } from "@/features/book/components/selected-book-header";
+import { SelectedBookHeader } from "@/features/book/components/selected-book/selected-book-header";
 import { BookSentence } from "@/features/book/components/sentence/book-sentence";
 import { BookSentenceGuide } from "@/features/book/components/sentence/book-sentence-guide";
 import { selectedBookAtom } from "@/features/book/states/book";
