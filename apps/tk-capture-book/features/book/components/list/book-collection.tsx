@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, Image, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, TouchableOpacity, View } from "react-native";
 
 import { useTranslation } from "react-i18next";
 
@@ -8,6 +8,7 @@ import { useRouter } from "expo-router";
 import { Card, CardContent } from "@/components/ui";
 import { Progress } from "@/components/ui/progress";
 import { Text } from "@/components/ui/text";
+import { BookCollectionSkeleton } from "@/features/book/components/list/book-collection-skeleton";
 import { useBooks } from "@/features/book/hooks/queries/useBooks";
 import { Book } from "@/features/book/types/book";
 
@@ -85,17 +86,6 @@ export function BookCollection() {
     </TouchableOpacity>
   );
 
-  const Loading = () => (
-    <View className="flex-1 bg-background">
-      <View className="flex-1 items-center justify-center">
-        <Card className="items-center justify-center border-border/20 bg-card/50 p-6">
-          <ActivityIndicator size="large" color="hsl(var(--primary))" />
-          <Text className="mt-4 text-sm text-muted-foreground">{t("common.loading")}</Text>
-        </Card>
-      </View>
-    </View>
-  );
-
   const ErrorState = () => (
     <View className="flex-1 bg-background">
       <View className="absolute inset-0 flex items-center justify-center px-4">
@@ -140,7 +130,7 @@ export function BookCollection() {
     </View>
   );
 
-  if (loadingBooks) return <Loading />;
+  if (loadingBooks) return <BookCollectionSkeleton />;
   if (loadingBooksError) return <ErrorState />;
   if (!books || books.length === 0) return <NoRegisteredBook />;
 
