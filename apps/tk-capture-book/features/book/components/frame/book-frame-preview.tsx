@@ -6,11 +6,17 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { Text } from "@/components/ui/text";
 
+interface FrameItem {
+  id: string;
+  type: "add" | "frame";
+  image?: string | null;
+  timestamp?: string;
+}
+
 export function BookFramePreview() {
   const [selectedFrameId, setSelectedFrameId] = useState<string>("1");
 
-  // Mock data for frame previews
-  const mockFrames = [
+  const mockFrames: FrameItem[] = [
     { id: "add", type: "add" },
     { id: "1", type: "frame", image: null, timestamp: "June 7th 2025\n02:57 PM" },
     { id: "2", type: "frame", image: null, timestamp: "June 7th 2025\n02:58 PM" },
@@ -18,7 +24,7 @@ export function BookFramePreview() {
     { id: "4", type: "frame", image: null, timestamp: "June 7th 2025\n03:00 PM" },
   ];
 
-  const renderFrameItem = ({ item }: { item: any }) => {
+  const renderFrameItem = ({ item }: { item: FrameItem }) => {
     if (item.type === "add") {
       return (
         <TouchableOpacity style={styles.addFrameButton}>
