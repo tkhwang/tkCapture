@@ -38,6 +38,12 @@ export const en = {
           title: "loading error",
           description: "An error occurred while loading.",
         },
+        "collection-skeleton": {
+          accessibilityLabel: "Loading book collection",
+        },
+        collection: {
+          accessibilityRole: "my book collection",
+        },
       },
       detail: {
         title: "Book information",

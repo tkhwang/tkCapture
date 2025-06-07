@@ -42,6 +42,12 @@ export const ko = {
           title: "로딩 중 오류",
           description: "로딩 중 오류가 발생했습니다.",
         },
+        "collection-skeleton": {
+          accessibilityLabel: "도서 목록 로딩 중",
+        },
+        collection: {
+          accessibilityRole: "내 도서 목록",
+        },
       },
       detail: {
         title: "도서 정보",
