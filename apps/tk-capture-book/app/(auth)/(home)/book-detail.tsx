@@ -10,6 +10,7 @@ import { Text } from "@/components/ui/text";
 import { BookDetailEdit } from "@/features/book/components/detail/book-detail-edit";
 import { BookDetailHeader } from "@/features/book/components/detail/book-detail-header";
 import { BookDetailNavigation } from "@/features/book/components/detail/book-detail-navigation";
+import { BookDetailSkeleton } from "@/features/book/components/detail/book-detail-skeleton";
 import { useUpdateBook } from "@/features/book/hooks/mutations/useUpdateBook";
 import { useBook } from "@/features/book/hooks/queries/useBook";
 import { selectedBookAtom } from "@/features/book/states/book";
@@ -43,13 +44,7 @@ export default function BookDetailScreen() {
     });
   };
 
-  if (loading) {
-    return (
-      <View className="flex-1 items-center justify-center">
-        <Text>로딩 중...</Text>
-      </View>
-    );
-  }
+  if (loading) return <BookDetailSkeleton />;
 
   if (!book) {
     return (
