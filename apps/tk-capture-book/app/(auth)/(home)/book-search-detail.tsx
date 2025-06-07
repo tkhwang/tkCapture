@@ -64,10 +64,8 @@ export default function BookSearchDetailScreen() {
         {/* Book information */}
         <Card className="mx-4 mb-4 overflow-hidden">
           <CardHeader className="border-b border-border pb-2">
-            <Text variant="title" size="xl">
-              {selectedBook.title}
-            </Text>
-            <Text variant="muted" className="mt-1">
+            <Text className="text-xl font-semibold">{selectedBook.title}</Text>
+            <Text className="mt-1 text-muted-foreground">
               {selectedBook.author} | {selectedBook.publisher}
             </Text>
           </CardHeader>
@@ -85,21 +83,15 @@ export default function BookSearchDetailScreen() {
             ) : (
               <View className="h-72 w-56 items-center justify-center rounded-md bg-muted">
                 <Ionicons name="image-outline" size={48} color="hsl(var(--muted-foreground))" />
-                <Text variant="muted" size="sm" className="mt-2">
-                  No Cover
-                </Text>
+                <Text className="mt-2 text-sm text-muted-foreground">No Cover</Text>
               </View>
             )}
           </CardContent>
 
           {/* Book description */}
           <CardContent className="border-t border-border pt-2">
-            <Text variant="title" size="lg" className="mb-2">
-              Book Description
-            </Text>
-            <Text variant="muted" className="leading-6">
-              {selectedBook.description}
-            </Text>
+            <Text className="mb-2 text-lg font-semibold">Book Description</Text>
+            <Text className="leading-6 text-muted-foreground">{selectedBook.description}</Text>
           </CardContent>
         </Card>
       </ScrollView>
