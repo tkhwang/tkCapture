@@ -10,7 +10,7 @@ import { useRouter } from "expo-router";
 import { Card, CardContent } from "@/components/ui";
 import { Text } from "@/components/ui/text";
 import { SEARCH_DEBOUNCE_MS, SEARCH_PAGE_SIZE } from "@/consts/appConsts";
-import { BookCollection } from "@/features/book/components/list/book-collection";
+import { BookCollection } from "@/features/book/components/collection/book-collection";
 import { BookSearchInput } from "@/features/book/components/search/book-search-input";
 import { BookSearchResult } from "@/features/book/components/search/book-search-result";
 import { useBooks } from "@/features/book/hooks/queries/useBooks";

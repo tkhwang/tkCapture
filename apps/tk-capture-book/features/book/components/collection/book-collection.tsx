@@ -8,7 +8,7 @@ import { useRouter } from "expo-router";
 import { Card, CardContent } from "@/components/ui";
 import { Progress } from "@/components/ui/progress";
 import { Text } from "@/components/ui/text";
-import { BookCollectionSkeleton } from "@/features/book/components/list/book-collection-skeleton";
+import { BookCollectionSkeleton } from "@/features/book/components/collection/book-collection-skeleton";
 import { useBooks } from "@/features/book/hooks/queries/useBooks";
 import { Book } from "@/features/book/types/book";
 
