@@ -6,8 +6,8 @@ export const APP_NAME = "tkCaptureBook";
 /*
  *  APP VERSION
  */
-export const APP_VERSION = "1.47.1";
-export const PLAYSTORE_VERSION = "47";
+export const APP_VERSION = "1.48.1";
+export const PLAYSTORE_VERSION = "48";
 export const VERSION = `${APP_VERSION} (${PLAYSTORE_VERSION})`;
 
 /*
