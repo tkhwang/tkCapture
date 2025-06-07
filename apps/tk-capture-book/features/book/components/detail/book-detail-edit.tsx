@@ -66,7 +66,9 @@ export function BookDetailEdit({ loading, book, onUpdateStatus }: Props) {
               indicatorClassName={cn("bg-gray-400", loading && "opacity-50")}
             />
           </View>
-          <Text variant="muted" size="sm" className={cn("min-w-[35px]", loading && "opacity-50")}>
+          <Text
+            className={cn("min-w-[35px] text-sm text-muted-foreground", loading && "opacity-50")}
+          >
             {getProgressPercentage()}
           </Text>
         </View>
