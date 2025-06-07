@@ -54,10 +54,10 @@ export default function HomeScreen() {
               className="mb-8 h-72 w-72"
               resizeMode="contain"
             />
-            <Text variant="heading" size="xl" className="mb-3 text-center">
+            <Text className="mb-3 text-center text-xl font-bold">
               {t("search.search-no-result.title")}
             </Text>
-            <Text variant="muted" className="text-center">
+            <Text className="text-center text-muted-foreground">
               {t("search.search-no-result.description")}
             </Text>
           </CardContent>
