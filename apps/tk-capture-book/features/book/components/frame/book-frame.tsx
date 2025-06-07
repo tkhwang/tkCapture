@@ -50,20 +50,19 @@ export function BookFrame() {
 
   return (
     <View style={styles.container}>
-      {/* Top Controls */}
-      <View style={styles.topControls}>{/* TODO: Add top controls */}</View>
-
-      {/* Camera Preview */}
-      <View style={styles.cameraContainer}>
-        <CameraView style={styles.camera} facing={facing}>
-          {/* Camera Controls Overlay */}
-          <View style={styles.cameraControlsOverlay}>
-            <TouchableOpacity style={styles.cameraControlButton} onPress={toggleCameraFacing}>
-              <Ionicons name="camera-reverse" size={20} color="white" />
-              <Text style={styles.controlButtonText}>Flip Camera</Text>
-            </TouchableOpacity>
-          </View>
-        </CameraView>
+      {/* Camera Preview Section */}
+      <View style={styles.cameraSection}>
+        <View style={styles.cameraContainer}>
+          <CameraView style={styles.camera} facing={facing}>
+            {/* Camera Controls Overlay */}
+            <View style={styles.cameraControlsOverlay}>
+              <TouchableOpacity style={styles.cameraControlButton} onPress={toggleCameraFacing}>
+                <Ionicons name="camera-reverse" size={20} color="white" />
+                <Text style={styles.controlButtonText}>Flip Camera</Text>
+              </TouchableOpacity>
+            </View>
+          </CameraView>
+        </View>
       </View>
 
       {/* Frame Preview Carousel */}
@@ -77,45 +76,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
   },
-  topControls: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingTop: 60,
-    paddingBottom: 20,
-  },
-  topControlButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  cameraSection: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  nextButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "600",
+    padding: 20, // Equal margin on all sides
   },
   cameraContainer: {
-    flex: 1,
-    marginHorizontal: 20,
+    aspectRatio: 1, // 1:1 square aspect ratio
+    width: "100%",
+    maxWidth: 400, // Maximum width to prevent too large on tablets
     borderRadius: 20,
     overflow: "hidden",
-    marginBottom: 20,
   },
   camera: {
     flex: 1,
   },
-  frameGuide: {
-    position: "absolute",
-    top: "10%",
-    left: "10%",
-    right: "10%",
-    bottom: "10%",
-  },
-
   cameraControlsOverlay: {
     position: "absolute",
     left: 20,
