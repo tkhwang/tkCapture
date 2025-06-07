@@ -13,16 +13,32 @@ interface FrameItem {
   timestamp?: string;
 }
 
-export function BookFramePreview() {
-  const [selectedFrameId, setSelectedFrameId] = useState<string>("1");
+interface BookFramePreviewProps {
+  onFrameSelect?: (frame: FrameItem) => void;
+  selectedFrameId?: string;
+}
+
+export function BookFramePreview({ onFrameSelect, selectedFrameId }: BookFramePreviewProps) {
+  const [internalSelectedId, setInternalSelectedId] = useState<string>("1");
+
+  // Use external selectedFrameId if provided, otherwise use internal state
+  const currentSelectedId = selectedFrameId || internalSelectedId;
 
   const mockFrames: FrameItem[] = [
     { id: "add", type: "add" },
-    { id: "1", type: "frame", image: null, timestamp: "June 7th 2025\n02:57 PM" },
-    { id: "2", type: "frame", image: null, timestamp: "June 7th 2025\n02:58 PM" },
-    { id: "3", type: "frame", image: null, timestamp: "June 7th 2025\n02:59 PM" },
-    { id: "4", type: "frame", image: null, timestamp: "June 7th 2025\n03:00 PM" },
+    { id: "1", type: "frame", image: null, timestamp: "Frame #1" },
+    { id: "2", type: "frame", image: null, timestamp: "Frame #2" },
+    { id: "3", type: "frame", image: null, timestamp: "Frame #3" },
+    { id: "4", type: "frame", image: null, timestamp: "Frame #4" },
+    { id: "4", type: "frame", image: null, timestamp: "Frame #5" },
   ];
+
+  const handleFramePress = (item: FrameItem) => {
+    setInternalSelectedId(item.id);
+    if (onFrameSelect) {
+      onFrameSelect(item);
+    }
+  };
 
   const renderFrameItem = ({ item }: { item: FrameItem }) => {
     if (item.type === "add") {
@@ -33,12 +49,12 @@ export function BookFramePreview() {
       );
     }
 
-    const isSelected = item.id === selectedFrameId;
+    const isSelected = item.id === currentSelectedId;
 
     return (
       <TouchableOpacity
         style={[styles.frameItem, isSelected && styles.selectedFrameItem]}
-        onPress={() => setSelectedFrameId(item.id)}
+        onPress={() => handleFramePress(item)}
       >
         <View style={styles.framePreview}>
           {/* Mock frame content - you can replace with actual image */}
