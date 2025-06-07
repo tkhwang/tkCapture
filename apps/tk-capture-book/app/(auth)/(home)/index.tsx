@@ -10,7 +10,7 @@ import { useRouter } from "expo-router";
 import { Card, CardContent } from "@/components/ui";
 import { Text } from "@/components/ui/text";
 import { SEARCH_DEBOUNCE_MS, SEARCH_PAGE_SIZE } from "@/consts/appConsts";
-import { MyBooks } from "@/features/book/components/my-books";
+import { BookCollection } from "@/features/book/components/collection/book-collection";
 import { BookSearchInput } from "@/features/book/components/search/book-search-input";
 import { BookSearchResult } from "@/features/book/components/search/book-search-result";
 import { useBooks } from "@/features/book/hooks/queries/useBooks";
@@ -54,10 +54,10 @@ export default function HomeScreen() {
               className="mb-8 h-72 w-72"
               resizeMode="contain"
             />
-            <Text variant="heading" size="xl" className="mb-3 text-center">
+            <Text className="mb-3 text-center text-xl font-bold">
               {t("search.search-no-result.title")}
             </Text>
-            <Text variant="muted" className="text-center">
+            <Text className="text-center text-muted-foreground">
               {t("search.search-no-result.description")}
             </Text>
           </CardContent>
@@ -86,7 +86,7 @@ export default function HomeScreen() {
   };
 
   const SearchResult = () => {
-    if (searchText.length === 0) return <MyBooks />;
+    if (searchText.length === 0) return <BookCollection />;
 
     if (isLoading && !isFetchingNextPage) {
       return (
@@ -130,7 +130,7 @@ export default function HomeScreen() {
       ) : loading ? (
         <ActivityIndicator />
       ) : (
-        <MyBooks />
+        <BookCollection />
       )}
     </View>
   );

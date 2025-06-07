@@ -5,6 +5,17 @@ export const ko = {
     },
     frame: {
       title: "프레임",
+      camera: {
+        "loading-permission": "카메라 권한 로딩 중...",
+        permission: {
+          action: "권한 허용",
+        },
+        "no-permission": {
+          title: "카메라 권한",
+          description: "프레임 기능을 이용하기 위해서는 카메라 권한이 필요합니다.",
+        },
+        "flip-camera": "카메라 전환",
+      },
     },
     sentence: {
       title: "문장",
@@ -26,8 +37,22 @@ export const ko = {
     },
     home: {
       tabTitle: "홈",
+      list: {
+        "loading-error": {
+          title: "로딩 중 오류",
+          description: "로딩 중 오류가 발생했습니다.",
+        },
+        "collection-skeleton": {
+          accessibilityLabel: "도서 목록 로딩 중",
+        },
+        collection: {
+          accessibilityRole: "내 도서 목록",
+        },
+      },
       detail: {
         title: "도서 정보",
+        status: "상태",
+        progress: "진행율",
       },
     },
     search: {

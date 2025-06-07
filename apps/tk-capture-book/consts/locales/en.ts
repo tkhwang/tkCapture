@@ -5,6 +5,17 @@ export const en = {
     },
     frame: {
       title: "frame",
+      camera: {
+        "loading-permission": "Loading camera permission...",
+        permission: {
+          action: "Allow Permission",
+        },
+        "no-permission": {
+          title: "Camera Permission",
+          description: "To use the frame feature, you need camera permission.",
+        },
+        "flip-camera": "Flip Camera",
+      },
     },
     sentence: {
       title: "sentence",
@@ -21,8 +32,23 @@ export const en = {
     },
     home: {
       tabTitle: "Home",
+
+      list: {
+        "loading-error": {
+          title: "loading error",
+          description: "An error occurred while loading.",
+        },
+        "collection-skeleton": {
+          accessibilityLabel: "Loading book collection",
+        },
+        collection: {
+          accessibilityRole: "my book collection",
+        },
+      },
       detail: {
         title: "Book information",
+        status: "Status",
+        progress: "Progress",
       },
     },
     search: {

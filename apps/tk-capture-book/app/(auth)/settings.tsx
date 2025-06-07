@@ -27,7 +27,7 @@ export default function SettingsScreen() {
       <View className="flex-1 gap-8 p-4">
         {/* User Profile Section - 테두리 유지 */}
         <View className="gap-3">
-          <Text variant="title" size="xl" className="text-foreground">
+          <Text className="text-xl font-semibold text-foreground">
             {t("settings.menu.profile")}
           </Text>
           <Profile onLogout={handleLogout} />
@@ -35,7 +35,7 @@ export default function SettingsScreen() {
 
         {/* Color Scheme Section */}
         <View className="gap-3">
-          <Text variant="title" size="xl" className="text-foreground">
+          <Text className="text-xl font-semibold text-foreground">
             {t("settings.menu.appearance")}
           </Text>
           <ToggleTheme />
@@ -43,7 +43,7 @@ export default function SettingsScreen() {
 
         {/* Language Settings Section */}
         <View className="gap-3">
-          <Text variant="title" size="xl" className="text-foreground">
+          <Text className="text-xl font-semibold text-foreground">
             {t("settings.menu.language")}
           </Text>
           <LanguageSetting />
@@ -51,7 +51,7 @@ export default function SettingsScreen() {
 
         {/* Search Settings Section */}
         <View className="gap-3">
-          <Text variant="title" size="xl" className="text-foreground">
+          <Text className="text-xl font-semibold text-foreground">
             {t("settings.menu.bookSearchProvider")}
           </Text>
           <BookSearchProviderSetting provider={provider} onProviderChange={setProvider} />

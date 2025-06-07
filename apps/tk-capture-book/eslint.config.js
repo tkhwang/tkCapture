@@ -84,7 +84,7 @@ module.exports = [
       "@tanstack/query/exhaustive-deps": "error",
       "@tanstack/query/no-rest-destructuring": "warn",
       "no-unused-vars": "off",
-      "no-console": "warn",
+      "no-console": ["warn", { allow: ["error"] }],
     },
     settings: {
       react: {

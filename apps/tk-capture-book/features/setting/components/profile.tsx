@@ -34,9 +34,7 @@ export function Profile({ onLogout }: ProfileProps) {
               <AvatarFallback>{getProviderIcon()}</AvatarFallback>
             </Avatar>
             <View>
-              <Text variant="title" size="xl">
-                {user?.name ?? ""}
-              </Text>
+              <Text className="text-xl font-semibold">{user?.name ?? ""}</Text>
             </View>
           </View>
           <Button variant="secondary" className="rounded-full bg-slate-200 px-5" onPress={onLogout}>

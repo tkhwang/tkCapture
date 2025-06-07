@@ -10,8 +10,8 @@ interface Props {
 export function TextRowTitleDescription({ title, description }: Props) {
   return (
     <View className="flex flex-row flex-wrap items-center gap-2">
-      {title && <Text variant="title">{title}</Text>}
-      {description && <Text variant="default">{description}</Text>}
+      {title && <Text className="font-semibold">{title}</Text>}
+      {description && <Text>{description}</Text>}
     </View>
   );
 }

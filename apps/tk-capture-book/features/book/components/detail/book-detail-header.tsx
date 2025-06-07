@@ -18,12 +18,10 @@ export function BookDetailHeader({ book, expanded, toggleExpanded }: BookDetailH
       <CardHeader className="p-4 pb-0">
         <Pressable onPress={toggleExpanded} className="flex-row items-center justify-between">
           <View className="flex-1">
-            <Text variant="title" size="lg" numberOfLines={2}>
+            <Text className="text-lg font-semibold" numberOfLines={2}>
               {book.title}
             </Text>
-            <Text variant="muted" size="sm" className="mt-1">
-              {book.author}
-            </Text>
+            <Text className="mt-1 text-sm text-muted-foreground">{book.author}</Text>
           </View>
           <Ionicons
             name={expanded ? "chevron-up" : "chevron-down"}
@@ -45,19 +43,17 @@ export function BookDetailHeader({ book, expanded, toggleExpanded }: BookDetailH
             ) : (
               <View className="mr-4 h-44 w-32 items-center justify-center rounded-md bg-muted">
                 <Ionicons name="image-outline" size={32} color="hsl(var(--muted-foreground))" />
-                <Text variant="muted" size="sm" className="mt-2">
-                  No Image
-                </Text>
+                <Text className="mt-2 text-sm text-muted-foreground">No Image</Text>
               </View>
             )}
             <View className="flex-1">
               <View className="mb-1 flex-row items-center">
                 <View className="mr-1 h-1 w-1 rounded-full bg-primary" />
-                <Text variant="muted">출판사: {book.publisher}</Text>
+                <Text className="text-muted-foreground">출판사: {book.publisher}</Text>
               </View>
               <View className="mb-1 flex-row items-center">
                 <View className="mr-1 h-1 w-1 rounded-full bg-primary" />
-                <Text variant="muted">ISBN: {book.isbn}</Text>
+                <Text className="text-muted-foreground">ISBN: {book.isbn}</Text>
               </View>
             </View>
           </View>

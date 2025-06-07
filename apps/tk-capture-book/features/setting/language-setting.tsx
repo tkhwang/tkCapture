@@ -35,7 +35,7 @@ export function LanguageSetting() {
             )}
             onPress={() => setLanguage(option.code)}
           >
-            <Text size="base">{option.label}</Text>
+            <Text className="text-base">{option.label}</Text>
             {language === option.code && (
               <Ionicons name="checkmark-circle" size={22} color="hsl(var(--primary))" />
             )}
