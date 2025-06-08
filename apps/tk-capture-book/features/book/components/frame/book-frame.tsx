@@ -3,37 +3,25 @@ import { useState, useRef } from "react";
 import { StyleSheet, TouchableOpacity, View, Modal, Image, Alert } from "react-native";
 
 import { useTranslation } from "react-i18next";
-import { captureRef } from "react-native-view-shot";
 
 import { Ionicons } from "@expo/vector-icons";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
+import { useRouter } from "expo-router";
 
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { BookFramePreview } from "@/features/book/components/frame/book-frame-preview";
-
-interface FrameItem {
-  id: string;
-  type: "add" | "frame";
-  image?: string | null;
-  timestamp?: string;
-}
 
 export function BookFrame() {
   const { t } = useTranslation();
+  const router = useRouter();
   const cameraRef = useRef<CameraView>(null);
-  const captureViewRef = useRef<View>(null);
-  const compositeViewRef = useRef<View>(null);
 
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
-  const [selectedFrame, setSelectedFrame] = useState<FrameItem | null>(null);
   const [capturedImageUri, setCapturedImageUri] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isCapturing, setIsCapturing] = useState(false);
-  const [cameraPhotoUri, setCameraPhotoUri] = useState<string | null>(null);
-  const [isCompositing, setIsCompositing] = useState(false);
 
   if (!permission) {
     return (
@@ -67,12 +55,12 @@ export function BookFrame() {
   }
 
   const handleTakeSnapshot = async () => {
-    if (!cameraRef.current || !selectedFrame) return;
+    if (!cameraRef.current) return;
 
     setIsCapturing(true);
 
     try {
-      // Step 1: Take photo with camera
+      // Take photo with camera
       const photo = await cameraRef.current.takePictureAsync({
         quality: 0.9,
         base64: false,
@@ -83,9 +71,11 @@ export function BookFrame() {
         return;
       }
 
-      // Step 2: Set the camera photo for compositing
-      setCameraPhotoUri(photo.uri);
-      setIsCompositing(true);
+      console.log("Captured photo URI:", photo.uri);
+
+      // Show captured photo in modal
+      setCapturedImageUri(photo.uri);
+      setIsModalVisible(true);
     } catch (error) {
       console.error("Error capturing photo:", error);
       Alert.alert("Error", "Failed to capture photo");
@@ -105,10 +95,16 @@ export function BookFrame() {
       }
 
       await MediaLibrary.saveToLibraryAsync(capturedImageUri);
+
+      // Close modal and reset state
       setIsModalVisible(false);
       setCapturedImageUri(null);
+
+      // Show success message and navigate to home
+      router.replace("/(auth)/(home)");
     } catch (error) {
       console.error("Error saving to album:", error);
+      Alert.alert("Error", "Failed to save image to album");
     }
   };
 
@@ -117,70 +113,11 @@ export function BookFrame() {
     setCapturedImageUri(null);
   };
 
-  const handleFrameSelect = (frame: FrameItem) => {
-    setSelectedFrame(frame);
-  };
-
-  const handleCompositeCapture = async () => {
-    if (!compositeViewRef.current) return;
-
-    try {
-      // Capture the composite view (photo + frame overlay)
-      const compositeUri = await captureRef(compositeViewRef.current, {
-        format: "jpg",
-        quality: 0.9,
-        result: "tmpfile",
-      });
-
-      if (compositeUri) {
-        setCapturedImageUri(compositeUri);
-        setIsModalVisible(true);
-        // Reset states
-        setCameraPhotoUri(null);
-        setIsCompositing(false);
-      } else {
-        Alert.alert("Error", "Failed to create composite image");
-      }
-    } catch (error) {
-      console.error("Error creating composite:", error);
-      Alert.alert("Error", "Failed to create composite image");
-      setCameraPhotoUri(null);
-      setIsCompositing(false);
-    }
-  };
-
   return (
     <View className="flex-1 bg-black">
-      {/* Hidden Composite View for Frame Overlay */}
-      {cameraPhotoUri && isCompositing && (
-        <View
-          ref={compositeViewRef}
-          style={[styles.compositeContainer, { position: "absolute", opacity: 0, zIndex: -1 }]}
-        >
-          <Image
-            source={{ uri: cameraPhotoUri }}
-            style={styles.compositeImage}
-            resizeMode="cover"
-            onLoad={() => {
-              // Trigger capture after image loads
-              handleCompositeCapture();
-            }}
-          />
-          {selectedFrame && selectedFrame.type === "frame" && (
-            <View style={styles.frameOverlay}>
-              <View style={styles.frameTop} />
-              <View style={styles.frameMiddle} />
-              <View style={styles.frameBottom}>
-                <Text style={styles.frameTimestamp}>{selectedFrame.timestamp}</Text>
-              </View>
-            </View>
-          )}
-        </View>
-      )}
-
       {/* Camera Preview Section */}
       <View className="flex-1 items-center justify-center p-5">
-        <View ref={captureViewRef} style={styles.cameraContainer}>
+        <View style={styles.cameraContainer}>
           <CameraView
             ref={cameraRef}
             style={styles.camera}
@@ -189,22 +126,6 @@ export function BookFrame() {
               console.error(`[-] BookFrame: Camera mount error: ${error}`);
             }}
           >
-            {/* Frame Overlay */}
-            {selectedFrame && selectedFrame.type === "frame" && (
-              <View style={styles.frameOverlay}>
-                {/* Top frame section */}
-                <View style={styles.frameTop} />
-
-                {/* Middle transparent section - camera preview shows through */}
-                <View style={styles.frameMiddle} />
-
-                {/* Bottom frame section with metadata */}
-                <View style={styles.frameBottom}>
-                  <Text style={styles.frameTimestamp}>{selectedFrame.timestamp}</Text>
-                </View>
-              </View>
-            )}
-
             {/* Camera Controls Overlay */}
             <View className="absolute left-5 top-[80%] gap-4">
               <TouchableOpacity
@@ -224,25 +145,24 @@ export function BookFrame() {
       {/* Camera Button Section */}
       <View style={styles.cameraButtonSection}>
         <TouchableOpacity
-          style={[
-            styles.cameraButton,
-            (!selectedFrame || isCapturing) && styles.cameraButtonDisabled,
-          ]}
+          style={[styles.cameraButton, isCapturing && styles.cameraButtonDisabled]}
           onPress={handleTakeSnapshot}
-          disabled={!selectedFrame || isCapturing}
+          disabled={isCapturing}
         >
           <View style={styles.cameraButtonInner}>
             <Ionicons
               name={isCapturing ? "hourglass" : "camera"}
               size={32}
-              color={selectedFrame && !isCapturing ? "white" : "#666"}
+              color={isCapturing ? "#666" : "white"}
             />
           </View>
         </TouchableOpacity>
+        {isCapturing && (
+          <Text style={styles.capturingText}>
+            {t("frame.camera.capturing", { defaultValue: "Capturing..." })}
+          </Text>
+        )}
       </View>
-
-      {/* Frame Preview Carousel */}
-      <BookFramePreview onFrameSelect={handleFrameSelect} selectedFrameId={selectedFrame?.id} />
 
       {/* Modal for Image Preview */}
       <Modal
@@ -402,5 +322,11 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
+  },
+  capturingText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 10,
   },
 });
