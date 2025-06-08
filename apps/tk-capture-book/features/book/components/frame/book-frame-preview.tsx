@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   mockFrameContent: {
     flex: 1,
-    backgroundColor: "#D2691E", // Lighter brown for mock content
+    // backgroundColor: "#D2691E", // Lighter brown for mock content
   },
   timestampOverlay: {
     position: "absolute",

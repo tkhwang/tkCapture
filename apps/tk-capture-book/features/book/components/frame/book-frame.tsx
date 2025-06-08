@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { StyleSheet, TouchableOpacity, View, Modal, Image, Alert } from "react-native";
 
 import { useTranslation } from "react-i18next";
+import { captureRef } from "react-native-view-shot";
 
 import { Ionicons } from "@expo/vector-icons";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
@@ -22,6 +23,7 @@ interface FrameItem {
 export function BookFrame() {
   const { t } = useTranslation();
   const cameraRef = useRef<CameraView>(null);
+  const cameraContainerRef = useRef<View>(null);
 
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
@@ -61,22 +63,22 @@ export function BookFrame() {
   }
 
   const handleTakeSnapshot = async () => {
-    if (!cameraRef.current || !selectedFrame) return;
+    if (!cameraContainerRef.current || !selectedFrame) return;
 
     try {
-      // Take picture directly from camera
-      const cameraPhoto = await cameraRef.current.takePictureAsync({
+      // Capture the entire camera container including frame overlay
+      const capturedImageUri = await captureRef(cameraContainerRef.current, {
+        format: "jpg",
         quality: 0.9,
-        base64: false,
       });
 
-      if (!cameraPhoto?.uri) {
-        Alert.alert("Error", "Failed to capture camera image");
+      if (!capturedImageUri) {
+        Alert.alert("Error", "Failed to capture image with frame overlay");
         return;
       }
 
-      // Show the captured image directly in modal
-      setCapturedImageUri(cameraPhoto.uri);
+      // Show the captured image with frame overlay in modal
+      setCapturedImageUri(capturedImageUri);
       setIsModalVisible(true);
     } catch (error) {
       console.error("Error in snapshot process:", error);
@@ -115,7 +117,7 @@ export function BookFrame() {
     <View className="flex-1 bg-black">
       {/* Camera Preview Section */}
       <View className="flex-1 items-center justify-center p-5">
-        <View style={styles.cameraContainer}>
+        <View ref={cameraContainerRef} style={styles.cameraContainer}>
           <CameraView
             ref={cameraRef}
             style={styles.camera}
@@ -185,17 +187,7 @@ export function BookFrame() {
                   style={styles.modalImage}
                   resizeMode="contain"
                 />
-                {/* Frame overlay preview on captured image */}
-                {selectedFrame && selectedFrame.type === "frame" && (
-                  <View style={styles.modalFrameOverlay}>
-                    <View style={styles.frameContent}>
-                      <View style={styles.frameTop} />
-                      <View style={styles.frameBottom}>
-                        <Text style={styles.frameTimestamp}>{selectedFrame.timestamp}</Text>
-                      </View>
-                    </View>
-                  </View>
-                )}
+                {/* Frame overlay is already included in the captured image */}
               </View>
             )}
             <View style={styles.modalButtons}>
