@@ -70,7 +70,10 @@ export function BookFrame() {
       const capturedImageUri = await captureRef(cameraContainerRef.current, {
         format: "jpg",
         quality: 0.9,
+        result: "tmpfile", // Ensure we get a proper file URI
       });
+
+      console.log("Captured image URI:", capturedImageUri);
 
       if (!capturedImageUri) {
         Alert.alert("Error", "Failed to capture image with frame overlay");
@@ -129,11 +132,15 @@ export function BookFrame() {
             {/* Frame Overlay */}
             {selectedFrame && selectedFrame.type === "frame" && (
               <View style={styles.frameOverlay}>
-                <View style={styles.frameContent}>
-                  <View style={styles.frameTop} />
-                  <View style={styles.frameBottom}>
-                    <Text style={styles.frameTimestamp}>{selectedFrame.timestamp}</Text>
-                  </View>
+                {/* Top frame section */}
+                <View style={styles.frameTop} />
+
+                {/* Middle transparent section - camera preview shows through */}
+                <View style={styles.frameMiddle} />
+
+                {/* Bottom frame section with metadata */}
+                <View style={styles.frameBottom}>
+                  <Text style={styles.frameTimestamp}>{selectedFrame.timestamp}</Text>
                 </View>
               </View>
             )}
@@ -177,8 +184,7 @@ export function BookFrame() {
         transparent={true}
         onRequestClose={handleCloseModal}
       >
-        {/* <View style={styles.modalContainer}> */}
-        <View className="flex-1 items-center justify-center bg-background">
+        <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             {capturedImageUri && (
               <View style={styles.modalImageContainer}>
@@ -186,8 +192,13 @@ export function BookFrame() {
                   source={{ uri: capturedImageUri }}
                   style={styles.modalImage}
                   resizeMode="contain"
+                  onError={(error) => {
+                    console.error("Modal Image load error:", error);
+                  }}
+                  onLoad={() => {
+                    console.log("Modal Image loaded successfully");
+                  }}
                 />
-                {/* Frame overlay is already included in the captured image */}
               </View>
             )}
             <View style={styles.modalButtons}>
@@ -224,20 +235,22 @@ const styles = StyleSheet.create({
   frameOverlay: {
     ...StyleSheet.absoluteFillObject,
     zIndex: 1,
-  },
-  frameContent: {
-    flex: 1,
-    justifyContent: "space-between",
+    backgroundColor: "transparent", // Ensure overlay background is transparent
+    flexDirection: "column",
   },
   frameTop: {
     height: 60,
-    backgroundColor: "rgba(139, 69, 19, 0.8)", // Semi-transparent brown
+    backgroundColor: "rgba(139, 69, 19, 0.85)", // Semi-transparent brown for frame only
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
+  frameMiddle: {
+    flex: 1,
+    backgroundColor: "transparent", // Completely transparent - camera preview shows through
+  },
   frameBottom: {
     height: 80,
-    backgroundColor: "rgba(139, 69, 19, 0.9)", // Semi-transparent brown
+    backgroundColor: "rgba(139, 69, 19, 0.85)", // Semi-transparent brown for frame only
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     justifyContent: "center",
@@ -293,15 +306,18 @@ const styles = StyleSheet.create({
   },
   modalImage: {
     width: "100%",
-    height: 300,
+    aspectRatio: 1, // Maintain 1:1 aspect ratio to match camera container
     borderRadius: 10,
     marginBottom: 20,
+    backgroundColor: "#f0f0f0", // Light gray background to help identify loading issues
   },
   modalButtons: {
     width: "100%",
   },
   modalImageContainer: {
     position: "relative",
+    width: "100%",
+    backgroundColor: "transparent",
   },
   modalFrameOverlay: {
     ...StyleSheet.absoluteFillObject,
