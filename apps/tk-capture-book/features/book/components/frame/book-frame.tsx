@@ -24,6 +24,7 @@ export function BookFrame() {
   const { t } = useTranslation();
   const cameraRef = useRef<CameraView>(null);
   const captureViewRef = useRef<View>(null);
+  const compositeViewRef = useRef<View>(null);
 
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
@@ -31,6 +32,8 @@ export function BookFrame() {
   const [capturedImageUri, setCapturedImageUri] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isCapturing, setIsCapturing] = useState(false);
+  const [cameraPhotoUri, setCameraPhotoUri] = useState<string | null>(null);
+  const [isCompositing, setIsCompositing] = useState(false);
 
   if (!permission) {
     return (
@@ -64,29 +67,28 @@ export function BookFrame() {
   }
 
   const handleTakeSnapshot = async () => {
-    if (!captureViewRef.current || !selectedFrame) return;
+    if (!cameraRef.current || !selectedFrame) return;
 
     setIsCapturing(true);
 
     try {
-      // Capture the entire view containing camera + frame overlay
-      const capturedUri = await captureRef(captureViewRef.current, {
-        format: "jpg",
+      // Step 1: Take photo with camera
+      const photo = await cameraRef.current.takePictureAsync({
         quality: 0.9,
-        result: "tmpfile",
-        width: undefined, // Use view's actual width
-        height: undefined, // Use view's actual height
+        base64: false,
       });
 
-      if (capturedUri) {
-        setCapturedImageUri(capturedUri);
-        setIsModalVisible(true);
-      } else {
-        Alert.alert("Error", "Failed to capture image");
+      if (!photo?.uri) {
+        Alert.alert("Error", "Failed to capture photo");
+        return;
       }
+
+      // Step 2: Set the camera photo for compositing
+      setCameraPhotoUri(photo.uri);
+      setIsCompositing(true);
     } catch (error) {
-      console.error("Error capturing snapshot:", error);
-      Alert.alert("Error", "Failed to capture image");
+      console.error("Error capturing photo:", error);
+      Alert.alert("Error", "Failed to capture photo");
     } finally {
       setIsCapturing(false);
     }
@@ -119,8 +121,63 @@ export function BookFrame() {
     setSelectedFrame(frame);
   };
 
+  const handleCompositeCapture = async () => {
+    if (!compositeViewRef.current) return;
+
+    try {
+      // Capture the composite view (photo + frame overlay)
+      const compositeUri = await captureRef(compositeViewRef.current, {
+        format: "jpg",
+        quality: 0.9,
+        result: "tmpfile",
+      });
+
+      if (compositeUri) {
+        setCapturedImageUri(compositeUri);
+        setIsModalVisible(true);
+        // Reset states
+        setCameraPhotoUri(null);
+        setIsCompositing(false);
+      } else {
+        Alert.alert("Error", "Failed to create composite image");
+      }
+    } catch (error) {
+      console.error("Error creating composite:", error);
+      Alert.alert("Error", "Failed to create composite image");
+      setCameraPhotoUri(null);
+      setIsCompositing(false);
+    }
+  };
+
   return (
     <View className="flex-1 bg-black">
+      {/* Hidden Composite View for Frame Overlay */}
+      {cameraPhotoUri && isCompositing && (
+        <View
+          ref={compositeViewRef}
+          style={[styles.compositeContainer, { position: "absolute", opacity: 0, zIndex: -1 }]}
+        >
+          <Image
+            source={{ uri: cameraPhotoUri }}
+            style={styles.compositeImage}
+            resizeMode="cover"
+            onLoad={() => {
+              // Trigger capture after image loads
+              handleCompositeCapture();
+            }}
+          />
+          {selectedFrame && selectedFrame.type === "frame" && (
+            <View style={styles.frameOverlay}>
+              <View style={styles.frameTop} />
+              <View style={styles.frameMiddle} />
+              <View style={styles.frameBottom}>
+                <Text style={styles.frameTimestamp}>{selectedFrame.timestamp}</Text>
+              </View>
+            </View>
+          )}
+        </View>
+      )}
+
       {/* Camera Preview Section */}
       <View className="flex-1 items-center justify-center p-5">
         <View ref={captureViewRef} style={styles.cameraContainer}>
@@ -332,5 +389,18 @@ const styles = StyleSheet.create({
   modalFrameOverlay: {
     ...StyleSheet.absoluteFillObject,
     zIndex: 2,
+  },
+  compositeContainer: {
+    aspectRatio: 1,
+    width: "100%",
+    maxWidth: 400,
+    borderRadius: 20,
+    overflow: "hidden",
+    position: "absolute",
+  },
+  compositeImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
   },
 });
