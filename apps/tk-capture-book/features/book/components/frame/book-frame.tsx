@@ -23,13 +23,14 @@ interface FrameItem {
 export function BookFrame() {
   const { t } = useTranslation();
   const cameraRef = useRef<CameraView>(null);
-  const cameraContainerRef = useRef<View>(null);
+  const captureViewRef = useRef<View>(null);
 
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
   const [selectedFrame, setSelectedFrame] = useState<FrameItem | null>(null);
   const [capturedImageUri, setCapturedImageUri] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isCapturing, setIsCapturing] = useState(false);
 
   if (!permission) {
     return (
@@ -63,29 +64,31 @@ export function BookFrame() {
   }
 
   const handleTakeSnapshot = async () => {
-    if (!cameraContainerRef.current || !selectedFrame) return;
+    if (!captureViewRef.current || !selectedFrame) return;
+
+    setIsCapturing(true);
 
     try {
-      // Capture the entire camera container including frame overlay
-      const capturedImageUri = await captureRef(cameraContainerRef.current, {
+      // Capture the entire view containing camera + frame overlay
+      const capturedUri = await captureRef(captureViewRef.current, {
         format: "jpg",
         quality: 0.9,
-        result: "tmpfile", // Ensure we get a proper file URI
+        result: "tmpfile",
+        width: undefined, // Use view's actual width
+        height: undefined, // Use view's actual height
       });
 
-      console.log("Captured image URI:", capturedImageUri);
-
-      if (!capturedImageUri) {
-        Alert.alert("Error", "Failed to capture image with frame overlay");
-        return;
+      if (capturedUri) {
+        setCapturedImageUri(capturedUri);
+        setIsModalVisible(true);
+      } else {
+        Alert.alert("Error", "Failed to capture image");
       }
-
-      // Show the captured image with frame overlay in modal
-      setCapturedImageUri(capturedImageUri);
-      setIsModalVisible(true);
     } catch (error) {
-      console.error("Error in snapshot process:", error);
+      console.error("Error capturing snapshot:", error);
       Alert.alert("Error", "Failed to capture image");
+    } finally {
+      setIsCapturing(false);
     }
   };
 
@@ -120,7 +123,7 @@ export function BookFrame() {
     <View className="flex-1 bg-black">
       {/* Camera Preview Section */}
       <View className="flex-1 items-center justify-center p-5">
-        <View ref={cameraContainerRef} style={styles.cameraContainer}>
+        <View ref={captureViewRef} style={styles.cameraContainer}>
           <CameraView
             ref={cameraRef}
             style={styles.camera}
@@ -164,12 +167,19 @@ export function BookFrame() {
       {/* Camera Button Section */}
       <View style={styles.cameraButtonSection}>
         <TouchableOpacity
-          style={[styles.cameraButton, !selectedFrame && styles.cameraButtonDisabled]}
+          style={[
+            styles.cameraButton,
+            (!selectedFrame || isCapturing) && styles.cameraButtonDisabled,
+          ]}
           onPress={handleTakeSnapshot}
-          disabled={!selectedFrame}
+          disabled={!selectedFrame || isCapturing}
         >
           <View style={styles.cameraButtonInner}>
-            <Ionicons name="camera" size={32} color={selectedFrame ? "white" : "#666"} />
+            <Ionicons
+              name={isCapturing ? "hourglass" : "camera"}
+              size={32}
+              color={selectedFrame && !isCapturing ? "white" : "#666"}
+            />
           </View>
         </TouchableOpacity>
       </View>
