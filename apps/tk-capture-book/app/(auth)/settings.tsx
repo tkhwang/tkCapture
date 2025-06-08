@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import ToggleTheme from "@/components/ToggleTheme";
 import { Text } from "@/components/ui/text";
+import { VERSION } from "@/consts/appConsts";
 import { BookSearchProviderAtom } from "@/features/book/states/book";
 import { BookSearchProviderSetting } from "@/features/setting/book-search-provider-setting";
 import { Profile } from "@/features/setting/components/profile";
@@ -56,6 +57,11 @@ export default function SettingsScreen() {
           </Text>
           <BookSearchProviderSetting provider={provider} onProviderChange={setProvider} />
         </View>
+      </View>
+
+      {/* Version Display */}
+      <View className="items-center justify-center pb-2">
+        <Text className="text-sm text-gray-400">VERSION: {VERSION}</Text>
       </View>
     </View>
   );
