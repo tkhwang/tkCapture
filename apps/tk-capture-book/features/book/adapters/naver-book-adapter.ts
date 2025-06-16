@@ -10,10 +10,13 @@ import {
 
 export class NaverBookAdapter implements BookSearchAdapter {
   async search(params: BookSearchParams): Promise<BookSearchResponse> {
+    const page = params.page ?? 1;
+    const size = params.size ?? 10;
     const naverResponse = await searchNaverBooks({
       query: params.query,
-      display: params.size,
-      start: params.page,
+      display: size,
+      // Naver API uses the starting index (1-based) rather than page number
+      start: (page - 1) * size + 1,
       sort: params.sort === "latest" ? "date" : "sim",
     });
 
