@@ -42,8 +42,13 @@ export function useBookSearch({ onBookPress }: UseBookSearchProps = {}) {
 
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
-    await refetch();
-    setRefreshing(false);
+    try {
+      await refetch();
+    } catch (error) {
+      console.error("Failed to refresh search results:", error);
+    } finally {
+      setRefreshing(false);
+    }
   }, [refetch]);
 
   return {

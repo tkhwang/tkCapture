@@ -16,6 +16,7 @@ export function BookSearchEmpty() {
             source={require("../../../../assets/images/woman-book-reading-green.png")}
             className="mb-8 h-72 w-72"
             resizeMode="contain"
+            accessibilityLabel={t("search.empty.image.alt")}
           />
           <Text className="mb-3 text-center text-xl font-bold">
             {t("search.search-no-result.title")}
